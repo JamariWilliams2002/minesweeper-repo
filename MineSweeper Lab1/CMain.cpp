@@ -2,6 +2,9 @@
 
 wxBEGIN_EVENT_TABLE(CMain, wxFrame)
 EVT_BUTTON(1001, OnButtonClick)
+
+
+
 wxEND_EVENT_TABLE()
 
 
@@ -11,14 +14,20 @@ CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's MineSweeper", wxPoint(30, 3
 	wxGridSizer* grid = new wxGridSizer(fieldWidth, fieldHeight, 0, 0);
 	field = new int [fieldWidth * fieldHeight];
 	wxFont font(24, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
+	//color stuff
+	wxColor clickedButtonColor(wxColor(*wxBLUE));
 
 	for (int row = 0; row < fieldWidth; row++)
 	{
 		for (int col = 0; col < fieldHeight; col++)
 		{
+			//create button
 			int currentButton = col * fieldWidth + row;
 			btn[currentButton] = new wxButton(this, 1000 + (currentButton));
+			
+			//button appearence
 			btn[currentButton]->SetFont(font);
+			btn[currentButton]->SetBackgroundColour(clickedButtonColor);
 			grid->Add(btn[currentButton], 1, wxEXPAND | wxALL);
 			btn[currentButton]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnButtonClick, this);
 			field[currentButton] = 0;
@@ -61,8 +70,8 @@ void CMain::OnButtonClick(wxCommandEvent& evt)
 	}
 	firstClick = false;
 
-	//disable button from being clicked again
-	btn[currentButton]->Enable(false);
+	//change the color of button, indicating it has been clicked
+	btn[currentButton]->SetBackgroundColour();
 	//check for mine
 	if (field[currentButton] == isMine)
 	{

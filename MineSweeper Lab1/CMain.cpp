@@ -62,7 +62,7 @@ void CMain::OnButtonClick(wxCommandEvent& evt)
 	firstClick = false;
 
 	//disable button from being clicked again
-	btn[currentButton]->Enable();
+	btn[currentButton]->Enable(false);
 	//check for mine
 	if (field[currentButton] == isMine)
 	{

@@ -9,9 +9,11 @@ public:
 	CMain();
 	~CMain();
 	//member fields
-	wxButton* btn1 = nullptr;
-	wxTextCtrl* text1 = nullptr;
-	wxListBox* list = nullptr;
+	int fieldHeight = 10;
+	int fieldWidth = 10;
+	wxButton** btn;
+	int* field = nullptr;
+	bool firstClick = true;
 
 	//click events
 	void OnButtonClick(wxCommandEvent& evt);

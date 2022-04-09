@@ -10,12 +10,15 @@ CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's MineSweeper", wxPoint(30, 3
 	btn = new wxButton * [fieldWidth * fieldHeight];
 	wxGridSizer* grid = new wxGridSizer(fieldWidth, fieldHeight, 0, 0);
 	field = new int [fieldWidth * fieldHeight];
+	wxFont font(24, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
+
 	for (int row = 0; row < fieldWidth; row++)
 	{
 		for (int col = 0; col < fieldHeight; col++)
 		{
 			int currentButton = col * fieldWidth + row;
 			btn[currentButton] = new wxButton(this, 1000 + (currentButton));
+			btn[currentButton]->SetFont(font);
 			grid->Add(btn[currentButton], 1, wxEXPAND | wxALL);
 			btn[currentButton]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnButtonClick, this);
 			field[currentButton] = 0;

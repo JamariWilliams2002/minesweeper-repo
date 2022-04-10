@@ -14,7 +14,10 @@ public:
 	wxButton** btn;
 	int* field = nullptr;
 	bool firstClick = true;
-
+	//colors
+	wxColor unclickedButtonColor;
+	wxColor clickedButtonColor;
+	wxColor flagButtonColor;
 	//click events
 	void OnButtonClick(wxCommandEvent& evt);
 	wxDECLARE_EVENT_TABLE();

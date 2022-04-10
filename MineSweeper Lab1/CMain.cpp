@@ -3,9 +3,8 @@
 wxBEGIN_EVENT_TABLE(CMain, wxFrame)
 EVT_BUTTON(1001, OnButtonClick)
 
-
-
 wxEND_EVENT_TABLE()
+
 
 
 CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's MineSweeper", wxPoint(30, 30), wxSize(800, 800))
@@ -15,19 +14,23 @@ CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's MineSweeper", wxPoint(30, 3
 	field = new int [fieldWidth * fieldHeight];
 	wxFont font(24, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
 	//color stuff
-	wxColor clickedButtonColor(wxColor(*wxBLUE));
-
+	unclickedButtonColor = wxColor(wxColor(*wxLIGHT_GREY));
+	clickedButtonColor = wxColor(wxColor(77, 80, 87));
+	//building grid
 	for (int row = 0; row < fieldWidth; row++)
 	{
 		for (int col = 0; col < fieldHeight; col++)
 		{
 			//create button
 			int currentButton = col * fieldWidth + row;
-			btn[currentButton] = new wxButton(this, 1000 + (currentButton));
+			int buttonID = 1000 + (currentButton);
+			btn[currentButton] = new wxButton(this, buttonID);
+			//right click processing
 			
+
 			//button appearence
 			btn[currentButton]->SetFont(font);
-			btn[currentButton]->SetBackgroundColour(clickedButtonColor);
+			btn[currentButton]->SetBackgroundColour(unclickedButtonColor);
 			grid->Add(btn[currentButton], 1, wxEXPAND | wxALL);
 			btn[currentButton]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnButtonClick, this);
 			field[currentButton] = 0;
@@ -51,6 +54,12 @@ void CMain::OnButtonClick(wxCommandEvent& evt)
 	int col = (evt.GetId() - 1000) / fieldHeight;
 	int currentButton = col * fieldWidth + row;
 	int isMine = -1;
+	//if right click, allow for flag and return
+	
+	
+
+	return;
+	
 	//populate mines
 	if (firstClick)
 	{
@@ -71,7 +80,7 @@ void CMain::OnButtonClick(wxCommandEvent& evt)
 	firstClick = false;
 
 	//change the color of button, indicating it has been clicked
-	btn[currentButton]->SetBackgroundColour();
+	btn[currentButton]->SetBackgroundColour(clickedButtonColor);
 	//check for mine
 	if (field[currentButton] == isMine)
 	{
@@ -109,4 +118,6 @@ void CMain::OnButtonClick(wxCommandEvent& evt)
 		if (mineCount > 0)
 			btn[currentButton]->SetLabel(std::to_string(mineCount));
 	}
+
+	evt.Skip();
 }

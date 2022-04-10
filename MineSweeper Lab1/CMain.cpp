@@ -14,8 +14,8 @@ CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's MineSweeper", wxPoint(30, 3
 	field = new int [fieldWidth * fieldHeight];
 	wxFont font(24, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
 	//color stuff
-	unclickedButtonColor = wxColor(wxColor(*wxLIGHT_GREY));
-	clickedButtonColor = wxColor(wxColor(77, 80, 87));
+	/*unclickedButtonColor = wxColor(wxColor(*wxLIGHT_GREY));
+	clickedButtonColor = wxColor(wxColor(138, 108, 106));*/
 	//building grid
 	for (int row = 0; row < fieldWidth; row++)
 	{
@@ -30,7 +30,6 @@ CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's MineSweeper", wxPoint(30, 3
 
 			//button appearence
 			btn[currentButton]->SetFont(font);
-			btn[currentButton]->SetBackgroundColour(unclickedButtonColor);
 			grid->Add(btn[currentButton], 1, wxEXPAND | wxALL);
 			btn[currentButton]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnButtonClick, this);
 			field[currentButton] = 0;
@@ -55,11 +54,7 @@ void CMain::OnButtonClick(wxCommandEvent& evt)
 	int currentButton = col * fieldWidth + row;
 	int isMine = -1;
 	//if right click, allow for flag and return
-	
-	
-
-	return;
-	
+	btn[currentButton]->Enable(false);
 	//populate mines
 	if (firstClick)
 	{
@@ -80,7 +75,7 @@ void CMain::OnButtonClick(wxCommandEvent& evt)
 	firstClick = false;
 
 	//change the color of button, indicating it has been clicked
-	btn[currentButton]->SetBackgroundColour(clickedButtonColor);
+	//btn[currentButton]->SetBackgroundColour(clickedButtonColor);
 	//check for mine
 	if (field[currentButton] == isMine)
 	{

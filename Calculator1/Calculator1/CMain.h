@@ -19,6 +19,7 @@ public:
 	//constants
 	const int fieldWidth = 7;
 	const int fieldHeight = 4;
+	const int numButtons = fieldWidth * fieldHeight;
 	
 	//his controls
 	wxButton* btn = nullptr;

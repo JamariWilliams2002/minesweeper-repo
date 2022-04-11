@@ -23,11 +23,14 @@ CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's Calculator", wxPoint(CAL_PO
 			int currentButton = col * fieldWidth + row;
 			int buttonID = 1000 + currentButton;
 			calButtons[currentButton] = new wxButton(this, buttonID);
-			calGrid->Add(calButtons[currentButton]);
-
-			//
+			calGrid->Add(calButtons[currentButton], 1, wxEXPAND | wxALL);
 		}
 	}
+
+	//for (int i = 0; i < numButtons; i++)
+	//{
+	//	//specs for each button
+	//}
 	FillButtonText();
 
 	//set the grid

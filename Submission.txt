@@ -1,0 +1,27 @@
+Jamari Williams
+
+1. https://github.com/github/gitignore
+A collection of gitignore templates.
+Usefeul for different applications, languages, games, and more. 
+Quick for different when you're working on different projects and don't want to create a gitignore yourself.
+
+2. https://github.com/Pathoschild/SMAPI
+Allows for modding in Stardew Valley.
+It automatically creates backups for your saves, 
+lets you know when there are updates for the game,
+and provides detailed information on errors. 
+
+3. https://github.com/forrestthewoods/d3js_smash_brothers
+A post about potential balancing for Super Smash Brothers Melee. 
+It allows users to make any balance changes to the game that they see fit. 
+
+4. https://github.com/KevinLage/DeadCells-Cheat
+Allows for cheats in Dead Cells
+One of those cheats is teleportation, which makes the game significantly easier
+and for some cool out of bounds techniques. 
+
+5. https://github.com/uberhalit/EldenRingFpsUnlockAndMore
+Drops the frame rate lock on Elden Ring. 
+Makes the game look smoother, allows widescreen support,
+can stop you from losing runes upon death, and increase the overall speed of the game. 
+Doesn't change the files of the game, only patches the RAM

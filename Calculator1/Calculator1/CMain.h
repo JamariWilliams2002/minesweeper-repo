@@ -5,6 +5,8 @@
 // create display
 // create 0-9 buttons
 // 
+// EXTRAS:
+// make functioning sizer
 //
 
 

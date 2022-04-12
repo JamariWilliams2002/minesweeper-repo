@@ -36,10 +36,15 @@ private:
 	wxButton* buttonTest = nullptr;
 	wxButton** calButtons = nullptr;
 	wxTextCtrl *calDisplay = nullptr;
-	//methods
+	//set up methods
 	void GenerateButtons();
 	void ButtonSpecs();
 	int GetButtonIndex(int rows, int cols);
+	//runtime methods
+	void OnClickNumbers(wxCommandEvent &evt);
+	void OnClickArithmetic(wxCommandEvent& evt);
+	void OnClickBinHexDec(wxCommandEvent& evt);
+	void OnClickMisc(wxCommandEvent &evt);
 public:
 
 	//constructor/destructor

@@ -1,7 +1,7 @@
 #include "CMain.h"
 
 wxBEGIN_EVENT_TABLE(CMain, wxFrame)
-
+//EVT_BUTTON(1001, )
 wxEND_EVENT_TABLE();
 
 
@@ -66,18 +66,42 @@ int CMain::GetButtonIndex(int rows, int cols)
 void CMain::ButtonSpecs()
 {
 	//main numbers 0-9
-	calButtons[GetButtonIndex(1, 2)]->SetLabel("7");
-	calButtons[GetButtonIndex(1, 3)]->SetLabel("8");
-	calButtons[GetButtonIndex(1, 4)]->SetLabel("9");
-	calButtons[GetButtonIndex(2, 2)]->SetLabel("4");
-	calButtons[GetButtonIndex(2, 3)]->SetLabel("5");
-	calButtons[GetButtonIndex(2, 4)]->SetLabel("6");
-	calButtons[GetButtonIndex(3, 2)]->SetLabel("1");
-	calButtons[GetButtonIndex(3, 3)]->SetLabel("2");
-	calButtons[GetButtonIndex(3, 4)]->SetLabel("3");
-	
+	calButtons[GetButtonIndex(0, 2)]->SetLabel("7");
+	calButtons[GetButtonIndex(0, 3)]->SetLabel("8");
+	calButtons[GetButtonIndex(0, 4)]->SetLabel("9");
+	calButtons[GetButtonIndex(1, 2)]->SetLabel("4");
+	calButtons[GetButtonIndex(1, 3)]->SetLabel("5");
+	calButtons[GetButtonIndex(1, 4)]->SetLabel("6");
+	calButtons[GetButtonIndex(2, 2)]->SetLabel("1");
+	calButtons[GetButtonIndex(2, 3)]->SetLabel("2");
+	calButtons[GetButtonIndex(2, 4)]->SetLabel("3");
+	calButtons[GetButtonIndex(3, 3)]->SetLabel("0");
+
+	calButtons[GetButtonIndex(3, 3)]->SetBackgroundColour((*wxLIGHT_GREY));
+	for (int rows = 0; rows <= 2; rows++)
+	{
+		for (int cols = 2; cols <= 4; cols++)
+		{
+			calButtons[GetButtonIndex(rows, cols)]->SetBackgroundColour((*wxLIGHT_GREY));
+		}
+	}
 	//arithmetic
 	calButtons[GetButtonIndex(3, 5)]->SetLabel("+");
+	calButtons[GetButtonIndex(2, 5)]->SetLabel("-");
+	calButtons[GetButtonIndex(2, 6)]->SetLabel("/");
+	calButtons[GetButtonIndex(1, 5)]->SetLabel("%");
+	calButtons[GetButtonIndex(1, 6)]->SetLabel("X");
+
+	//bin/hex/dec
+	calButtons[GetButtonIndex(1, 1)]->SetLabel("bin");
+	calButtons[GetButtonIndex(2, 1)]->SetLabel("dec");
+	calButtons[GetButtonIndex(3, 1)]->SetLabel("hex");
+
+
+	//misc
+	calButtons[GetButtonIndex(3, 2)]->SetLabel("+/-");
+	calButtons[GetButtonIndex(3, 6)]->SetLabel("=");
+	calButtons[GetButtonIndex(3, 4)]->SetLabel(".");
 
 }
 

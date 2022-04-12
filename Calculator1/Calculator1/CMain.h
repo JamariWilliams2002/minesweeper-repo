@@ -17,30 +17,35 @@
 
 class CMain : public wxFrame
 {
-public:
-	//constants
-	const int fieldWidth = 7;
-	const int fieldHeight = 4;
-	const int numButtons = fieldWidth * fieldHeight;
+private:
+	//enum for buttons
 	
-	//his controls
-	wxButton* btn = nullptr;
-	wxButton* btn2 = nullptr;
 
-	wxTextCtrl* txt = nullptr;
-	wxListBox* list = nullptr;
 
+	//generic fields
+	wxPoint displayPoint;
+	//buffer variables
+	const int displayPointBuffer = 10;
+	const int displayToButtonBuffer = 20;
+	const int betweenButtonBuffer = 5;
+	//constants
+	const int fieldRows = 4;
+	const int fieldCols = 7;
+	const int numButtons = fieldRows * fieldCols;
 	//controls
-	wxButton* test = nullptr;
+	wxButton* buttonTest = nullptr;
 	wxButton** calButtons = nullptr;
 	wxTextCtrl *calDisplay = nullptr;
+	//methods
+	void GenerateButtons();
+	void ButtonSpecs();
+	int GetButtonIndex(int rows, int cols);
+public:
 
 	//constructor/destructor
 	CMain();
 	~CMain();
 
-	//methods
-	void FillButtonText();
 
 	//events
 

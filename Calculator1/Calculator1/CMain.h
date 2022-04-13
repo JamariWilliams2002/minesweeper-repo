@@ -2,20 +2,18 @@
 #include "wx/wx.h"
 
 //TO DO::
-// create display
-// create 0-9 buttons
-// 
-// EXTRAS:
 // make functioning sizer
 //create preview for display
 //when the user clicks a different operation, the operation in question changes
-// parenthases
-// 
+//		------make this apply to the preview display as well
 //delete button
+// EXTRAS:
+// parenthases
+// square roots
 
 
 //RETURNING NOTES:
-//
+//wanted to work on 3rd todo in list
 
 
 

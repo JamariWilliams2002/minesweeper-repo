@@ -390,14 +390,23 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 
 void CMain::UpdatePreview()
 {
-	wxString previewStr;
-	if (!onNextNum)
-		previewStr = calDisplay->GetValue() + " " + clickedAction + " ";
-	else
+	wxString updatedStr;
+	//early return
+	if (!onNextNum && !arithmeticClick)
+		return;
+	if (calDisplay->GetValue() == "")
+		updatedStr = calDisplay->GetValue();
+	else if (!onNextNum)
 	{
-		
+		updatedStr = calDisplay->GetValue() + " " + clickedAction + " ";
+		prePreviewStr = updatedStr;
 	}
-		calPreview->SetLabelText(previewStr);
+	else //arithmeticClick && onNextNum
+	{
+		int projSol = ProjectedSolution();
+
+	}
+		calPreview->SetLabelText(updatedStr);
 	
 }
 
@@ -457,13 +466,13 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 
 
 			//setting flags and resetting
-			calPreview->SetLabelText("");
 			tempResult = strResult;
 			arithmeticClick = false;
 			equalsClicked = true;
 			onNextNum = false;
 			decimalPointClicked = false;
 			ResetPrevAndNextNum();
+			UpdatePreview();
 		}
 	}
 	else if (calButtons[buttonIndex]->GetLabel() == "clear")
@@ -507,6 +516,12 @@ void CMain::ResetArithmetic()
 {
 	arithmeticClick = false;
 	clickedAction = "";
+}
+
+int CMain::ProjectedSolution()
+{
+	int result = 0;
+	return result;
 }
 
 void CMain::ResetPrevAndNextNum()

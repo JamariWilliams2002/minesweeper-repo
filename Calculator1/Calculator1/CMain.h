@@ -44,6 +44,7 @@ private:
 	wxSize previewSize;
 	wxPoint displayPoint;
 	wxSize displaySize;
+	wxString prePreviewStr;
 	//buffer variables
 	const int previewToDisplayBuffer = 10;
 	const int displayPointBuffer = 10;
@@ -80,6 +81,7 @@ private:
 	void ToggleButtonsForBinary();
 	void ToggleButtonsForHex();
 	void UpdatePreview();
+	int ProjectedSolution();
 public:
 	//constructor/destructor
 	CMain();

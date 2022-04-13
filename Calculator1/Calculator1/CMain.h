@@ -37,6 +37,7 @@ private:
 	wxButton** calButtons = nullptr;
 	wxTextCtrl *calDisplay = nullptr;
 	//set up methods
+	void GenerateDisplay();
 	void GenerateButtons();
 	void ButtonSpecs();
 	int GetButtonIndex(int rows, int cols);

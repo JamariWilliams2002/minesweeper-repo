@@ -1,7 +1,7 @@
 #include "CMain.h"
 
 wxBEGIN_EVENT_TABLE(CMain, wxFrame)
-//EVT_BUTTON(1001, )
+EVT_BUTTON(1001, OnClickNumbers)
 wxEND_EVENT_TABLE();
 
 
@@ -14,16 +14,19 @@ const int CAL_SIZE_HEIGHT = 700;
 CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's Calculator", wxPoint(CAL_POINT_X, CAL_POINT_Y), wxSize(CAL_SIZE_WIDTH, CAL_SIZE_HEIGHT))
 {
 	//display & buttons
-
-	calDisplay = new wxTextCtrl(this, wxID_ANY, "", wxPoint(CAL_POINT_X - displayPointBuffer, CAL_POINT_Y - displayPointBuffer), wxSize(650, 200));
-	displayPoint = wxPoint(CAL_POINT_X - displayPointBuffer, CAL_POINT_Y - displayPointBuffer);
-	
+	GenerateDisplay();
 	GenerateButtons();
 	ButtonSpecs();
 
 	//set the grid
 	//this->SetSizer(calGrid);
 	//calGrid->Layout();
+}
+
+void CMain::GenerateDisplay()
+{
+	calDisplay = new wxTextCtrl(this, wxID_ANY, "", wxPoint(CAL_POINT_X - displayPointBuffer, CAL_POINT_Y - displayPointBuffer), wxSize(650, 200), wxTE_READONLY);
+	displayPoint = wxPoint(CAL_POINT_X - displayPointBuffer, CAL_POINT_Y - displayPointBuffer);
 }
 
 void CMain::GenerateButtons()
@@ -76,13 +79,16 @@ void CMain::ButtonSpecs()
 	calButtons[GetButtonIndex(2, 3)]->SetLabel("2");
 	calButtons[GetButtonIndex(2, 4)]->SetLabel("3");
 	calButtons[GetButtonIndex(3, 3)]->SetLabel("0");
-
+	//zero specs
 	calButtons[GetButtonIndex(3, 3)]->SetBackgroundColour((*wxLIGHT_GREY));
+	calButtons[GetButtonIndex(3, 3)]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnClickNumbers, this);
+	//all other number specs
 	for (int rows = 0; rows <= 2; rows++)
 	{
 		for (int cols = 2; cols <= 4; cols++)
 		{
 			calButtons[GetButtonIndex(rows, cols)]->SetBackgroundColour((*wxLIGHT_GREY));
+			//calButtons[GetButtonIndex(rows, cols)]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnClickNumbers, this);
 		}
 	}
 	//arithmetic
@@ -102,6 +108,34 @@ void CMain::ButtonSpecs()
 	calButtons[GetButtonIndex(3, 2)]->SetLabel("+/-");
 	calButtons[GetButtonIndex(3, 6)]->SetLabel("=");
 	calButtons[GetButtonIndex(3, 4)]->SetLabel(".");
+	calButtons[GetButtonIndex(0, 5)]->SetLabel("del");
+	calButtons[GetButtonIndex(0, 6)]->SetLabel("clear");
+
+}
+
+void CMain::OnClickNumbers(wxCommandEvent& evt)
+{
+
+
+	//find the row and column
+	int row = (evt.GetId() - 1000) % fieldRows;
+	int col = (evt.GetId() - 1000) / fieldRows;
+	int buttonIndex = GetButtonIndex(row, col);
+	for (int i = 0; i < 10; i++)
+	{
+		if (calButtons[buttonIndex]->GetLabel() == std::to_string(i))
+		{
+			calDisplay->AppendText(std::to_string(i));
+			break;
+		}
+	}
+}
+
+void CMain::OnClickArithmetic(wxCommandEvent& evt)
+{
+	int row = (evt.GetId() - 1000) % fieldRows;
+	int col = (evt.GetId() - 1000) / fieldRows;
+	int buttonIndex = GetButtonIndex(row, col);
 
 }
 

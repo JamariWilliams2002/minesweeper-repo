@@ -403,8 +403,7 @@ void CMain::UpdatePreview()
 	}
 	else //arithmeticClick && onNextNum
 	{
-		int projSol = ProjectedSolution();
-
+		wxString projSol = ProjectedSolution();
 	}
 		calPreview->SetLabelText(updatedStr);
 	
@@ -416,55 +415,13 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 	int col = (evt.GetId() - 1000) / fieldRows;
 	int buttonIndex = GetButtonIndex(row, col);
 
-
-	float numResult = 0;
 	wxString strResult;
 	if (calButtons[buttonIndex]->GetLabel() == "=")
 	{
-		if (arithmeticClick)
+		if (arithmeticClick && onNextNum)
 		{
-			//going to decimal
-			if (isBin)
-			{
-				prevNumFl = BinaryToDecimal(prevNumFl);
-				nextNumFl = BinaryToDecimal(nextNumFl);
-			}
-			else if (isHex)
-			{
-				prevNumFl = HexToDecimal(prevNumStr);
-				nextNumFl = HexToDecimal(nextNumStr);
-			}
-			//actual operation
-			if (clickedAction == "+")
-				numResult = prevNumFl + nextNumFl;
-			else if (clickedAction == "-")
-				numResult = prevNumFl - nextNumFl;
-			else if (clickedAction == "X")
-				numResult = prevNumFl * nextNumFl;
-			else if (clickedAction == "/")
-				numResult = prevNumFl / nextNumFl;
-			else if (clickedAction == "%")
-				numResult = (int)prevNumFl % (int)nextNumFl;
-
-			//back to hex/bin
-			if (isDec)
-			{
-				if (decimalPointClicked)
-					strResult = wxString::Format(wxT("%f"), numResult);
-				else
-					strResult = wxString::Format(wxT("%i"), (int)numResult);
-			}
-			else if (isBin)
-			{
-				numResult = ConvertToBinary((int)numResult);
-				strResult = wxString::Format(wxT("%i"), (int)numResult);
-			}
-			else //isHex
-				strResult = DecimalToHex((int)numResult);
-
+			strResult = ProjectedSolution();
 			calDisplay->SetLabelText(strResult);
-
-
 			//setting flags and resetting
 			tempResult = strResult;
 			arithmeticClick = false;
@@ -518,10 +475,53 @@ void CMain::ResetArithmetic()
 	clickedAction = "";
 }
 
-int CMain::ProjectedSolution()
+wxString CMain::ProjectedSolution()
 {
-	int result = 0;
-	return result;
+	float numResult = 0;
+	wxString strResult;
+	if (arithmeticClick && onNextNum)
+	{
+		//going to decimal
+		if (isBin)
+		{
+			prevNumFl = BinaryToDecimal(prevNumFl);
+			nextNumFl = BinaryToDecimal(nextNumFl);
+		}
+		else if (isHex)
+		{
+			prevNumFl = HexToDecimal(prevNumStr);
+			nextNumFl = HexToDecimal(nextNumStr);
+		}
+		//actual operation
+		if (clickedAction == "+")
+			numResult = prevNumFl + nextNumFl;
+		else if (clickedAction == "-")
+			numResult = prevNumFl - nextNumFl;
+		else if (clickedAction == "X")
+			numResult = prevNumFl * nextNumFl;
+		else if (clickedAction == "/")
+			numResult = prevNumFl / nextNumFl;
+		else if (clickedAction == "%")
+			numResult = (int)prevNumFl % (int)nextNumFl;
+
+		//back to hex/bin
+		if (isDec)
+		{
+			if (decimalPointClicked)
+				strResult = wxString::Format(wxT("%f"), numResult);
+			else
+				strResult = wxString::Format(wxT("%i"), (int)numResult);
+		}
+		else if (isBin)
+		{
+			numResult = ConvertToBinary((int)numResult);
+			strResult = wxString::Format(wxT("%i"), (int)numResult);
+		}
+		else //isHex
+			strResult = DecimalToHex((int)numResult);
+	}
+
+	return strResult;
 }
 
 void CMain::ResetPrevAndNextNum()

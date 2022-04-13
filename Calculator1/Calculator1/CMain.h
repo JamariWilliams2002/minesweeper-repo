@@ -81,7 +81,7 @@ private:
 	void ToggleButtonsForBinary();
 	void ToggleButtonsForHex();
 	void UpdatePreview();
-	int ProjectedSolution();
+	wxString ProjectedSolution();
 public:
 	//constructor/destructor
 	CMain();

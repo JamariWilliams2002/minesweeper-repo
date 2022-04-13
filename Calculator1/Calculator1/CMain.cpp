@@ -88,7 +88,7 @@ void CMain::ButtonSpecs()
 		for (int cols = 2; cols <= 4; cols++)
 		{
 			calButtons[GetButtonIndex(rows, cols)]->SetBackgroundColour((*wxLIGHT_GREY));
-			//calButtons[GetButtonIndex(rows, cols)]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnClickNumbers, this);
+			calButtons[GetButtonIndex(rows, cols)]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnClickNumbers, this);
 		}
 	}
 	//arithmetic
@@ -97,6 +97,13 @@ void CMain::ButtonSpecs()
 	calButtons[GetButtonIndex(2, 6)]->SetLabel("/");
 	calButtons[GetButtonIndex(1, 5)]->SetLabel("%");
 	calButtons[GetButtonIndex(1, 6)]->SetLabel("X");
+	for (int rows = 1; rows <= 3; rows++)
+	{
+		for (int cols = 5; cols <= 6; cols++)
+		{
+			calButtons[GetButtonIndex(rows, cols)]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnClickArithmetic, this);
+		}
+	}
 
 	//bin/hex/dec
 	calButtons[GetButtonIndex(1, 1)]->SetLabel("bin");
@@ -106,7 +113,12 @@ void CMain::ButtonSpecs()
 
 	//misc
 	calButtons[GetButtonIndex(3, 2)]->SetLabel("+/-");
+	calButtons[GetButtonIndex(3, 2)]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnClickMisc, this);
+
+
 	calButtons[GetButtonIndex(3, 6)]->SetLabel("=");
+	calButtons[GetButtonIndex(3, 6)]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnClickMisc, this);
+
 	calButtons[GetButtonIndex(3, 4)]->SetLabel(".");
 	calButtons[GetButtonIndex(0, 5)]->SetLabel("del");
 	calButtons[GetButtonIndex(0, 6)]->SetLabel("clear");
@@ -115,21 +127,29 @@ void CMain::ButtonSpecs()
 
 void CMain::OnClickNumbers(wxCommandEvent& evt)
 {
-
-
-	//find the row and column
 	int row = (evt.GetId() - 1000) % fieldRows;
 	int col = (evt.GetId() - 1000) / fieldRows;
 	int buttonIndex = GetButtonIndex(row, col);
-	for (int i = 0; i < 10; i++)
+	wxString label = calButtons[buttonIndex]->GetLabel();
+
+	//find the row and column
+	if (arithmeticClick)
+		onNextNum = true;
+	if (onNextNum)
 	{
-		if (calButtons[buttonIndex]->GetLabel() == std::to_string(i))
-		{
-			calDisplay->AppendText(std::to_string(i));
-			break;
-		}
+		nextNumStr = nextNumStr + label;
+		nextNumFl = wxAtof(nextNumStr);
 	}
+	else
+	{
+		prevNumStr = prevNumStr + label;
+		prevNumFl = wxAtof(prevNumStr);
+	}
+		calDisplay->AppendText(label);
+	//update prevNum
+	
 }
+
 
 void CMain::OnClickArithmetic(wxCommandEvent& evt)
 {
@@ -137,6 +157,48 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 	int col = (evt.GetId() - 1000) / fieldRows;
 	int buttonIndex = GetButtonIndex(row, col);
 
+	wxString label = calButtons[buttonIndex]->GetLabel();
+	arithmeticClick = true;
+	clickedAction = label;
+
+	calDisplay->AppendText(" " + label + " ");
+
+}
+
+void CMain::OnClickMisc(wxCommandEvent& evt)
+{
+	int row = (evt.GetId() - 1000) % fieldRows;
+	int col = (evt.GetId() - 1000) / fieldRows;
+	int buttonIndex = GetButtonIndex(row, col);
+
+	long numResult = 0;
+	wxString strResult;
+	if (calButtons[buttonIndex]->GetLabel() == "=")
+	{
+		if (arithmeticClick)
+		{
+			//actual operation
+			if (clickedAction == "+")
+				numResult = prevNumFl + nextNumFl;
+			else if(clickedAction == "-")
+				numResult = prevNumFl - nextNumFl;
+			else if (clickedAction == "X")
+				numResult = prevNumFl * nextNumFl;
+			else if (clickedAction == "/")
+				numResult = prevNumFl / nextNumFl;
+			else if (clickedAction == "%")
+				numResult = (int)prevNumFl % (int)nextNumFl;
+
+			strResult = wxString::Format(wxT("%i"), numResult);
+			calDisplay->SetLabelText(strResult);
+			arithmeticClick = false;
+			prevNumFl = numResult;
+		}
+	}
+	else if (calButtons[buttonIndex]->GetLabel() == "clear")
+	{
+		calDisplay->SetLabel("");
+	}
 }
 
 CMain::~CMain()

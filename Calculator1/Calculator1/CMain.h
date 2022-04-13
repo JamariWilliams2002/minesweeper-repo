@@ -18,9 +18,14 @@
 class CMain : public wxFrame
 {
 private:
-	//enum for buttons
-	
-
+	//flags for operations
+	bool arithmeticClick = false;
+	wxString clickedAction;
+	float prevNumFl;
+	wxString prevNumStr;
+	float nextNumFl;
+	wxString nextNumStr;
+	bool onNextNum = false;
 
 	//generic fields
 	wxPoint displayPoint;

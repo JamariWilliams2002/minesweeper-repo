@@ -7,7 +7,11 @@
 // 
 // EXTRAS:
 // make functioning sizer
-//
+//create preview for display
+//when the user clicks a different operation, the operation in question changes
+// parenthases
+// 
+//delete button
 
 
 //RETURNING NOTES:
@@ -36,7 +40,10 @@ private:
 	wxString tempResult = textEmpty;
 	wxColour defaultButtonColor;
 	//generic fields
+	wxPoint previewPoint;
+	wxSize previewSize;
 	wxPoint displayPoint;
+	wxSize displaySize;
 	//buffer variables
 	const int displayPointBuffer = 10;
 	const int displayToButtonBuffer = 20;
@@ -51,6 +58,7 @@ private:
 	wxTextCtrl *calDisplay = nullptr;
 	wxTextCtrl* calPreview = nullptr;
 	//set up methods
+	void GeneratePreview();
 	void GenerateDisplay();
 	void GenerateButtons();
 	void ButtonSpecs();

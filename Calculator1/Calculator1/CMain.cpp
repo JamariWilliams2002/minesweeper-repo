@@ -15,6 +15,7 @@ const int CAL_SIZE_HEIGHT = 700;
 CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's Calculator", wxPoint(CAL_POINT_X, CAL_POINT_Y), wxSize(CAL_SIZE_WIDTH, CAL_SIZE_HEIGHT))
 {
 	//display & buttons
+	GeneratePreview();
 	GenerateDisplay();
 	GenerateButtons();
 	ButtonSpecs();
@@ -26,10 +27,31 @@ CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's Calculator", wxPoint(CAL_PO
 	//calGrid->Layout();
 }
 
+void CMain::GeneratePreview()
+{
+	//dimensions and position
+	//rest of layout depends on the preview
+	int previewPointX = CAL_POINT_X - displayPointBuffer;
+	int previewPointY = CAL_POINT_Y - displayPointBuffer;
+	previewPoint = wxPoint(previewPointX, previewPointY);
+	int preivewSizeX = 650;
+	int preivewSizeY = 50;
+	previewSize = wxSize(preivewSizeX, preivewSizeY);
+
+	calPreview = new wxTextCtrl(this, wxID_ANY, "", previewPoint, previewSize, wxTE_READONLY);
+
+}
+
 void CMain::GenerateDisplay()
 {
-	calDisplay = new wxTextCtrl(this, wxID_ANY, "", wxPoint(CAL_POINT_X - displayPointBuffer, CAL_POINT_Y - displayPointBuffer), wxSize(650, 200), wxTE_READONLY);
-	displayPoint = wxPoint(CAL_POINT_X - displayPointBuffer, CAL_POINT_Y - displayPointBuffer);
+	int displayPointX = previewPoint.x;
+	int displayPointY = previewPoint.y + previewSize.y + 10;
+	displayPoint = wxPoint(displayPointX, displayPointY);
+	int displaySizeX = previewSize.x;
+	int displaySizeY = 200;
+	displaySize = wxSize(displaySizeX, displaySizeY);
+
+	calDisplay = new wxTextCtrl(this, wxID_ANY, "", displayPoint, displaySize, wxTE_READONLY);
 }
 
 void CMain::GenerateButtons()

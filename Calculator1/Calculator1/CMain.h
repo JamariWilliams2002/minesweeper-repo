@@ -22,10 +22,15 @@ private:
 	bool arithmeticClick = false;
 	wxString clickedAction;
 	float prevNumFl;
-	wxString prevNumStr;
+	wxString prevNumStr = "";
 	float nextNumFl;
-	wxString nextNumStr;
+	wxString nextNumStr = "";
 	bool onNextNum = false;
+	bool equalsClicked = false;
+	bool negPosButtonClicked = false;
+	bool decimalPointClicked = false;	
+	wxString textEmpty = "Empty";
+	wxString tempResult = textEmpty;
 
 	//generic fields
 	wxPoint displayPoint;
@@ -51,6 +56,8 @@ private:
 	void OnClickArithmetic(wxCommandEvent& evt);
 	void OnClickBinHexDec(wxCommandEvent& evt);
 	void OnClickMisc(wxCommandEvent &evt);
+	void ResetArithmetic();
+	void ResetPrevAndNextNum();
 public:
 
 	//constructor/destructor

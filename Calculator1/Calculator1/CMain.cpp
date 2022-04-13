@@ -391,11 +391,11 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 void CMain::UpdatePreview()
 {
 	wxString updatedStr;
-	//early return
-	if (!onNextNum && !arithmeticClick)
+	//early return for when numbers are clicked and nextnum is on
+	if (!onNextNum && !arithmeticClick && !equalsClicked)
 		return;
-	if (calDisplay->GetValue() == "")
-		updatedStr = calDisplay->GetValue();
+	else if (equalsClicked || calDisplay->GetValue() == "")//equalsClicked or calDisplay is an empty string
+		updatedStr = "";
 	else if (!onNextNum)
 	{
 		updatedStr = calDisplay->GetValue() + " " + clickedAction + " ";
@@ -404,6 +404,8 @@ void CMain::UpdatePreview()
 	else //arithmeticClick && onNextNum
 	{
 		wxString projSol = ProjectedSolution();
+		wxString currentLabel = calDisplay->GetValue();
+		updatedStr = prePreviewStr + currentLabel + " = " + projSol;
 	}
 		calPreview->SetLabelText(updatedStr);
 	
@@ -423,13 +425,13 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 			strResult = ProjectedSolution();
 			calDisplay->SetLabelText(strResult);
 			//setting flags and resetting
+			equalsClicked = true; 
 			tempResult = strResult;
 			arithmeticClick = false;
-			equalsClicked = true;
 			onNextNum = false;
 			decimalPointClicked = false;
-			ResetPrevAndNextNum();
 			UpdatePreview();
+			ResetPrevAndNextNum();
 		}
 	}
 	else if (calButtons[buttonIndex]->GetLabel() == "clear")

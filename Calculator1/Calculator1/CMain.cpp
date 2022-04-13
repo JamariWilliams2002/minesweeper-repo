@@ -2,7 +2,7 @@
 #include <sstream>
 
 wxBEGIN_EVENT_TABLE(CMain, wxFrame)
-EVT_BUTTON(1001, OnClickNumbers)
+EVT_BUTTON(wxID_ANY, OnClickNumbers)
 wxEND_EVENT_TABLE();
 
 
@@ -265,6 +265,7 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 		calDisplay->SetLabelText(label);
 		equalsClicked = false;
 	}
+	UpdatePreview();
 
 }
 
@@ -394,7 +395,7 @@ void CMain::UpdatePreview()
 		previewStr = calDisplay->GetValue() + " " + clickedAction + " ";
 	else
 	{
-
+		
 	}
 		calPreview->SetLabelText(previewStr);
 	

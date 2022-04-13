@@ -380,9 +380,24 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 
 	//calButtons[buttonIndex]->SetBackgroundColour(*wxCYAN);
 
-	calDisplay->AppendText(" " + label + " ");
+	//display to preview
+	UpdatePreview();
+	//display to display
 	calDisplay->SetLabelText("");
 
+}
+
+void CMain::UpdatePreview()
+{
+	wxString previewStr;
+	if (!onNextNum)
+		previewStr = calDisplay->GetValue() + " " + clickedAction + " ";
+	else
+	{
+
+	}
+		calPreview->SetLabelText(previewStr);
+	
 }
 
 void CMain::OnClickMisc(wxCommandEvent& evt)
@@ -423,11 +438,16 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 
 			//back to hex/bin
 			if (isDec)
-				strResult = wxString::Format(wxT("%f"), numResult);
+			{
+				if (decimalPointClicked)
+					strResult = wxString::Format(wxT("%f"), numResult);
+				else
+					strResult = wxString::Format(wxT("%i"), (int)numResult);
+			}
 			else if (isBin)
 			{
-				strResult = wxString::Format(wxT("%i"), (int)numResult);
 				numResult = ConvertToBinary((int)numResult);
+				strResult = wxString::Format(wxT("%i"), (int)numResult);
 			}
 			else //isHex
 				strResult = DecimalToHex((int)numResult);
@@ -436,10 +456,12 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 
 
 			//setting flags and resetting
+			calPreview->SetLabelText("");
 			tempResult = strResult;
 			arithmeticClick = false;
 			equalsClicked = true;
 			onNextNum = false;
+			decimalPointClicked = false;
 			ResetPrevAndNextNum();
 		}
 	}

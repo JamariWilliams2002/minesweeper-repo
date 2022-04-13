@@ -69,27 +69,22 @@ private:
 	void OnClickArithmetic(wxCommandEvent& evt);
 	void OnClickBinHexDec(wxCommandEvent& evt);
 	void OnClickMisc(wxCommandEvent &evt);
+	//helper methods
 	void ResetArithmetic();
 	void ResetPrevAndNextNum();
-	//void CheckButtonColor();
 	int ConvertToBinary();
 	int ConvertToBinary(int num);
+	int BinaryToDecimal(int n);
 	std::string DecimalToHex(int num);
 	int HexToDecimal(wxString hex);
-	int BinaryToDecimal(int n);
 	void ToggleButtonsForBinary();
 	void ToggleButtonsForHex();
+	void UpdatePreview();
 public:
-
 	//constructor/destructor
 	CMain();
 	~CMain();
-
-
 	//events
-
 	wxDECLARE_EVENT_TABLE();
-
-
 };
 

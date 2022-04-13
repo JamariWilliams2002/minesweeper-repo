@@ -28,10 +28,13 @@ private:
 	bool onNextNum = false;
 	bool equalsClicked = false;
 	bool negPosButtonClicked = false;
-	bool decimalPointClicked = false;	
+	bool decimalPointClicked = false;
+	bool isBin = false;
+	bool isDec = true;
+	bool isHex = false; 
 	wxString textEmpty = "Empty";
 	wxString tempResult = textEmpty;
-
+	wxColour defaultButtonColor;
 	//generic fields
 	wxPoint displayPoint;
 	//buffer variables
@@ -39,7 +42,7 @@ private:
 	const int displayToButtonBuffer = 20;
 	const int betweenButtonBuffer = 5;
 	//constants
-	const int fieldRows = 4;
+	const int fieldRows = 5;
 	const int fieldCols = 7;
 	const int numButtons = fieldRows * fieldCols;
 	//controls
@@ -58,6 +61,7 @@ private:
 	void OnClickMisc(wxCommandEvent &evt);
 	void ResetArithmetic();
 	void ResetPrevAndNextNum();
+	void CheckButtonColor();
 public:
 
 	//constructor/destructor

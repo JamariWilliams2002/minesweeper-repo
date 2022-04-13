@@ -45,7 +45,7 @@ void CMain::GeneratePreview()
 void CMain::GenerateDisplay()
 {
 	int displayPointX = previewPoint.x;
-	int displayPointY = previewPoint.y + previewSize.y + 10;
+	int displayPointY = previewPoint.y + previewSize.y + previewToDisplayBuffer;
 	displayPoint = wxPoint(displayPointX, displayPointY);
 	int displaySizeX = previewSize.x;
 	int displaySizeY = 200;

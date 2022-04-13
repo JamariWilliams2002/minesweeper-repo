@@ -45,6 +45,7 @@ private:
 	wxPoint displayPoint;
 	wxSize displaySize;
 	//buffer variables
+	const int previewToDisplayBuffer = 10;
 	const int displayPointBuffer = 10;
 	const int displayToButtonBuffer = 20;
 	const int betweenButtonBuffer = 5;

@@ -18,7 +18,9 @@ CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's Calculator", wxPoint(CAL_PO
 	GenerateDisplay();
 	GenerateButtons();
 	ButtonSpecs();
-
+	//since starting in decimal, disable buttons for hex
+	ToggleButtonsForHex();
+	
 	//set the grid
 	//this->SetSizer(calGrid);
 	//calGrid->Layout();
@@ -280,8 +282,6 @@ void CMain::OnClickBinHexDec(wxCommandEvent& evt)
 		calButtons[GetButtonIndex(2, 1)]->SetBackgroundColour(defaultButtonColor); //dec
 
 		//disable all except 1 and 0
-		ToggleButtonsForBinary();
-		ToggleButtonsForHex();
 	}
 	else if (calButtons[buttonIndex]->GetLabel() == "dec" && (isBin == false || isHex == false || isDec == true))
 	{
@@ -290,7 +290,6 @@ void CMain::OnClickBinHexDec(wxCommandEvent& evt)
 		calButtons[GetButtonIndex(1, 1)]->SetBackgroundColour(defaultButtonColor); //binary
 		isHex = false;
 		calButtons[GetButtonIndex(3, 1)]->SetBackgroundColour(defaultButtonColor); //hex
-		ToggleButtonsForBinary();
 	}
 	else if (calButtons[buttonIndex]->GetLabel() == "hex")
 	{
@@ -299,8 +298,9 @@ void CMain::OnClickBinHexDec(wxCommandEvent& evt)
 		calButtons[GetButtonIndex(1, 1)]->SetBackgroundColour(defaultButtonColor); //binary
 		isDec = false;
 		calButtons[GetButtonIndex(2, 1)]->SetBackgroundColour(defaultButtonColor); //dec
-		ToggleButtonsForBinary();
 	}
+	ToggleButtonsForHex();
+	ToggleButtonsForBinary();
 	calButtons[buttonIndex]->SetBackgroundColour(*wxCYAN);
 }
 
@@ -359,6 +359,7 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 	//calButtons[buttonIndex]->SetBackgroundColour(*wxCYAN);
 
 	calDisplay->AppendText(" " + label + " ");
+	calDisplay->SetLabelText("");
 
 }
 

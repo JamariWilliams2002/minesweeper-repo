@@ -49,6 +49,7 @@ private:
 	wxButton* buttonTest = nullptr;
 	wxButton** calButtons = nullptr;
 	wxTextCtrl *calDisplay = nullptr;
+	wxTextCtrl* calPreview = nullptr;
 	//set up methods
 	void GenerateDisplay();
 	void GenerateButtons();
@@ -61,7 +62,7 @@ private:
 	void OnClickMisc(wxCommandEvent &evt);
 	void ResetArithmetic();
 	void ResetPrevAndNextNum();
-	void CheckButtonColor();
+	//void CheckButtonColor();
 	int ConvertToBinary();
 	int ConvertToBinary(int num);
 	std::string DecimalToHex(int num);

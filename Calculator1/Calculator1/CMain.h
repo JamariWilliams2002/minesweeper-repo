@@ -62,6 +62,13 @@ private:
 	void ResetArithmetic();
 	void ResetPrevAndNextNum();
 	void CheckButtonColor();
+	int ConvertToBinary();
+	int ConvertToBinary(int num);
+	std::string DecimalToHex(int num);
+	int HexToDecimal(wxString hex);
+	int BinaryToDecimal(int n);
+	void ToggleButtonsForBinary();
+	void ToggleButtonsForHex();
 public:
 
 	//constructor/destructor

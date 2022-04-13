@@ -1,4 +1,5 @@
 #include "CMain.h"
+#include <sstream>
 
 wxBEGIN_EVENT_TABLE(CMain, wxFrame)
 EVT_BUTTON(1001, OnClickNumbers)
@@ -127,6 +128,12 @@ void CMain::ButtonSpecs()
 	calButtons[GetButtonIndex(0, 0)]->SetLabel("E");
 	calButtons[GetButtonIndex(0, 1)]->SetLabel("F");
 
+	//handle f
+	calButtons[GetButtonIndex(0, 1)]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnClickNumbers, this);
+
+	//other letters
+	for (int rows = 0; rows <= 4; rows++)
+		calButtons[GetButtonIndex(rows, 0)]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnClickNumbers, this);
 
 	//misc
 	calButtons[GetButtonIndex(3, 2)]->SetLabel("+/-");
@@ -146,6 +153,55 @@ void CMain::ButtonSpecs()
 
 }
 
+int CMain::ConvertToBinary()
+{
+	int decimal, binary = 0, remainder, product = 1;
+	if (onNextNum)
+		decimal = (int)nextNumFl;
+	else
+		decimal = (int)prevNumFl;
+
+	while (decimal != 0) {
+		remainder = decimal % 2;
+		binary = binary + (remainder * product);
+		decimal = decimal / 2;
+		product *= 10;
+	}
+	return binary;
+}
+
+int CMain::ConvertToBinary(int num)
+{
+	int decimal = num, binary = 0, remainder, product = 1;
+
+	while (decimal != 0) {
+		remainder = decimal % 2;
+		binary = binary + (remainder * product);
+		decimal = decimal / 2;
+		product *= 10;
+	}
+	return binary;
+}
+
+std::string CMain::DecimalToHex(int num)
+{
+	std::stringstream ss;
+	ss << std::hex << num; // int decimal_value
+	std::string res(ss.str());
+	return res;
+}
+
+int CMain::HexToDecimal(wxString hex)
+{
+	int result;
+	std::stringstream ss;
+	ss << hex;
+	ss >> std::hex >> result;
+
+	return result;
+}
+
+
 void CMain::OnClickNumbers(wxCommandEvent& evt)
 {
 	int row = (evt.GetId() - 1000) % fieldRows;
@@ -154,19 +210,29 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 	wxString label = calButtons[buttonIndex]->GetLabel();
 
 	//find the row and column
+
 	if (arithmeticClick)
 		onNextNum = true;
-	
-		if (onNextNum)
-		{
-			nextNumStr = nextNumStr + label;
+	if (onNextNum)
+	{
+		if (isBin)
+			ConvertToBinary();
+
+		nextNumStr = nextNumStr + label;
+
+		if (isDec || isBin)
 			nextNumFl = wxAtof(nextNumStr);
-		}
-		else
-		{
-			prevNumStr = prevNumStr + label;
+	}
+	else
+	{
+		if (isBin)
+			ConvertToBinary();
+
+		prevNumStr = prevNumStr + label;
+
+		if (isDec || isBin)
 			prevNumFl = wxAtof(prevNumStr);
-		}
+	}
 
 	if (!equalsClicked)
 		calDisplay->AppendText(label);
@@ -175,8 +241,28 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 		calDisplay->SetLabelText(label);
 		equalsClicked = false;
 	}
-	//update prevNum
 
+}
+
+int CMain::BinaryToDecimal(int n)
+{
+	int num = n;
+	int dec_value = 0;
+
+	// Initializing base value to 1, i.e 2^0
+	int base = 1;
+
+	int temp = num;
+	while (temp) {
+		int last_digit = temp % 10;
+		temp = temp / 10;
+
+		dec_value += last_digit * base;
+
+		base = base * 2;
+	}
+
+	return dec_value;
 }
 
 void CMain::OnClickBinHexDec(wxCommandEvent& evt)
@@ -187,31 +273,74 @@ void CMain::OnClickBinHexDec(wxCommandEvent& evt)
 
 	if (calButtons[buttonIndex]->GetLabel() == "bin")
 	{
-		isBin = !isBin;
+		isBin = true;
 		isHex = false;
 		calButtons[GetButtonIndex(3, 1)]->SetBackgroundColour(defaultButtonColor); //hex
 		isDec = false;
 		calButtons[GetButtonIndex(2, 1)]->SetBackgroundColour(defaultButtonColor); //dec
 
+		//disable all except 1 and 0
+		ToggleButtonsForBinary();
+		ToggleButtonsForHex();
 	}
-	else if (calButtons[buttonIndex]->GetLabel() == "dec")
+	else if (calButtons[buttonIndex]->GetLabel() == "dec" && (isBin == false || isHex == false || isDec == true))
 	{
-		isDec = !isDec;
+		isDec = true;
 		isBin = false;
 		calButtons[GetButtonIndex(1, 1)]->SetBackgroundColour(defaultButtonColor); //binary
 		isHex = false;
 		calButtons[GetButtonIndex(3, 1)]->SetBackgroundColour(defaultButtonColor); //hex
+		ToggleButtonsForBinary();
 	}
 	else if (calButtons[buttonIndex]->GetLabel() == "hex")
 	{
-		isHex = !isHex;
+		isHex = true;
 		isBin = false;
 		calButtons[GetButtonIndex(1, 1)]->SetBackgroundColour(defaultButtonColor); //binary
 		isDec = false;
 		calButtons[GetButtonIndex(2, 1)]->SetBackgroundColour(defaultButtonColor); //dec
-
+		ToggleButtonsForBinary();
 	}
 	calButtons[buttonIndex]->SetBackgroundColour(*wxCYAN);
+}
+
+void CMain::ToggleButtonsForHex()
+{
+	//other four letters
+	for (int rows = 0; rows <= 4; rows++)
+	{
+		if (isHex)
+			calButtons[GetButtonIndex(rows, 0)]->Enable();
+		else
+			calButtons[GetButtonIndex(rows, 0)]->Disable();
+	}
+	//handle f
+	if (isHex)
+		calButtons[GetButtonIndex(0, 1)]->Enable();
+	else
+		calButtons[GetButtonIndex(0, 1)]->Disable();
+
+}
+
+void CMain::ToggleButtonsForBinary()
+{
+	for (int rows = 0; rows <= 2; rows++)
+	{
+		for (int cols = 2; cols <= 4; cols++)
+		{
+			if (calButtons[GetButtonIndex(rows, cols)]->GetLabel() == "1")
+				continue;
+			if (isBin)
+				calButtons[GetButtonIndex(rows, cols)]->Disable();
+			else
+				calButtons[GetButtonIndex(rows, cols)]->Enable();
+		}
+	}
+	//no plus/minus
+	if (isBin)
+		calButtons[GetButtonIndex(3, 2)]->Disable();
+	else
+		calButtons[GetButtonIndex(3, 2)]->Enable();
 }
 
 void CMain::OnClickArithmetic(wxCommandEvent& evt)
@@ -239,12 +368,24 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 	int col = (evt.GetId() - 1000) / fieldRows;
 	int buttonIndex = GetButtonIndex(row, col);
 
+
 	float numResult = 0;
 	wxString strResult;
 	if (calButtons[buttonIndex]->GetLabel() == "=")
 	{
 		if (arithmeticClick)
 		{
+			//going to decimal
+			if (isBin)
+			{
+				prevNumFl = BinaryToDecimal(prevNumFl);
+				nextNumFl = BinaryToDecimal(nextNumFl);
+			}
+			else if (isHex)
+			{
+				prevNumFl = HexToDecimal(prevNumStr);
+				nextNumFl = HexToDecimal(nextNumStr);
+			}
 			//actual operation
 			if (clickedAction == "+")
 				numResult = prevNumFl + nextNumFl;
@@ -257,8 +398,19 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 			else if (clickedAction == "%")
 				numResult = (int)prevNumFl % (int)nextNumFl;
 
-			strResult = wxString::Format(wxT("%f"), numResult);
+			//back to hex/bin
+			if (isDec)
+				strResult = wxString::Format(wxT("%f"), numResult);
+			else if (isBin)
+			{
+				strResult = wxString::Format(wxT("%i"), (int)numResult);
+				numResult = ConvertToBinary((int)numResult);
+			}
+			else //isHex
+				strResult = DecimalToHex((int)numResult);
+
 			calDisplay->SetLabelText(strResult);
+
 
 			//setting flags and resetting
 			tempResult = strResult;

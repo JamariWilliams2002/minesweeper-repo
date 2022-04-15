@@ -15,7 +15,7 @@
 
 
 //RETURNING NOTES:
-//wanted to work on 3rd todo in list
+//working on the updatePreview function. trying to make it update when the user clicks a number and when multiple operations have been entered
 
 
 
@@ -55,7 +55,7 @@ private:
 	wxSize previewSize;
 	wxPoint displayPoint;
 	wxSize displaySize;
-	wxString prePreviewStr;
+	wxString prePreviewStr = "";
 	//buffer variables
 	const int previewToDisplayBuffer = 10;
 	const int displayPointBuffer = 10;

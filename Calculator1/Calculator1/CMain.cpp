@@ -370,27 +370,33 @@ void CMain::ResetCurrentNum()
 void CMain::UpdatePreview()
 {
 	wxString updatedStr;
+	wxString currentLabel = calDisplay->GetValue();
 	//early return for when numbers are clicked and nextnum is off
-	if (!arithmeticClick && !equalsClicked)
+	if (!arithmeticClick && !equalsClicked && !onNextNum)
 		return;
-	else if (equalsClicked || calDisplay->GetValue() == "")//equalsClicked or calDisplay is an empty string
+	else if (equalsClicked || currentLabel == "")//equalsClicked or calDisplay is an empty string
 		updatedStr = "";
-	else if (numClick && !onNextNum) //if a number was clicked
+	else if (numClick && !onNextNum && arithmeticClick) //if the first num was entered, will only happen once
 	{
-		updatedStr = calDisplay->GetValue() + " " + clickedAction + " ";
-		numClick = !numClick;
+		updatedStr = currentLabel + " " + clickedAction + " ";
+		numClick = false;
 		//means atleast one number has been entered
 		onNextNum = true;
+		arithmeticClick = false;
+		prePreviewStr = updatedStr;
 	}
-	else if (arithmeticClick || numClick && onNextNum) //onNextNum
+	else if (arithmeticClick) //onNextNum
 	{
 		/*wxString projSol = ProjectedSolution();*/
-		wxString currentLabel = calDisplay->GetValue();
 		//updatedStr = prePreviewStr + currentLabel + " = " + projSol;
-
-		updatedStr = currentLabel + " " + clickedAction + " ";
+		updatedStr = calPreview->GetValue() + " " + clickedAction + " ";
+		arithmeticClick = false;
 		prePreviewStr = updatedStr;
-		arithmeticClick = !arithmeticClick;
+	}
+	else if (numClick && onNextNum)
+	{
+		updatedStr = prePreviewStr + currentLabel;
+
 	}
 	calPreview->SetLabelText(updatedStr);
 
@@ -487,7 +493,7 @@ wxString CMain::ProjectedSolution()
 			//found the operation
 			if (enteredOperationsIter != enteredOperations.end())
 			{
-				
+
 				sortedOperations.push_back(operationToFind);
 				//find numbers between the found operations
 				break;

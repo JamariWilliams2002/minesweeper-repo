@@ -23,7 +23,7 @@ CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's Calculator", wxPoint(CAL_PO
 	ButtonSpecs();
 	//since starting in decimal, disable buttons for hex
 	ToggleButtonsForHex();
-	
+
 	//set the grid
 	//this->SetSizer(calGrid);
 	//calGrid->Layout();
@@ -182,7 +182,7 @@ void CMain::ButtonSpecs()
 int CMain::ConvertToBinary(int decimal)
 {
 	int binary = 0, remainder, product = 1;
-	
+
 	while (decimal != 0) {
 		remainder = decimal % 2;
 		binary = binary + (remainder * product);
@@ -217,6 +217,8 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 	int col = (evt.GetId() - 1000) / fieldRows;
 	int buttonIndex = GetButtonIndex(row, col);
 	wxString label = calButtons[buttonIndex]->GetLabel();
+
+	numClick = true;
 
 	//update current num str and fl
 	if (isBin)
@@ -300,7 +302,7 @@ void CMain::ToggleButtonsForHex()
 	//other four letters
 	for (int rows = 0; rows <= 4; rows++)
 	{
-		if (isHex) 
+		if (isHex)
 			calButtons[GetButtonIndex(rows, 0)]->Enable();
 		else
 			calButtons[GetButtonIndex(rows, 0)]->Disable();
@@ -341,20 +343,22 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 		return;
 	else	//push the current num to the vector of nums
 		enteredNums.push_back(currentNumFl);
-	//reset the current num
-	ResetCurrentNum();
-	//move to next num
-	onNextNum = true;
 
 	int row = (evt.GetId() - 1000) % fieldRows;
 	int col = (evt.GetId() - 1000) / fieldRows;
 	int buttonIndex = GetButtonIndex(row, col);
 	wxString label = calButtons[buttonIndex]->GetLabel();
+	clickedAction = label;
+	//push to vector of operations
+	enteredOperations.push_back(clickedAction);
+
+	ResetCurrentNum();
+	//move to next num
+	arithmeticClick = true;
 	//display to preview
 	UpdatePreview();
 	//display to display
 	calDisplay->SetLabelText("");
-
 }
 
 void CMain::ResetCurrentNum()
@@ -367,23 +371,27 @@ void CMain::UpdatePreview()
 {
 	wxString updatedStr;
 	//early return for when numbers are clicked and nextnum is off
-	if (!onNextNum && !equalsClicked)
+	if (!arithmeticClick && !equalsClicked)
 		return;
 	else if (equalsClicked || calDisplay->GetValue() == "")//equalsClicked or calDisplay is an empty string
 		updatedStr = "";
-	else if (!onNextNum)
+	else if (numClick && !onNextNum) //if a number was clicked
 	{
 		updatedStr = calDisplay->GetValue() + " " + clickedAction + " ";
 		prePreviewStr = updatedStr;
+		numClick = !numClick;
+		//means atleast one number has been entered
+		onNextNum = true;
 	}
-	else //onNextNum
+	else if (arithmeticClick || numClick && onNextNum) //onNextNum
 	{
 		wxString projSol = ProjectedSolution();
 		wxString currentLabel = calDisplay->GetValue();
 		updatedStr = prePreviewStr + currentLabel + " = " + projSol;
+		arithmeticClick = !arithmeticClick;
 	}
-		calPreview->SetLabelText(updatedStr);
-	
+	calPreview->SetLabelText(updatedStr);
+
 }
 
 void CMain::OnClickMisc(wxCommandEvent& evt)
@@ -400,7 +408,7 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 			strResult = ProjectedSolution();
 			calDisplay->SetLabelText(strResult);
 			//setting flags and resetting
-			equalsClicked = true; 
+			equalsClicked = true;
 			tempResult = strResult;
 			onNextNum = false;
 			decimalPointClicked = false;
@@ -454,47 +462,51 @@ wxString CMain::ProjectedSolution()
 {
 	float numResult = 0;
 	wxString strResult;
-	if (onNextNum)
-	{
-		//going to decimal
-		if (isBin)
-		{
-			prevNumFl = BinaryToDecimal(prevNumFl);
-			nextNumFl = BinaryToDecimal(nextNumFl);
-		}
-		else if (isHex)
-		{
-			prevNumFl = HexToDecimal(prevNumStr);
-			nextNumFl = HexToDecimal(nextNumStr);
-		}
-		//actual operation
-		if (clickedAction == "+")
-			numResult = prevNumFl + nextNumFl;
-		else if (clickedAction == "-")
-			numResult = prevNumFl - nextNumFl;
-		else if (clickedAction == "X")
-			numResult = prevNumFl * nextNumFl;
-		else if (clickedAction == "/")
-			numResult = prevNumFl / nextNumFl;
-		else if (clickedAction == "%")
-			numResult = (int)prevNumFl % (int)nextNumFl;
 
-		//back to hex/bin
-		if (isDec)
-		{
-			if (decimalPointClicked)
-				strResult = wxString::Format(wxT("%f"), numResult);
-			else
-				strResult = wxString::Format(wxT("%i"), (int)numResult);
-		}
-		else if (isBin)
-		{
-			numResult = ConvertToBinary((int)numResult);
-			strResult = wxString::Format(wxT("%i"), (int)numResult);
-		}
-		else //isHex
-			strResult = DecimalToHex((int)numResult);
+	for (int i = 0; i < enteredOperations.size(); i++)
+	{
+		//handle pemdas
 	}
+
+	//going to decimal
+	if (isBin)
+	{
+		prevNumFl = BinaryToDecimal(prevNumFl);
+		nextNumFl = BinaryToDecimal(nextNumFl);
+	}
+	else if (isHex)
+	{
+		prevNumFl = HexToDecimal(prevNumStr);
+		nextNumFl = HexToDecimal(nextNumStr);
+	}
+	//actual operation
+	if (clickedAction == "+")
+		numResult = prevNumFl + nextNumFl;
+	else if (clickedAction == "-")
+		numResult = prevNumFl - nextNumFl;
+	else if (clickedAction == "X")
+		numResult = prevNumFl * nextNumFl;
+	else if (clickedAction == "/")
+		numResult = prevNumFl / nextNumFl;
+	else if (clickedAction == "%")
+		numResult = (int)prevNumFl % (int)nextNumFl;
+
+	//back to hex/bin
+	if (isDec)
+	{
+		if (decimalPointClicked)
+			strResult = wxString::Format(wxT("%f"), numResult);
+		else
+			strResult = wxString::Format(wxT("%i"), (int)numResult);
+	}
+	else if (isBin)
+	{
+		numResult = ConvertToBinary((int)numResult);
+		strResult = wxString::Format(wxT("%i"), (int)numResult);
+	}
+	else //isHex
+		strResult = DecimalToHex((int)numResult);
+
 
 	return strResult;
 }

@@ -30,6 +30,10 @@ private:
 	//flags for operations
 	//means atleast one arithmetic has been clicked and we are working on a second number
 	bool onNextNum = false;
+	bool onFirstNum = true;
+	//false if number is clicked, true if it's arithmetic
+	bool arithmeticClick = false;
+	bool numClick = false;
 	wxString clickedAction;
 	float prevNumFl;
 	wxString prevNumStr = "";

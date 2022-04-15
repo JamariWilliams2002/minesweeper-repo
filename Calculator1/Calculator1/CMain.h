@@ -28,13 +28,13 @@ private:
 
 
 	//flags for operations
-	bool arithmeticClick = false;
+	//means atleast one arithmetic has been clicked and we are working on a second number
+	bool onNextNum = false;
 	wxString clickedAction;
 	float prevNumFl;
 	wxString prevNumStr = "";
 	float nextNumFl;
 	wxString nextNumStr = "";
-	bool onNextNum = false;
 	bool equalsClicked = false;
 	bool negPosButtonClicked = false;
 	bool decimalPointClicked = false;

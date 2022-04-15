@@ -342,7 +342,9 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 	else	//push the current num to the vector of nums
 		enteredNums.push_back(currentNumFl);
 	//reset the current num
-
+	ResetCurrentNum();
+	//move to next num
+	onNextNum = true;
 
 	int row = (evt.GetId() - 1000) % fieldRows;
 	int col = (evt.GetId() - 1000) / fieldRows;
@@ -355,11 +357,17 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 
 }
 
+void CMain::ResetCurrentNum()
+{
+	currentNumFl = 0.0f;
+	currentNumStr = "";
+}
+
 void CMain::UpdatePreview()
 {
 	wxString updatedStr;
-	//early return for when numbers are clicked and nextnum is on
-	if (!onNextNum && !arithmeticClick && !equalsClicked)
+	//early return for when numbers are clicked and nextnum is off
+	if (!onNextNum && !equalsClicked)
 		return;
 	else if (equalsClicked || calDisplay->GetValue() == "")//equalsClicked or calDisplay is an empty string
 		updatedStr = "";
@@ -368,7 +376,7 @@ void CMain::UpdatePreview()
 		updatedStr = calDisplay->GetValue() + " " + clickedAction + " ";
 		prePreviewStr = updatedStr;
 	}
-	else //arithmeticClick && onNextNum
+	else //onNextNum
 	{
 		wxString projSol = ProjectedSolution();
 		wxString currentLabel = calDisplay->GetValue();
@@ -387,14 +395,13 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 	wxString strResult;
 	if (calButtons[buttonIndex]->GetLabel() == "=")
 	{
-		if (arithmeticClick && onNextNum)
+		if (onNextNum)
 		{
 			strResult = ProjectedSolution();
 			calDisplay->SetLabelText(strResult);
 			//setting flags and resetting
 			equalsClicked = true; 
 			tempResult = strResult;
-			arithmeticClick = false;
 			onNextNum = false;
 			decimalPointClicked = false;
 			UpdatePreview();
@@ -440,7 +447,6 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 
 void CMain::ResetArithmetic()
 {
-	arithmeticClick = false;
 	clickedAction = "";
 }
 
@@ -448,7 +454,7 @@ wxString CMain::ProjectedSolution()
 {
 	float numResult = 0;
 	wxString strResult;
-	if (arithmeticClick && onNextNum)
+	if (onNextNum)
 	{
 		//going to decimal
 		if (isBin)

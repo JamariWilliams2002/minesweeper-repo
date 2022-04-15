@@ -182,10 +182,8 @@ void CMain::ButtonSpecs()
 int CMain::ConvertToBinary()
 {
 	int decimal, binary = 0, remainder, product = 1;
-	if (onNextNum)
-		decimal = (int)nextNumFl;
-	else
-		decimal = (int)prevNumFl;
+	decimal = (int)currentNumFl;
+	
 
 	while (decimal != 0) {
 		remainder = decimal % 2;
@@ -235,10 +233,7 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 	int buttonIndex = GetButtonIndex(row, col);
 	wxString label = calButtons[buttonIndex]->GetLabel();
 
-	//update current num 
-
-	
-
+	//update current num str and fl
 	if (isBin)
 		ConvertToBinary();
 
@@ -246,7 +241,7 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 
 	if (isDec || isBin)
 		currentNumFl = wxAtof(currentNumStr);
-
+	//update display
 	if (!equalsClicked)
 		calDisplay->AppendText(label);
 	else
@@ -255,31 +250,6 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 		equalsClicked = false;
 	}
 	UpdatePreview();
-
-	//previous code
-
-	/*if (arithmeticClick)
-		onNextNum = true;
-	if (onNextNum)
-	{
-		if (isBin)
-			ConvertToBinary();
-
-		nextNumStr = nextNumStr + label;
-
-		if (isDec || isBin)
-			nextNumFl = wxAtof(nextNumStr);
-	}
-	else
-	{
-		if (isBin)
-			ConvertToBinary();
-
-		prevNumStr = prevNumStr + label;
-
-		if (isDec || isBin)
-			prevNumFl = wxAtof(prevNumStr);
-	}*/
 }
 
 int CMain::BinaryToDecimal(int n)

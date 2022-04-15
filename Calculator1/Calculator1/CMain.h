@@ -78,8 +78,7 @@ private:
 	//helper methods
 	void ResetArithmetic();
 	void ResetPrevAndNextNum();
-	int ConvertToBinary();
-	int ConvertToBinary(int num);
+	int ConvertToBinary(int decimal);
 	int BinaryToDecimal(int n);
 	std::string DecimalToHex(int num);
 	int HexToDecimal(wxString hex);

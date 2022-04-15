@@ -15,7 +15,8 @@
 
 
 //RETURNING NOTES:
-//working on the updatePreview function. trying to make it update when the user clicks a number and when multiple operations have been entered
+//trying to implement PEMDAS, see ProjectedSolution function 
+//
 
 
 
@@ -55,7 +56,7 @@ private:
 	wxSize previewSize;
 	wxPoint displayPoint;
 	wxSize displaySize;
-	wxString prePreviewStr;
+	wxString prePreviewStr = "";
 	//buffer variables
 	const int previewToDisplayBuffer = 10;
 	const int displayPointBuffer = 10;

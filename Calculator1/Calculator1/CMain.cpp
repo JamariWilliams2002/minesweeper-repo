@@ -493,7 +493,6 @@ wxString CMain::ProjectedSolution()
 			//found the operation
 			if (enteredOperationsIter != enteredOperations.end())
 			{
-
 				sortedOperations.push_back(operationToFind);
 				//find numbers between the found operations
 				break;
@@ -503,11 +502,6 @@ wxString CMain::ProjectedSolution()
 		}
 
 	}
-
-
-
-
-
 
 
 	//going to decimal

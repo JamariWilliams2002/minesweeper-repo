@@ -2,6 +2,7 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 wxBEGIN_EVENT_TABLE(CMain, wxFrame)
 EVT_BUTTON(wxID_ANY, OnClickNumbers)
@@ -349,9 +350,8 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 	int buttonIndex = GetButtonIndex(row, col);
 	wxString label = calButtons[buttonIndex]->GetLabel();
 	clickedAction = label;
-	//push to vector of operations
+	//increment num of arithmetic
 	enteredOperations.push_back(clickedAction);
-
 	ResetCurrentNum();
 	//move to next num
 	arithmeticClick = true;
@@ -460,13 +460,47 @@ void CMain::ResetArithmetic()
 
 wxString CMain::ProjectedSolution()
 {
+	//stuff for result
 	float numResult = 0;
 	wxString strResult;
+	wxString calDisplayStr = calDisplay->GetValue();
+	wxString currentOperation;
+	std::vector<wxString> sortedOperations;
+	std::vector<int> indeciesOfOperations;
+	wxString operationToFind;
+	float num1 = 0, num2 = 0;
 
+	//iterator to store position
+	std::vector<wxString>::iterator enteredOperationsIter;
+	std::vector<wxString>::iterator fullExpressionIter;
+
+
+	//sort the list of operations
 	for (int i = 0; i < enteredOperations.size(); i++)
 	{
-		//handle pemdas
+		for (int j = 0; j < operationsInPemdas.size(); j++)
+		{
+			operationToFind = operationsInPemdas[j];
+			enteredOperationsIter = std::find(enteredOperations.begin(), enteredOperations.end(), operationToFind);
+			//found the operation
+			if (enteredOperationsIter != enteredOperations.end())
+			{
+				
+				sortedOperations.push_back(operationToFind);
+				//find numbers between the found operations
+				break;
+			}
+			//do math based on the operations
+
+		}
+
 	}
+
+
+
+
+
+
 
 	//going to decimal
 	if (isBin)
@@ -480,16 +514,7 @@ wxString CMain::ProjectedSolution()
 		nextNumFl = HexToDecimal(nextNumStr);
 	}
 	//actual operation
-	if (clickedAction == "+")
-		numResult = prevNumFl + nextNumFl;
-	else if (clickedAction == "-")
-		numResult = prevNumFl - nextNumFl;
-	else if (clickedAction == "X")
-		numResult = prevNumFl * nextNumFl;
-	else if (clickedAction == "/")
-		numResult = prevNumFl / nextNumFl;
-	else if (clickedAction == "%")
-		numResult = (int)prevNumFl % (int)nextNumFl;
+
 
 	//back to hex/bin
 	if (isDec)

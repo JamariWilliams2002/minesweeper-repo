@@ -9,7 +9,9 @@
 //delete button
 // EXTRAS:
 // parenthases
+// make iterator for the operations
 // square roots
+
 
 
 //RETURNING NOTES:
@@ -25,7 +27,8 @@ private:
 	wxString currentNumStr;
 	std::vector<float> enteredNums;
 	std::vector<wxString> enteredOperations;
-
+	//doesn't include P or E
+	std::vector<wxString> operationsInPemdas { "X", "/", "%", "+", "-" };
 
 	//flags for operations
 	//means atleast one arithmetic has been clicked and we are working on a second number

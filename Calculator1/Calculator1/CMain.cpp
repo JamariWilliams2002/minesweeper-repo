@@ -336,19 +336,18 @@ void CMain::ToggleButtonsForBinary()
 
 void CMain::OnClickArithmetic(wxCommandEvent& evt)
 {
-	if (prevNumStr == "")
+	//if a number hasn't been enterd, nothing to do
+	if (calDisplay->GetValue() == "")
 		return;
+	else	//push the current num to the vector of nums
+		enteredNums.push_back(currentNumFl);
+	//reset the current num
+
+
 	int row = (evt.GetId() - 1000) % fieldRows;
 	int col = (evt.GetId() - 1000) / fieldRows;
 	int buttonIndex = GetButtonIndex(row, col);
 	wxString label = calButtons[buttonIndex]->GetLabel();
-	//if (prevNumStr == "" && tempResult == textEmpty)
-
-	arithmeticClick = true;
-	clickedAction = label;
-
-	//calButtons[buttonIndex]->SetBackgroundColour(*wxCYAN);
-
 	//display to preview
 	UpdatePreview();
 	//display to display

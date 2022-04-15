@@ -24,7 +24,7 @@ private:
 	float currentNumFl;
 	wxString currentNumStr;
 	std::vector<float> enteredNums;
-	std::vector<std::string> enteredOperations;
+	std::vector<wxString> enteredOperations;
 
 
 	//flags for operations
@@ -41,8 +41,7 @@ private:
 	bool isBin = false;
 	bool isDec = true;
 	bool isHex = false; 
-	wxString textEmpty = "Empty";
-	wxString tempResult = textEmpty;
+	wxString tempResult = "";
 	wxColour defaultButtonColor;
 	//generic fields
 	wxPoint previewPoint;
@@ -86,6 +85,7 @@ private:
 	void ToggleButtonsForHex();
 	void UpdatePreview();
 	wxString ProjectedSolution();
+	void ResetCurrentNum();
 public:
 	//constructor/destructor
 	CMain();

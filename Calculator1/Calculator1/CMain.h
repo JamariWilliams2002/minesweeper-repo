@@ -20,6 +20,11 @@
 class CMain : public wxFrame
 {
 private:
+	//refactored variables
+	std::vector<float> enteredNums;
+	std::vector<std::string> enteredOperations;
+
+
 	//flags for operations
 	bool arithmeticClick = false;
 	wxString clickedAction;

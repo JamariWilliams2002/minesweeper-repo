@@ -1,5 +1,7 @@
 #include "CMain.h"
 #include <sstream>
+#include <vector>
+#include <string>
 
 wxBEGIN_EVENT_TABLE(CMain, wxFrame)
 EVT_BUTTON(wxID_ANY, OnClickNumbers)

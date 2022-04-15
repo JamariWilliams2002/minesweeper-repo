@@ -15,7 +15,8 @@
 
 
 //RETURNING NOTES:
-//working on the updatePreview function. trying to make it update when the user clicks a number and when multiple operations have been entered
+//trying to implement PEMDAS, see ProjectedSolution function 
+//
 
 
 

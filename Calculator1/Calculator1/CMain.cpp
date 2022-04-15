@@ -332,7 +332,7 @@ void CMain::ToggleButtonsForHex()
 	//other four letters
 	for (int rows = 0; rows <= 4; rows++)
 	{
-		if (isHex)
+		if (isHex) 
 			calButtons[GetButtonIndex(rows, 0)]->Enable();
 		else
 			calButtons[GetButtonIndex(rows, 0)]->Disable();

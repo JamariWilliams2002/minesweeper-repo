@@ -235,9 +235,30 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 	int buttonIndex = GetButtonIndex(row, col);
 	wxString label = calButtons[buttonIndex]->GetLabel();
 
-	//find the row and column
+	//update current num 
 
-	if (arithmeticClick)
+	
+
+	if (isBin)
+		ConvertToBinary();
+
+	currentNumStr = currentNumStr + label;
+
+	if (isDec || isBin)
+		currentNumFl = wxAtof(currentNumStr);
+
+	if (!equalsClicked)
+		calDisplay->AppendText(label);
+	else
+	{
+		calDisplay->SetLabelText(label);
+		equalsClicked = false;
+	}
+	UpdatePreview();
+
+	//previous code
+
+	/*if (arithmeticClick)
 		onNextNum = true;
 	if (onNextNum)
 	{
@@ -258,17 +279,7 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 
 		if (isDec || isBin)
 			prevNumFl = wxAtof(prevNumStr);
-	}
-
-	if (!equalsClicked)
-		calDisplay->AppendText(label);
-	else
-	{
-		calDisplay->SetLabelText(label);
-		equalsClicked = false;
-	}
-	UpdatePreview();
-
+	}*/
 }
 
 int CMain::BinaryToDecimal(int n)

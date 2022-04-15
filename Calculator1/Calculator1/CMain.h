@@ -21,6 +21,8 @@ class CMain : public wxFrame
 {
 private:
 	//refactored variables
+	float currentNumFl;
+	wxString currentNumStr;
 	std::vector<float> enteredNums;
 	std::vector<std::string> enteredOperations;
 

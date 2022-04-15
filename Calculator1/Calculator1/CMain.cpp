@@ -70,16 +70,21 @@ void CMain::GenerateButtons()
 	wxPoint buttonPos(x, y);
 	//buttonTest = new wxButton(this, wxID_ANY, "this is a button", buttonPos, buttonSize);S
 
+	ButtonFactory* factory = new ButtonFactory();
+	
 	for (int row = 0; row < fieldRows; row++)
 	{
 		for (int col = 0; col < fieldCols; col++)
 		{
+			wxButton *button = factory->CreateAddButton();
+
+
 			//create button, add to grid
 			int currentButton = col * fieldRows + row;
 			int buttonID = 1000 + currentButton;
+			auto a = this;
 			calButtons[currentButton] = new wxButton(this, buttonID, "this is a button", buttonPos, buttonSize);
-			//calGrid->Add(calButtons[currentButton], 1, wxEXPAND | wxALL);
-
+		
 			//change x, leave y
 			buttonPos.x += (buttonSize.x + 5);
 		}

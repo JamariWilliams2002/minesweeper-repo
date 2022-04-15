@@ -7,10 +7,8 @@ ButtonFactory::~ButtonFactory()
 {
 
 }
-wxButton& ButtonFactory::CreateAddButton()
+wxButton* ButtonFactory::CreateAddButton()
 {
-	wxButton createdButton;
-	
-
-	return createdButton;
+	//wxButton* createdButton = new wxButton(invokingObject, buttonId, "this is a button", point, size);
+	return NULL;
 }

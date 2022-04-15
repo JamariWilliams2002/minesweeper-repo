@@ -1,5 +1,4 @@
 #pragma once
-#include "CMain.h"
 #include "wx/wx.h"
 class ButtonFactory
 {
@@ -9,10 +8,10 @@ public:
 	ButtonFactory();
 	~ButtonFactory();
 	wxButton* CreateAddButton();
-	void test(wxWindow* a)
+	wxButton* test(wxWindow* a, int buttonID, wxPoint buttonPos, wxSize buttonSize)
 	{
-		wxButton* s = new wxButton(a, 3);
-		return;
+		wxButton* button = new wxButton(a, buttonID, "this is a button", buttonPos, buttonSize);
+		return button;
 	}
 };
 

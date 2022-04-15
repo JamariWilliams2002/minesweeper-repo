@@ -378,16 +378,18 @@ void CMain::UpdatePreview()
 	else if (numClick && !onNextNum) //if a number was clicked
 	{
 		updatedStr = calDisplay->GetValue() + " " + clickedAction + " ";
-		prePreviewStr = updatedStr;
 		numClick = !numClick;
 		//means atleast one number has been entered
 		onNextNum = true;
 	}
 	else if (arithmeticClick || numClick && onNextNum) //onNextNum
 	{
-		wxString projSol = ProjectedSolution();
+		/*wxString projSol = ProjectedSolution();*/
 		wxString currentLabel = calDisplay->GetValue();
-		updatedStr = prePreviewStr + currentLabel + " = " + projSol;
+		//updatedStr = prePreviewStr + currentLabel + " = " + projSol;
+
+		updatedStr = currentLabel + " " + clickedAction + " ";
+		prePreviewStr = updatedStr;
 		arithmeticClick = !arithmeticClick;
 	}
 	calPreview->SetLabelText(updatedStr);

@@ -1,4 +1,5 @@
 #include "CMain.h"
+#include "ButtonFactory.h"
 #include <sstream>
 #include <vector>
 #include <string>
@@ -67,7 +68,7 @@ void CMain::GenerateButtons()
 	int x = displayPoint.x;
 	int y = displayPoint.y + calDisplay->GetSize().y + displayToButtonBuffer;
 	wxPoint buttonPos(x, y);
-	//buttonTest = new wxButton(this, wxID_ANY, "this is a button", buttonPos, buttonSize);
+	//buttonTest = new wxButton(this, wxID_ANY, "this is a button", buttonPos, buttonSize);S
 
 	for (int row = 0; row < fieldRows; row++)
 	{

@@ -21,12 +21,18 @@
     <ClInclude Include="CMain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ButtonFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

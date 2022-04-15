@@ -179,12 +179,10 @@ void CMain::ButtonSpecs()
 
 }
 
-int CMain::ConvertToBinary()
+int CMain::ConvertToBinary(int decimal)
 {
-	int decimal, binary = 0, remainder, product = 1;
-	decimal = (int)currentNumFl;
+	int binary = 0, remainder, product = 1;
 	
-
 	while (decimal != 0) {
 		remainder = decimal % 2;
 		binary = binary + (remainder * product);
@@ -235,7 +233,7 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 
 	//update current num str and fl
 	if (isBin)
-		ConvertToBinary();
+		ConvertToBinary((int)currentNumFl);
 
 	currentNumStr = currentNumStr + label;
 

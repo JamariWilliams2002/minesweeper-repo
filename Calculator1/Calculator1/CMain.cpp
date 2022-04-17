@@ -73,7 +73,7 @@ void CMain::GenerateButtons()
 	//buttonTest = new wxButton(this, wxID_ANY, "this is a button", buttonPos, buttonSize);S
 
 	ButtonFactory factory;
-	
+
 	for (int row = 0; row < fieldRows; row++)
 	{
 		for (int col = 0; col < fieldCols; col++)
@@ -82,10 +82,10 @@ void CMain::GenerateButtons()
 			int currentButton = col * fieldRows + row;
 			int buttonID = 1000 + currentButton;
 
-			wxButton *button = factory.test(this, buttonID, buttonPos, buttonSize);
-			
+			wxButton* button = factory.test(this, buttonID, buttonPos, buttonSize);
+
 			calButtons[currentButton] = button;
-		
+
 			//change x, leave y
 			buttonPos.x += (buttonSize.x + 5);
 		}
@@ -348,8 +348,6 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 	//if a number hasn't been enterd, nothing to do
 	if (calDisplay->GetValue() == "")
 		return;
-	else	//push the current num to the vector of nums
-		enteredNums.push_back(currentNumFl);
 
 	int row = (evt.GetId() - 1000) % fieldRows;
 	int col = (evt.GetId() - 1000) / fieldRows;
@@ -363,6 +361,8 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 	arithmeticClick = true;
 	//display to preview
 	UpdatePreview();
+	//update the copy of the string
+	EnterCurrentNumToVector();
 	//display to display
 	calDisplay->SetLabelText("");
 }
@@ -417,6 +417,8 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 	wxString strResult;
 	if (calButtons[buttonIndex]->GetLabel() == "=")
 	{
+		//need to add the last number to the vector
+		EnterCurrentNumToVector();
 		if (onNextNum)
 		{
 			strResult = ProjectedSolution();
@@ -504,19 +506,16 @@ wxString CMain::ProjectedSolution()
 	//			break;
 	//		}
 	//		//do math based on the operations
-
 	//	}
-
 	//}
 
-	//replace 'X' with '*'
-
+	//build a string based on the vector of entered numbers
+	int tempResult = 0;
 	numResult = te_interp(calPreview->GetValue(), 0);
-	int check = (int)numResult;
 	//back to hex/bin
 	if (isDec)
 	{
-		if (decimalPointClicked || numResult - check != 0)
+		if (decimalPointClicked || numResult - (int)numResult != 0) //check for double
 			strResult = wxString::Format(wxT("%f"), numResult);
 		else
 			strResult = wxString::Format(wxT("%i"), (int)numResult);
@@ -545,4 +544,20 @@ void CMain::ResetPrevAndNextNum()
 CMain::~CMain()
 {
 	delete[] calButtons;
+}
+
+void CMain::EnterCurrentNumToVector()
+{
+	double numToEnter = 0;
+	if (isBin)
+		numToEnter = BinaryToDecimal((int)currentNumFl);
+	else if (isHex)
+		numToEnter = HexToDecimal(calDisplay->GetValue());
+
+	wxString currentLabel = calDisplay->GetValue();
+}
+
+wxString CMain::UpdateStrings(wxString strToUpdate)
+{
+
 }

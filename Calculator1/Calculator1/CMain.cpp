@@ -375,37 +375,9 @@ void CMain::ResetCurrentNum()
 
 void CMain::UpdatePreview()
 {
-	wxString updatedStr;
-	wxString currentLabel = calDisplay->GetValue();
-	//early return for when numbers are clicked and nextnum is off
-	if (!arithmeticClick && !equalsClicked && !onNextNum)
-		return;
-	else if (equalsClicked || currentLabel == "")//equalsClicked or calDisplay is an empty string
-		updatedStr = "";
-	else if (numClick && !onNextNum && arithmeticClick) //if the first num was entered, this will only happen once
-	{
-		updatedStr = currentLabel + " " + clickedAction + " ";
-		numClick = false;
-		//means atleast one number has been entered
-		onNextNum = true;
-		arithmeticClick = false;
-		prePreviewStr = updatedStr;
-	}
-	else if (arithmeticClick && onNextNum) //onNextNum
-	{
-		/*wxString projSol = ProjectedSolution();*/
-		//updatedStr = prePreviewStr + currentLabel + " = " + projSol;
-		updatedStr = calPreview->GetValue() + " " + clickedAction + " ";
-		arithmeticClick = false;
-		prePreviewStr = updatedStr;
-	}
-	else if (numClick && onNextNum)
-	{
-		updatedStr = prePreviewStr + currentLabel;
-
-	}
-	calPreview->SetLabelText(updatedStr);
-
+	wxString updatedStr = calPreview->GetValue();
+	
+	calPreview->SetLabelText(UpdateStrings(updatedStr));
 }
 
 void CMain::OnClickMisc(wxCommandEvent& evt)
@@ -553,11 +525,38 @@ void CMain::EnterCurrentNumToVector()
 		numToEnter = BinaryToDecimal((int)currentNumFl);
 	else if (isHex)
 		numToEnter = HexToDecimal(calDisplay->GetValue());
-
-	wxString currentLabel = calDisplay->GetValue();
+	cpy = UpdateStrings(cpy);
 }
 
 wxString CMain::UpdateStrings(wxString strToUpdate)
 {
-
+	wxString updatedStr = "";
+	wxString currentLabel = calDisplay->GetValue();
+	//early return for when numbers are clicked and nextnum is off
+	if (!arithmeticClick && !equalsClicked && !onNextNum)
+		return updatedStr;
+	else if (equalsClicked || currentLabel == "")//equalsClicked or calDisplay is an empty string
+		updatedStr = "";
+	else if (numClick && !onNextNum && arithmeticClick) //if the first num was entered, this will only happen once
+	{
+		updatedStr = currentLabel + " " + clickedAction + " ";
+		numClick = false;
+		//means atleast one number has been entered
+		onNextNum = true;
+		arithmeticClick = false;
+		prePreviewStr = updatedStr;
+	}
+	else if (arithmeticClick && onNextNum) //onNextNum
+	{
+		/*wxString projSol = ProjectedSolution();*/
+		//updatedStr = prePreviewStr + currentLabel + " = " + projSol;
+		updatedStr = calPreview->GetValue() + " " + clickedAction + " ";
+		arithmeticClick = false;
+		prePreviewStr = updatedStr;
+	}
+	else if (numClick && onNextNum)
+	{
+		updatedStr = prePreviewStr + currentLabel;
+	}
+	return updatedStr;
 }

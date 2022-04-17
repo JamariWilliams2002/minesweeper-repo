@@ -24,9 +24,10 @@ class CMain : public wxFrame
 {
 private:
 	//refactored variables
-	float currentNumFl;
+	double currentNumFl;
 	wxString currentNumStr;
-	std::vector<float> enteredNums;
+	//these numbers are always converted to decimal before being entered
+	std::vector<double> enteredNums;
 	std::vector<wxString> enteredOperations;
 	//doesn't include P or E
 	std::vector<wxString> operationsInPemdas { "X", "/", "%", "+", "-" };
@@ -57,6 +58,9 @@ private:
 	wxPoint displayPoint;
 	wxSize displaySize;
 	wxString prePreviewStr = "";
+	//keep a copy of the string
+	wxString cpy;
+
 	//buffer variables
 	const int previewToDisplayBuffer = 10;
 	const int displayPointBuffer = 10;
@@ -94,6 +98,8 @@ private:
 	void UpdatePreview();
 	wxString ProjectedSolution();
 	void ResetCurrentNum();
+	void EnterCurrentNumToVector();
+	wxString UpdateStrings(wxString strToUpdate);
 public:
 	//constructor/destructor
 	CMain();

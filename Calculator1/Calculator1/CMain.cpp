@@ -1,9 +1,11 @@
 #include "CMain.h"
 #include "ButtonFactory.h"
+#include "tinyexpr.h"
 #include <sstream>
 #include <vector>
 #include <string>
 #include <algorithm>
+
 
 wxBEGIN_EVENT_TABLE(CMain, wxFrame)
 EVT_BUTTON(wxID_ANY, OnClickNumbers)
@@ -132,7 +134,7 @@ void CMain::ButtonSpecs()
 	calButtons[GetButtonIndex(2, 5)]->SetLabel("-");
 	calButtons[GetButtonIndex(2, 6)]->SetLabel("/");
 	calButtons[GetButtonIndex(1, 5)]->SetLabel("%");
-	calButtons[GetButtonIndex(1, 6)]->SetLabel("X");
+	calButtons[GetButtonIndex(1, 6)]->SetLabel("*");
 	for (int rows = 1; rows <= 3; rows++)
 	{
 		for (int cols = 5; cols <= 6; cols++)
@@ -215,7 +217,6 @@ int CMain::HexToDecimal(wxString hex)
 
 	return result;
 }
-
 
 void CMain::OnClickNumbers(wxCommandEvent& evt)
 {
@@ -381,7 +382,7 @@ void CMain::UpdatePreview()
 		return;
 	else if (equalsClicked || currentLabel == "")//equalsClicked or calDisplay is an empty string
 		updatedStr = "";
-	else if (numClick && !onNextNum && arithmeticClick) //if the first num was entered, will only happen once
+	else if (numClick && !onNextNum && arithmeticClick) //if the first num was entered, this will only happen once
 	{
 		updatedStr = currentLabel + " " + clickedAction + " ";
 		numClick = false;
@@ -390,7 +391,7 @@ void CMain::UpdatePreview()
 		arithmeticClick = false;
 		prePreviewStr = updatedStr;
 	}
-	else if (arithmeticClick) //onNextNum
+	else if (arithmeticClick && onNextNum) //onNextNum
 	{
 		/*wxString projSol = ProjectedSolution();*/
 		//updatedStr = prePreviewStr + currentLabel + " = " + projSol;
@@ -474,59 +475,48 @@ void CMain::ResetArithmetic()
 wxString CMain::ProjectedSolution()
 {
 	//stuff for result
-	float numResult = 0;
+	double numResult = 0;
 	wxString strResult;
-	wxString calDisplayStr = calDisplay->GetValue();
-	wxString currentOperation;
-	std::vector<wxString> sortedOperations;
-	std::vector<int> indeciesOfOperations;
-	wxString operationToFind;
-	float num1 = 0, num2 = 0;
+	//wxString calDisplayStr = calDisplay->GetValue();
+	//wxString currentOperation;
+	//std::vector<wxString> sortedOperations;
+	//std::vector<int> indeciesOfOperations;
+	//wxString operationToFind;
+	//float num1 = 0, num2 = 0;
 
-	//iterator to store position
-	std::vector<wxString>::iterator enteredOperationsIter;
-	std::vector<wxString>::iterator fullExpressionIter;
-
-
-	//sort the list of operations
-	for (int i = 0; i < enteredOperations.size(); i++)
-	{
-		for (int j = 0; j < operationsInPemdas.size(); j++)
-		{
-			operationToFind = operationsInPemdas[j];
-			enteredOperationsIter = std::find(enteredOperations.begin(), enteredOperations.end(), operationToFind);
-			//found the operation
-			if (enteredOperationsIter != enteredOperations.end())
-			{
-				sortedOperations.push_back(operationToFind);
-				//find numbers between the found operations
-				break;
-			}
-			//do math based on the operations
-
-		}
-
-	}
+	////iterator to store position
+	//std::vector<wxString>::iterator enteredOperationsIter;
+	//std::vector<wxString>::iterator fullExpressionIter;
 
 
-	//going to decimal
-	if (isBin)
-	{
-		prevNumFl = BinaryToDecimal(prevNumFl);
-		nextNumFl = BinaryToDecimal(nextNumFl);
-	}
-	else if (isHex)
-	{
-		prevNumFl = HexToDecimal(prevNumStr);
-		nextNumFl = HexToDecimal(nextNumStr);
-	}
-	//actual operation
+	////sort the list of operations
+	//for (int i = 0; i < enteredOperations.size(); i++)
+	//{
+	//	for (int j = 0; j < operationsInPemdas.size(); j++)
+	//	{
+	//		operationToFind = operationsInPemdas[j];
+	//		enteredOperationsIter = std::find(enteredOperations.begin(), enteredOperations.end(), operationToFind);
+	//		//found the operation
+	//		if (enteredOperationsIter != enteredOperations.end())
+	//		{
+	//			sortedOperations.push_back(operationToFind);
+	//			//find numbers between the found operations
+	//			break;
+	//		}
+	//		//do math based on the operations
 
+	//	}
 
+	//}
+
+	//replace 'X' with '*'
+
+	numResult = te_interp(calPreview->GetValue(), 0);
+	int check = (int)numResult;
 	//back to hex/bin
 	if (isDec)
 	{
-		if (decimalPointClicked)
+		if (decimalPointClicked || numResult - check != 0)
 			strResult = wxString::Format(wxT("%f"), numResult);
 		else
 			strResult = wxString::Format(wxT("%i"), (int)numResult);

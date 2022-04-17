@@ -362,7 +362,7 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 	//display to preview
 	UpdatePreview();
 	//update the copy of the string
-	EnterCurrentNumToVector();
+	UpdateToDecimalStr();
 	//display to display
 	calDisplay->SetLabelText("");
 }
@@ -390,7 +390,7 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 	if (calButtons[buttonIndex]->GetLabel() == "=")
 	{
 		//need to add the last number to the vector
-		EnterCurrentNumToVector();
+		UpdateToDecimalStr();
 		if (onNextNum)
 		{
 			strResult = ProjectedSolution();
@@ -518,14 +518,14 @@ CMain::~CMain()
 	delete[] calButtons;
 }
 
-void CMain::EnterCurrentNumToVector()
+void CMain::UpdateToDecimalStr()
 {
 	double numToEnter = 0;
 	if (isBin)
 		numToEnter = BinaryToDecimal((int)currentNumFl);
 	else if (isHex)
-		numToEnter = HexToDecimal(calDisplay->GetValue());
-	cpy = UpdateStrings(cpy);
+		numToEnter = HexToDecimal(currentNumStr);
+	/*cpy = UpdateStrings(cpy);*/
 }
 
 wxString CMain::UpdateStrings(wxString strToUpdate)
@@ -544,6 +544,8 @@ wxString CMain::UpdateStrings(wxString strToUpdate)
 		//means atleast one number has been entered
 		onNextNum = true;
 		arithmeticClick = false;
+		//update copies
+		UpdateToDecimalStr();
 		prePreviewStr = updatedStr;
 	}
 	else if (arithmeticClick && onNextNum) //onNextNum

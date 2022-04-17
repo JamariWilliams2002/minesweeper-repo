@@ -15,8 +15,12 @@
 
 
 //RETURNING NOTES:
-//trying to implement PEMDAS, see ProjectedSolution function 
-//
+//need to keep a copy of the prepreview string, except all of the numbers are already converted to decimal. 
+// this will allow us to enter the copied str into the te_interp function with no issues about conversions
+// **see function called "UpdateToDecimalStr". 
+// The following example is entered like: (dec * bin * hex), EX:
+// Entered Expression = 8 * 101 * AB
+// Copy of prepreview = 8 * 5 * 171
 
 
 
@@ -58,6 +62,8 @@ private:
 	wxPoint displayPoint;
 	wxSize displaySize;
 	wxString prePreviewStr = "";
+	//copy of prepreviewstr, just in the number's original form
+	wxString prePreviewStrOF = "";
 	//keep a copy of the string
 	wxString cpy;
 
@@ -98,7 +104,7 @@ private:
 	void UpdatePreview();
 	wxString ProjectedSolution();
 	void ResetCurrentNum();
-	void EnterCurrentNumToVector();
+	void UpdateToDecimalStr();
 	wxString UpdateStrings(wxString strToUpdate);
 public:
 	//constructor/destructor

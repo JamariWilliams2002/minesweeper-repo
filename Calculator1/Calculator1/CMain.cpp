@@ -138,9 +138,7 @@ void CMain::ButtonSpecs()
 	for (int rows = 1; rows <= 3; rows++)
 	{
 		for (int cols = 5; cols <= 6; cols++)
-		{
 			calButtons[GetButtonIndex(rows, cols)]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnClickArithmetic, this);
-		}
 	}
 
 	//bin/hex/dec
@@ -398,13 +396,11 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 			onNextNum = false;
 			decimalPointClicked = false;
 			UpdatePreview();
-			ResetPrevAndNextNum();
 		}
 	}
 	else if (calButtons[buttonIndex]->GetLabel() == "clear")
 	{
 		calDisplay->SetLabelText("");
-		ResetPrevAndNextNum();
 		ResetArithmetic();
 	}
 	else if (calButtons[buttonIndex]->GetLabel() == "+/-")
@@ -497,15 +493,6 @@ wxString CMain::ProjectedSolution()
 
 
 	return strResult;
-}
-
-void CMain::ResetPrevAndNextNum()
-{
-	prevNumFl = 0.0f;
-	prevNumStr = "";
-	nextNumFl = 0.0f;
-	nextNumStr = "";
-	onNextNum = false;
 }
 
 CMain::~CMain()

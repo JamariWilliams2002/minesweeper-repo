@@ -572,18 +572,3 @@ wxString CMain::UpdateStrings(wxString strToUpdate)
 	}
 	return updatedStr;
 }
-
-int CMain::FactoryButtonID(bool nextRow)
-{
-	if (myButtonID != 1000)
-	{
-		myButtonID += fieldRows;
-	}
-	else //evaluate next row
-	{
-		myButtonID = 1000;
-		idOffset++;
-		myButtonID += idOffset;
-	}
-	return myButtonID;
-}

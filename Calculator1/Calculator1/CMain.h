@@ -27,9 +27,6 @@
 class CMain : public wxFrame
 {
 private:
-	int myButtonID = 1000;
-	int idOffset;
-
 	//refactored variables
 	double currentNumFl;
 	wxString currentNumStr;
@@ -107,7 +104,6 @@ private:
 	void ResetCurrentNum();
 	void UpdateToDecimalStr(bool resetStr = false);
 	wxString UpdateStrings(wxString strToUpdate);
-	int FactoryButtonID(bool nextRow = false);
 public:
 	//constructor/destructor
 	CMain();

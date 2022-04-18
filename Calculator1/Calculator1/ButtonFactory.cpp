@@ -1,14 +1,55 @@
 #include "ButtonFactory.h"
-ButtonFactory::ButtonFactory()
+CalculatorButtonFactory::CalculatorButtonFactory()
 {
 
 }
-ButtonFactory::~ButtonFactory()
+CalculatorButtonFactory::~CalculatorButtonFactory()
 {
 
 }
-wxButton* ButtonFactory::CreateAddButton()
+wxButton* CalculatorButtonFactory::CreateButton(wxWindow* mainWindow, int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	//wxButton* createdButton = new wxButton(invokingObject, buttonId, "this is a button", point, size);
-	return NULL;
+	wxButton* button = new wxButton(mainWindow, buttonID, "this is a button", buttonPos, buttonSize);
+	return button;
+}
+
+wxButton* Button1()
+{
+
+}
+wxButton* Button2()
+{
+
+}
+wxButton* Button3()
+{
+
+}
+wxButton* Button4()
+{
+
+}
+wxButton* Button5()
+{
+
+}
+wxButton* Button6()
+{
+
+}
+wxButton* Button7()
+{
+
+}
+wxButton* Button8()
+{
+
+}
+wxButton* Button9()
+{
+
+}
+wxButton* Button0()
+{
+
 }

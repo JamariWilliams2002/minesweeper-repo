@@ -387,10 +387,9 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 	wxString strResult;
 	if (calButtons[buttonIndex]->GetLabel() == "=")
 	{
-		//need to add the last number to the vector
-		UpdateToDecimalStr();
 		if (onNextNum)
 		{
+			UpdateToDecimalStr();
 			strResult = ProjectedSolution();
 			calDisplay->SetLabelText(strResult);
 			//setting flags and resetting
@@ -514,8 +513,13 @@ CMain::~CMain()
 	delete[] calButtons;
 }
 //first entry is false by default
-void CMain::UpdateToDecimalStr()
+void CMain::UpdateToDecimalStr(bool resetStr)
 {
+	if (resetStr)
+	{
+		prePreviewDecStr = "";
+		return;
+	}
 	wxString currentLabel = calDisplay->GetValue();
 	double numToEnter = 0;
 	//convert 
@@ -532,7 +536,7 @@ void CMain::UpdateToDecimalStr()
 	{
 		prePreviewDecStr = numToEnterStr + " " + clickedAction + " ";
 	}
-	else if (arithmeticClick && onNextNum) //nextnum
+	else if (arithmeticClick && onNextNum || equalsClicked) //nextnum
 	{
 		prePreviewDecStr +=  clickedAction + " " + numToEnterStr;
 	}

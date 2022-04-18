@@ -104,7 +104,7 @@ private:
 	void UpdatePreview();
 	wxString ProjectedSolution();
 	void ResetCurrentNum();
-	void UpdateToDecimalStr();
+	void UpdateToDecimalStr(bool resetStr = false);
 	wxString UpdateStrings(wxString strToUpdate);
 public:
 	//constructor/destructor

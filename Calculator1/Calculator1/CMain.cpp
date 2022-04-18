@@ -72,7 +72,7 @@ void CMain::GenerateButtons()
 	wxPoint buttonPos(x, y);
 	//buttonTest = new wxButton(this, wxID_ANY, "this is a button", buttonPos, buttonSize);S
 
-	CalculatorButtonFactory buttonFactory;
+	CalculatorButtonFactory buttonFactory(this);
 
 	for (int row = 0; row < fieldRows; row++)
 	{
@@ -82,7 +82,7 @@ void CMain::GenerateButtons()
 			int currentButton = col * fieldRows + row;
 			int buttonID = 1000 + currentButton;
 
-			wxButton* button = buttonFactory.CreateButton(this, buttonID, buttonPos, buttonSize);
+			wxButton* button = buttonFactory.CreateButton(buttonID, buttonPos, buttonSize);
 
 			calButtons[currentButton] = button;
 

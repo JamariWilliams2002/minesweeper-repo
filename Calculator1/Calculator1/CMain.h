@@ -27,6 +27,9 @@
 class CMain : public wxFrame
 {
 private:
+	int myButtonID = 1000;
+	int idOffset;
+
 	//refactored variables
 	double currentNumFl;
 	wxString currentNumStr;
@@ -35,7 +38,6 @@ private:
 	std::vector<wxString> enteredOperations;
 	//doesn't include P or E
 	std::vector<wxString> operationsInPemdas { "X", "/", "%", "+", "-" };
-
 	//flags for operations
 	//means atleast one arithmetic has been clicked and we are working on a second number
 	bool onNextNum = false;
@@ -105,6 +107,7 @@ private:
 	void ResetCurrentNum();
 	void UpdateToDecimalStr(bool resetStr = false);
 	wxString UpdateStrings(wxString strToUpdate);
+	int FactoryButtonID(bool nextRow = false);
 public:
 	//constructor/destructor
 	CMain();

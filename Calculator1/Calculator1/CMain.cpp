@@ -93,6 +93,8 @@ void CMain::GenerateButtons()
 		buttonPos.x = x;
 		buttonPos.y += buttonSize.y + 20;
 	}
+
+	//making buttons
 	ButtonSpecs();
 }
 
@@ -220,6 +222,7 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 {
 	int row = (evt.GetId() - 1000) % fieldRows;
 	int col = (evt.GetId() - 1000) / fieldRows;
+	int a = evt.GetId();
 	int buttonIndex = GetButtonIndex(row, col);
 	wxString label = calButtons[buttonIndex]->GetLabel();
 
@@ -568,4 +571,19 @@ wxString CMain::UpdateStrings(wxString strToUpdate)
 		updatedStr = prePreviewStr + currentLabel;
 	}
 	return updatedStr;
+}
+
+int CMain::FactoryButtonID(bool nextRow)
+{
+	if (myButtonID != 1000)
+	{
+		myButtonID += fieldRows;
+	}
+	else //evaluate next row
+	{
+		myButtonID = 1000;
+		idOffset++;
+		myButtonID += idOffset;
+	}
+	return myButtonID;
 }

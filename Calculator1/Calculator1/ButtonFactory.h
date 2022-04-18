@@ -4,6 +4,7 @@ class CalculatorButtonFactory
 {
 private:
 	wxWindow* mMainWindow;
+	wxButton **calButtons;
 public:
 	//constructors
 	CalculatorButtonFactory(wxWindow* mainWindow);
@@ -46,9 +47,7 @@ public:
 	wxButton* ButtonDecimalPoint(int buttonID, wxPoint buttonPos, wxSize buttonSize);
 	wxButton* ButtonDelete(int buttonID, wxPoint buttonPos, wxSize buttonSize);
 	wxButton* ButtonClear(int buttonID, wxPoint buttonPos, wxSize buttonSize);
-
 #pragma endregion
-
 
 };
 

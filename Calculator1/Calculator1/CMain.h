@@ -63,7 +63,7 @@ private:
 	wxSize displaySize;
 	wxString prePreviewStr = "";
 	//copy of prepreviewstr, just in the number's original form
-	wxString prePreviewStrOF = "";
+	wxString prePreviewDecStr = "";
 	//keep a copy of the string
 	wxString cpy;
 

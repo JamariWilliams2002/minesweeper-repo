@@ -361,8 +361,6 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 	arithmeticClick = true;
 	//display to preview
 	UpdatePreview();
-	//update the copy of the string
-	UpdateToDecimalStr();
 	//display to display
 	calDisplay->SetLabelText("");
 }
@@ -481,9 +479,7 @@ wxString CMain::ProjectedSolution()
 	//	}
 	//}
 
-	//build a string based on the vector of entered numbers
-	int tempResult = 0;
-	numResult = te_interp(calPreview->GetValue(), 0);
+	numResult = te_interp(prePreviewDecStr, 0);
 	//back to hex/bin
 	if (isDec)
 	{
@@ -517,15 +513,29 @@ CMain::~CMain()
 {
 	delete[] calButtons;
 }
-
+//first entry is false by default
 void CMain::UpdateToDecimalStr()
 {
+	wxString currentLabel = calDisplay->GetValue();
 	double numToEnter = 0;
-	if (isBin)
-		numToEnter = BinaryToDecimal((int)currentNumFl);
+	//convert 
+	if (isDec)
+		numToEnter = wxAtof(currentLabel);
+	else if (isBin)
+		numToEnter = BinaryToDecimal((int)wxAtof(currentLabel));
 	else if (isHex)
-		numToEnter = HexToDecimal(currentNumStr);
-	/*cpy = UpdateStrings(cpy);*/
+		numToEnter = HexToDecimal(currentLabel);
+	//update the string
+	wxString numToEnterStr = std::to_string(numToEnter);
+
+	if (numClick && !onNextNum && arithmeticClick) //first num was entered
+	{
+		prePreviewDecStr = numToEnterStr + " " + clickedAction + " ";
+	}
+	else if (arithmeticClick && onNextNum) //nextnum
+	{
+		prePreviewDecStr +=  clickedAction + " " + numToEnterStr;
+	}
 }
 
 wxString CMain::UpdateStrings(wxString strToUpdate)
@@ -540,23 +550,25 @@ wxString CMain::UpdateStrings(wxString strToUpdate)
 	else if (numClick && !onNextNum && arithmeticClick) //if the first num was entered, this will only happen once
 	{
 		updatedStr = currentLabel + " " + clickedAction + " ";
-		numClick = false;
-		//means atleast one number has been entered
-		onNextNum = true;
-		arithmeticClick = false;
-		//update copies
+		//update copies, this is the first run through
 		UpdateToDecimalStr();
 		prePreviewStr = updatedStr;
+		//reset flags
+		numClick = false;
+		onNextNum = true;
+		arithmeticClick = false;
 	}
 	else if (arithmeticClick && onNextNum) //onNextNum
 	{
 		/*wxString projSol = ProjectedSolution();*/
 		//updatedStr = prePreviewStr + currentLabel + " = " + projSol;
 		updatedStr = calPreview->GetValue() + " " + clickedAction + " ";
-		arithmeticClick = false;
 		prePreviewStr = updatedStr;
+		UpdateToDecimalStr();
+		//reset flags
+		arithmeticClick = false;
 	}
-	else if (numClick && onNextNum)
+	else if (numClick && onNextNum) //update the string that is shown in preview
 	{
 		updatedStr = prePreviewStr + currentLabel;
 	}

@@ -374,7 +374,7 @@ void CMain::ResetCurrentNum()
 void CMain::UpdatePreview()
 {
 	wxString updatedStr = calPreview->GetValue();
-	
+
 	calPreview->SetLabelText(UpdateStrings(updatedStr));
 }
 
@@ -387,13 +387,13 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 	wxString strResult;
 	if (calButtons[buttonIndex]->GetLabel() == "=")
 	{
+		equalsClicked = true;
 		if (onNextNum)
 		{
 			UpdateToDecimalStr();
 			strResult = ProjectedSolution();
 			calDisplay->SetLabelText(strResult);
 			//setting flags and resetting
-			equalsClicked = true;
 			tempResult = strResult;
 			onNextNum = false;
 			decimalPointClicked = false;
@@ -536,9 +536,13 @@ void CMain::UpdateToDecimalStr(bool resetStr)
 	{
 		prePreviewDecStr = numToEnterStr + " " + clickedAction + " ";
 	}
-	else if (arithmeticClick && onNextNum || equalsClicked) //nextnum
+	else if (arithmeticClick && onNextNum) //nextnum
 	{
-		prePreviewDecStr +=  clickedAction + " " + numToEnterStr;
+		prePreviewDecStr += numToEnterStr + " " + clickedAction;
+	}
+	else if (equalsClicked)
+	{
+		prePreviewDecStr += " " + numToEnterStr;
 	}
 }
 

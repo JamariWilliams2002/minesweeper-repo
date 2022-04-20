@@ -2,6 +2,10 @@
 #include "tinyexpr.h"
 #include "BinHexDecConversion.h"
 
+CalculatorProcessor::CalculatorProcessor()
+{
+
+}
 CalculatorProcessor::CalculatorProcessor(wxString expression)
 {
 	ProjectedSolution(expression);

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BinHexDecConversion.h" />
     <ClInclude Include="ButtonFactory.h" />
     <ClInclude Include="CalculatorProcessor.h" />
     <ClInclude Include="CApp.h" />
@@ -27,6 +28,7 @@
     <ClInclude Include="tinyexpr.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BinHexDecConversion.cpp" />
     <ClCompile Include="ButtonFactory.cpp" />
     <ClCompile Include="CalculatorProcessor.cpp" />
     <ClCompile Include="CApp.cpp" />

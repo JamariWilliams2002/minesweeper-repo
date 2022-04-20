@@ -9,6 +9,8 @@ public:
 		return calc;
 	}
 private: 
+	//conversion functions
+
 	CalculatorProcessor(){}
 	CalculatorProcessor(CalculatorProcessor const&);
 	void operator=(CalculatorProcessor const&);

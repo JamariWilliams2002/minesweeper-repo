@@ -2,9 +2,9 @@
 CalculatorButtonFactory::CalculatorButtonFactory(wxWindow* mainWindow, wxButton** calButtons, int fieldRows, int fieldCols)
 {
 	mMainWindow = mainWindow;
-	mCalButtons = calButtons;	
-	mFieldCols = fieldCols;
+	mCalButtons = calButtons;
 	mFieldRows = fieldRows;
+	mFieldCols = fieldCols;
 }
 
 CalculatorButtonFactory::~CalculatorButtonFactory()
@@ -18,12 +18,12 @@ void CalculatorButtonFactory::GenerateButtonGrid(wxSize buttonSize, int xPos, in
 	wxPoint buttonPos(xPos, yPos);
 
 	mCalButtons = new wxButton * [mFieldRows * mFieldCols];
-	
+
 	for (int row = 0; row < mFieldRows; row++)
 	{
 		for (int col = 0; col < mFieldCols; col++)
 		{
-			int currentButton = col * mFieldRows+ row;
+			int currentButton = col * mFieldRows + row;
 			int buttonID = 1000 + currentButton;
 			wxButton* button;
 #pragma region Ifs for Button Creation
@@ -90,6 +90,8 @@ void CalculatorButtonFactory::GenerateButtonGrid(wxSize buttonSize, int xPos, in
 				button = ButtonDelete(buttonID, buttonPos, buttonSize);
 			else if (row == 0 && col == 6)
 				button = ButtonClear(buttonID, buttonPos, buttonSize);
+			else
+				button = CreateButton(buttonID, buttonPos, buttonSize);
 #pragma endregion
 			mCalButtons[currentButton] = button;
 			//change x, leave y
@@ -104,71 +106,87 @@ void CalculatorButtonFactory::GenerateButtonGrid(wxSize buttonSize, int xPos, in
 #pragma region Numpad
 wxButton* CalculatorButtonFactory::CreateButton(int buttonID, wxPoint buttonPos, wxSize buttonSize, wxString text)
 {
-	wxButton* button =  new wxButton(mMainWindow, buttonID, text, buttonPos, buttonSize);
+	wxButton* button = new wxButton(mMainWindow, buttonID, text, buttonPos, buttonSize);
+	return button;
 }
 
 wxButton* CalculatorButtonFactory::Button1(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "1");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "1");
+	return button;
 }
 wxButton* CalculatorButtonFactory::Button2(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "2");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "2");
+	return button;
 }
 wxButton* CalculatorButtonFactory::Button3(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "3");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "3");
+	return button;
 }
 wxButton* CalculatorButtonFactory::Button4(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "4");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "4");
+	return button;
 }
 wxButton* CalculatorButtonFactory::Button5(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "5");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "5");
+	return button;
 }
 wxButton* CalculatorButtonFactory::Button6(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "6");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "6");
+	return button;
 }
 wxButton* CalculatorButtonFactory::Button7(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "7");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "7");
+	return button;
 }
 wxButton* CalculatorButtonFactory::Button8(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "8");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "8");
+	return button;
 }
 wxButton* CalculatorButtonFactory::Button9(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "9");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "9");
+	return button;
 }
 wxButton* CalculatorButtonFactory::Button0(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "0");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "0");
+	return button;
 }
 #pragma endregion
 
 #pragma region Arithmetic
 wxButton* CalculatorButtonFactory::ButtonAdd(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "+");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "+");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonSubtract(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "-");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "-");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonMultiply(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "*");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "*");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonDivide(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "/");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "/");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonModulus(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "%");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "%");
+	return button;
 }
 
 #pragma endregion
@@ -177,64 +195,78 @@ wxButton* CalculatorButtonFactory::ButtonModulus(int buttonID, wxPoint buttonPos
 
 wxButton* CalculatorButtonFactory::ButtonBinary(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "bin");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "bin");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonDecimal(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "dec");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "dec");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonHexadecimal(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "hex");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "hex");
+	return button;
 }
 #pragma endregion
 
 #pragma region Hex Buttons
 wxButton* CalculatorButtonFactory::ButtonHexA(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "A");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "A");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonHexB(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "B");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "B");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonHexC(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "C");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "C");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonHexD(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "D");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "D");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonHexE(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "E");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "E");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonHexF(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "F");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "F");
+	return button;
 }
 #pragma endregion
 
 #pragma region miscellaneous
 wxButton* CalculatorButtonFactory::ButtonPlusMinus(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "+/-");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "+/-");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonEquals(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "=");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "=");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonDecimalPoint(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, ".");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, ".");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonDelete(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "del");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "del");
+	return button;
 }
 wxButton* CalculatorButtonFactory::ButtonClear(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
-	wxButton* button =  CreateButton(buttonID, buttonPos, buttonSize, "clear");
+	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "clear");
+	return button;
 }
 #pragma endregion

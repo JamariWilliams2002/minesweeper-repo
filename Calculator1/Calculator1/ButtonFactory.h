@@ -7,12 +7,13 @@ private:
 	wxButton** mCalButtons;
 	int mFieldRows;
 	int mFieldCols;
+	//garbage code, don't use
+	void GenerateButtonGrid(wxSize buttonSize, int xPos, int yPos);
 public:
 	//constructors
 	CalculatorButtonFactory(wxWindow* mainWindow, wxButton** calButtons, int fieldRows, int fieldCols);
 	~CalculatorButtonFactory();
 	wxButton* CreateButton(int buttonID, wxPoint buttonPos, wxSize buttonSize, wxString text = "this is a button");
-	void GenerateButtonGrid(wxSize buttonSize, int xPos, int yPos);
 
 private:
 #pragma region Button Functions

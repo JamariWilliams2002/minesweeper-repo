@@ -14,7 +14,7 @@ void CalculatorProcessor::ProjectedSolution(wxString decStr)
 	numResult = te_interp(decStr, 0);
 	strResult = std::to_string(numResult);
 
-	mResult.AsDouble = numResult;
-	mResult.AswxString = strResult;
+	resultAsDouble = numResult;
+	resultAswxString = strResult;
 }
 

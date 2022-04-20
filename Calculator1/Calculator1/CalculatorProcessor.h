@@ -1,5 +1,6 @@
 #pragma once
 #include "wx/wx.h"
+
 class CalculatorProcessor
 {
 public:
@@ -11,20 +12,13 @@ public:
 private: 
 	//conversion functions
 	//only valid constructor
-	CalculatorProcessor(wxString expression){}
-	CalculatorProcessor(CalculatorProcessor const&);
-	void operator=(CalculatorProcessor const&);
+	CalculatorProcessor(wxString expression);
 
 	//Pass in the whole string, include all arithmetic. Will return a decimal number
 	void ProjectedSolution(wxString decStr);
 public:
-	Result mResult;
+	double resultAsDouble;
+	wxString resultAswxString;
 	CalculatorProcessor(CalculatorProcessor const&) = delete;
 	void operator=(CalculatorProcessor const&) = delete;
-};
-
-struct Result
-{
-	static double AsDouble;
-	static wxString AswxString;
 };

@@ -2,7 +2,6 @@
 #include "ButtonFactory.h"
 #include "BinHexDecConversion.h"
 #include "CalculatorProcessor.h"
-#include "tinyexpr.h"
 #include <sstream>
 #include <vector>
 #include <string>
@@ -435,8 +434,9 @@ wxString CMain::ProjectedSolution()
 	//	}
 	//}
 
-
-	numResult = te_interp(prePreviewDecStr, 0);
+	CalculatorProcessor* calc = &CalculatorProcessor::GetInstance(previewDecStr);
+	numResult = calc->resultAsDouble;
+	strResult = calc->resultAswxString;
 	//back to hex/bin
 	if (isDec)
 	{
@@ -467,7 +467,7 @@ void CMain::UpdateToDecimalStr(bool resetStr)
 	BinHexDecConversion convert;
 	if (resetStr)
 	{
-		prePreviewDecStr = "";
+		previewDecStr = "";
 		return;
 	}
 	wxString currentLabel = calDisplay->GetValue();
@@ -484,15 +484,15 @@ void CMain::UpdateToDecimalStr(bool resetStr)
 
 	if (numClick && !onNextNum && arithmeticClick) //first num was entered
 	{
-		prePreviewDecStr = numToEnterStr + " " + clickedAction + " ";
+		previewDecStr = numToEnterStr + " " + clickedAction + " ";
 	}
 	else if (arithmeticClick && onNextNum) //nextnum
 	{
-		prePreviewDecStr += numToEnterStr + " " + clickedAction;
+		previewDecStr += numToEnterStr + " " + clickedAction;
 	}
 	else if (equalsClicked)
 	{
-		prePreviewDecStr += " " + numToEnterStr;
+		previewDecStr += " " + numToEnterStr;
 	}
 }
 

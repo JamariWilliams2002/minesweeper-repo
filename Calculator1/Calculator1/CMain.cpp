@@ -6,9 +6,6 @@
 #include <string>
 #include <algorithm>
 
-#define NORMAL_CODE true
-
-
 wxBEGIN_EVENT_TABLE(CMain, wxFrame)
 EVT_BUTTON(wxID_ANY, OnClickNumbers)
 wxEND_EVENT_TABLE();
@@ -77,8 +74,6 @@ void CMain::GenerateButtons()
 	//CalculatorButtonFactory factory(this, calButtons, fieldRows, fieldCols);
 	//create all buttons
 	//factory.GenerateButtonGrid(buttonSize, x, y);
-
-#if NORMAL_CODE
 	CalculatorButtonFactory factory(this, calButtons, fieldRows, fieldCols);
 	for (int row = 0; row < fieldRows; row++)
 	{
@@ -100,8 +95,7 @@ void CMain::GenerateButtons()
 		buttonPos.y += buttonSize.y + 20;
 	}
 	ButtonSpecs();
-#else
-#endif // NORMAL_CODE
+
 
 
 }

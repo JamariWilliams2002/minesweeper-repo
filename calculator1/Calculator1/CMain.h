@@ -15,12 +15,9 @@
 
 
 //RETURNING NOTES:
-//need to keep a copy of the prepreview string, except all of the numbers are already converted to decimal. 
-// this will allow us to enter the copied str into the te_interp function with no issues about conversions
-// **see function called "UpdateToDecimalStr". 
-// The following example is entered like: (dec * bin * hex), EX:
-// Entered Expression = 8 * 101 * AB
-// Copy of prepreview = 8 * 5 * 171
+//the decimal point doesn't work properly
+// the plusminus button doesn't work properly
+//do the plusminus first, that's a part of the rubric
 
 
 

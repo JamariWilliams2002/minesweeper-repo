@@ -13,6 +13,7 @@ public:
 	~CalculatorButtonFactory();
 	wxButton* CreateButton(int buttonID, wxPoint buttonPos, wxSize buttonSize, wxString text = "this is a button");
 	void GenerateButtonGrid(wxSize buttonSize, int xPos, int yPos);
+
 private:
 #pragma region Button Functions
 	//numpad

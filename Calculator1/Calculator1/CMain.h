@@ -94,6 +94,7 @@ private:
 	void OnClickMisc(wxCommandEvent &evt);
 	//helper methods
 	void ResetArithmetic();
+	void ResetPrevAndNextNum();
 	int ConvertToBinary(int decimal);
 	int BinaryToDecimal(int n);
 	std::string DecimalToHex(int num);

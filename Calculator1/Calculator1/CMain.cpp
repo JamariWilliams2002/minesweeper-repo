@@ -189,7 +189,7 @@ void CMain::ButtonSpecs()
 
 }
 
-int CMain::ConvertToBinary(int decimal)
+int CMain::DecimalToBinary(int decimal)
 {
 	int binary = 0, remainder, product = 1;
 
@@ -231,7 +231,7 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 
 	//update current num str and fl
 	if (isBin)
-		ConvertToBinary((int)currentNumFl);
+		DecimalToBinary((int)currentNumFl);
 
 	currentNumStr = currentNumStr + label;
 
@@ -489,7 +489,7 @@ wxString CMain::ProjectedSolution()
 	}
 	else if (isBin)
 	{
-		numResult = ConvertToBinary((int)numResult);
+		numResult = DecimalToBinary((int)numResult);
 		strResult = wxString::Format(wxT("%i"), (int)numResult);
 	}
 	else //isHex

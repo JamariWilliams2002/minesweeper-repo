@@ -33,6 +33,8 @@ private:
 	//doesn't include P or E
 	std::vector<wxString> operationsInPemdas { "X", "/", "%", "+", "-" };
 
+	//singleton classes
+
 	//flags for operations
 	//means atleast one arithmetic has been clicked and we are working on a second number
 	bool onNextNum = false;

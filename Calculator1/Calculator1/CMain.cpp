@@ -1,5 +1,6 @@
 #include "CMain.h"
 #include "ButtonFactory.h"
+#include "BinHexDecConversion.h"
 #include "tinyexpr.h"
 #include <sstream>
 #include <vector>
@@ -189,36 +190,9 @@ void CMain::ButtonSpecs()
 
 }
 
-int CMain::DecimalToBinary(int decimal)
-{
-	int binary = 0, remainder, product = 1;
 
-	while (decimal != 0) {
-		remainder = decimal % 2;
-		binary = binary + (remainder * product);
-		decimal = decimal / 2;
-		product *= 10;
-	}
-	return binary;
-}
 
-std::string CMain::DecimalToHex(int num)
-{
-	std::stringstream ss;
-	ss << std::hex << num; // int decimal_value
-	std::string res(ss.str());
-	return res;
-}
 
-int CMain::HexToDecimal(wxString hex)
-{
-	int result;
-	std::stringstream ss;
-	ss << hex;
-	ss >> std::hex >> result;
-
-	return result;
-}
 
 void CMain::OnClickNumbers(wxCommandEvent& evt)
 {
@@ -226,12 +200,12 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 	int col = (evt.GetId() - 1000) / fieldRows;
 	int buttonIndex = GetButtonIndex(row, col);
 	wxString label = calButtons[buttonIndex]->GetLabel();
-
+	BinHexDecConversion convert;
 	numClick = true;
 
 	//update current num str and fl
 	if (isBin)
-		DecimalToBinary((int)currentNumFl);
+		convert.DecimalToBinary((int)currentNumFl);
 
 	currentNumStr = currentNumStr + label;
 
@@ -248,26 +222,7 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 	UpdatePreview();
 }
 
-int CMain::BinaryToDecimal(int n)
-{
-	int num = n;
-	int dec_value = 0;
 
-	// Initializing base value to 1, i.e 2^0
-	int base = 1;
-
-	int temp = num;
-	while (temp) {
-		int last_digit = temp % 10;
-		temp = temp / 10;
-
-		dec_value += last_digit * base;
-
-		base = base * 2;
-	}
-
-	return dec_value;
-}
 
 void CMain::OnClickBinHexDec(wxCommandEvent& evt)
 {
@@ -448,6 +403,7 @@ wxString CMain::ProjectedSolution()
 	//stuff for result
 	double numResult = 0;
 	wxString strResult;
+	BinHexDecConversion convert;
 	//wxString calDisplayStr = calDisplay->GetValue();
 	//wxString currentOperation;
 	//std::vector<wxString> sortedOperations;
@@ -489,11 +445,11 @@ wxString CMain::ProjectedSolution()
 	}
 	else if (isBin)
 	{
-		numResult = DecimalToBinary((int)numResult);
+		numResult = convert.DecimalToBinary((int)numResult);
 		strResult = wxString::Format(wxT("%i"), (int)numResult);
 	}
 	else //isHex
-		strResult = DecimalToHex((int)numResult);
+		strResult = convert.DecimalToHex((int)numResult);
 
 
 	return strResult;
@@ -506,6 +462,7 @@ CMain::~CMain()
 //first entry is false by default
 void CMain::UpdateToDecimalStr(bool resetStr)
 {
+	BinHexDecConversion convert;
 	if (resetStr)
 	{
 		prePreviewDecStr = "";
@@ -517,9 +474,9 @@ void CMain::UpdateToDecimalStr(bool resetStr)
 	if (isDec)
 		numToEnter = wxAtof(currentLabel);
 	else if (isBin)
-		numToEnter = BinaryToDecimal((int)wxAtof(currentLabel));
+		numToEnter = convert.BinaryToDecimal((int)wxAtof(currentLabel));
 	else if (isHex)
-		numToEnter = HexToDecimal(currentLabel);
+		numToEnter = convert.HexToDecimal(currentLabel);
 	//update the string
 	wxString numToEnterStr = std::to_string(numToEnter);
 

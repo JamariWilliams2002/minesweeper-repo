@@ -1,8 +1,11 @@
 #include "CalculatorProcessor.h"
 #include "tinyexpr.h"
+#include "BinHexDecConversion.h"
 
 wxString CalculatorProcessor::ProjectedSolution(wxString decStr)
 {
+	//helper class
+	BinHexDecConversion convert;
 	double numResult = 0;
 	wxString strResult;
 	numResult = te_interp(decStr, 0);
@@ -16,11 +19,11 @@ wxString CalculatorProcessor::ProjectedSolution(wxString decStr)
 	}
 	else if (isBin)
 	{
-		numResult = DecimalToBinary((int)numResult);
+		numResult = convert.DecimalToBinary((int)numResult);
 		strResult = wxString::Format(wxT("%i"), (int)numResult);
 	}
 	else //isHex
-		strResult = DecimalToHex((int)numResult);
+		strResult = convert.DecimalToHex((int)numResult);
 
 
 	return strResult;

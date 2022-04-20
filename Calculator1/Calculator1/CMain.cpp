@@ -72,8 +72,9 @@ void CMain::GenerateButtons()
 	wxPoint buttonPos(x, y);
 	//buttonTest = new wxButton(this, wxID_ANY, "this is a button", buttonPos, buttonSize);S
 
-	ButtonFactory factory;
-
+	//CalculatorButtonFactory factory(this, calButtons, fieldRows, fieldCols);
+	//create all buttons
+	//factory.GenerateButtonGrid(buttonSize, x, y);
 	for (int row = 0; row < fieldRows; row++)
 	{
 		for (int col = 0; col < fieldCols; col++)
@@ -82,7 +83,7 @@ void CMain::GenerateButtons()
 			int currentButton = col * fieldRows + row;
 			int buttonID = 1000 + currentButton;
 
-			wxButton* button = factory.test(this, buttonID, buttonPos, buttonSize);
+			wxButton* button = new wxButton(this, buttonID, "", buttonPos, buttonSize);
 
 			calButtons[currentButton] = button;
 

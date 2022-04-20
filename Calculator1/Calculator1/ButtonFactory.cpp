@@ -1,7 +1,10 @@
 #include "ButtonFactory.h"
-CalculatorButtonFactory::CalculatorButtonFactory(wxWindow* mainWindow)
+CalculatorButtonFactory::CalculatorButtonFactory(wxWindow* mainWindow, wxButton** calButtons, int fieldRows, int fieldCols)
 {
 	mMainWindow = mainWindow;
+	mCalButtons = calButtons;	
+	mFieldCols = fieldCols;
+	mFieldRows = fieldRows;
 }
 
 CalculatorButtonFactory::~CalculatorButtonFactory()
@@ -9,6 +12,27 @@ CalculatorButtonFactory::~CalculatorButtonFactory()
 
 }
 
+void CalculatorButtonFactory::GenerateButtonGrid(wxSize buttonSize, int xPos, int yPos)
+{
+	//create button pos
+	wxPoint buttonPos(xPos, yPos);
+
+	mCalButtons = new wxButton * [mFieldRows * mFieldCols];
+	
+	for (int row = 0; row < mFieldRows; row++)
+	{
+		for (int col = 0; col < mFieldCols; col++)
+		{
+			int currentButton = col * mFieldRows+ row;
+			int buttonID = 1000 + currentButton;
+			wxButton* button;
+			//button creation
+			if (true) // 0 button
+				button = Button0(buttonID, buttonPos, buttonSize);
+			mCalButtons[currentButton] = button;
+		}
+	}
+}
 
 #pragma region Numpad
 wxButton* CalculatorButtonFactory::CreateButton(int buttonID, wxPoint buttonPos, wxSize buttonSize, wxString text)

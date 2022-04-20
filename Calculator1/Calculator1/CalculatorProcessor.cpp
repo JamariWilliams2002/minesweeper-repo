@@ -2,30 +2,19 @@
 #include "tinyexpr.h"
 #include "BinHexDecConversion.h"
 
-wxString CalculatorProcessor::ProjectedSolution(wxString decStr)
+CalculatorProcessor::CalculatorProcessor(wxString expression)
 {
-	//helper class
-	BinHexDecConversion convert;
+	ProjectedSolution(expression);
+}
+
+void CalculatorProcessor::ProjectedSolution(wxString decStr)
+{
 	double numResult = 0;
 	wxString strResult;
 	numResult = te_interp(decStr, 0);
-	//back to hex/bin
-	if (isDec)
-	{
-		if (decimalPointClicked || numResult - (int)numResult != 0) //check for double
-			strResult = wxString::Format(wxT("%f"), numResult);
-		else
-			strResult = wxString::Format(wxT("%i"), (int)numResult);
-	}
-	else if (isBin)
-	{
-		numResult = convert.DecimalToBinary((int)numResult);
-		strResult = wxString::Format(wxT("%i"), (int)numResult);
-	}
-	else //isHex
-		strResult = convert.DecimalToHex((int)numResult);
+	strResult = std::to_string(numResult);
 
-
-	return strResult;
+	mResult.AsDouble = numResult;
+	mResult.AswxString = strResult;
 }
 

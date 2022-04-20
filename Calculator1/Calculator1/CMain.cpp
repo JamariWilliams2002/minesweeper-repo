@@ -1,6 +1,7 @@
 #include "CMain.h"
 #include "ButtonFactory.h"
 #include "BinHexDecConversion.h"
+#include "CalculatorProcessor.h"
 #include "tinyexpr.h"
 #include <sstream>
 #include <vector>
@@ -433,6 +434,7 @@ wxString CMain::ProjectedSolution()
 	//		//do math based on the operations
 	//	}
 	//}
+
 
 	numResult = te_interp(prePreviewDecStr, 0);
 	//back to hex/bin

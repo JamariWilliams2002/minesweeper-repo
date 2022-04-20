@@ -92,10 +92,6 @@ private:
 	//helper methods
 	void ResetArithmetic();
 	void ResetPrevAndNextNum();
-	int DecimalToBinary(int decimal);
-	int BinaryToDecimal(int n);
-	std::string DecimalToHex(int num);
-	int HexToDecimal(wxString hex);
 	void ToggleButtonsForBinary();
 	void ToggleButtonsForHex();
 	void UpdatePreview();

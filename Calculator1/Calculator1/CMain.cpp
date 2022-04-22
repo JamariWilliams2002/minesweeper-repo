@@ -274,7 +274,7 @@ void CMain::ToggleButtonsForHex()
 		calButtons[GetButtonIndex(3, 2)]->Disable();
 		calButtons[GetButtonIndex(3, 4)]->Disable();
 	}
-	else if(!isBin)
+	else if (!isBin)
 	{
 		calButtons[GetButtonIndex(0, 1)]->Disable();
 		calButtons[GetButtonIndex(3, 2)]->Enable();
@@ -303,7 +303,7 @@ void CMain::ToggleButtonsForBinary()
 		calButtons[GetButtonIndex(3, 2)]->Disable();
 		calButtons[GetButtonIndex(3, 4)]->Disable();
 	}
-	else if(!isHex)
+	else if (!isHex)
 	{
 		calButtons[GetButtonIndex(3, 2)]->Enable();
 		calButtons[GetButtonIndex(3, 4)]->Enable();
@@ -326,6 +326,7 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 	ResetCurrentNum();
 	//move to next num
 	arithmeticClick = true;
+	decimalPointClicked = false;
 	//display to preview
 	UpdatePreview();
 	//display to display
@@ -378,14 +379,18 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 		if (currentNumFl - (int)currentNumFl == 0) //num is int
 			currentNumStr = wxString::Format(wxT("%i"), (int)currentNumFl);
 		else
-			currentNumStr= wxString::Format(wxT("%f"), currentNumFl);
+			currentNumStr = wxString::Format(wxT("%f"), currentNumFl);
 		calDisplay->SetLabelText(currentNumStr);
-		 
+
 	}
 	else if (calButtons[buttonIndex]->GetLabel() == ".")
 	{
-		decimalPointClicked = true;
-		
+		if (decimalPointClicked == false)
+		{
+			decimalPointClicked = true;
+			currentNumStr += ".";
+			calDisplay->SetLabel(currentNumStr);
+		}
 	}
 }
 

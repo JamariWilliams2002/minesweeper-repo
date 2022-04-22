@@ -12,12 +12,13 @@ namespace ClockLecture
 {
     public partial class Form1 : Form
     {
-
         public Form1()
         {
             InitializeComponent();
             Clock clock = new Clock();
             clock.TimeUpdatedHandler += Tick;
+            Alarm alarm1 = new Alarm(DateTime.Now.AddSeconds(10));
+            clock.TimeUpdatedHandler += alarm1.CheckFire;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -26,9 +27,15 @@ namespace ClockLecture
         }
         public void Tick(DateTime time)
         {
-            Invoke(new MethodInvoker(() =>{
+            Invoke(new MethodInvoker(() =>
+            {
                 clockDisplay.Text = DateTime.Now.ToString("HH::mm::ss");
             }));
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

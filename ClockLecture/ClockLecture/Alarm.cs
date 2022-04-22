@@ -6,21 +6,38 @@ using System.Threading.Tasks;
 
 namespace ClockLecture
 {
-    class Alarm
+    public class Alarm
     {
+        public delegate void AlarmUpdate(DateTime time);
+        public event AlarmUpdate AlarmUpdateHandler;
+
+        //private fields
         DateTime mAlarmTime;
         bool alarmOn;
-        Alarm(DateTime alarmTime)
+        public Alarm(DateTime alarmTime)
         {
             mAlarmTime = alarmTime;
-            alarmOn = true;
-            SetAlarm();
+            TurnOn();
         }
-        public void SetAlarm()
+        //check to see if the alarm should fire
+        public void CheckFire(DateTime time)
         {
-            if (alarmOn)
-            {
+            if (!alarmOn)
+                return;
 
+            if(time == mAlarmTime)
+            {
+                if(mAlarmTime > time)
+                {
+                    TurnOff();
+                    Task.Run(() =>
+                    {
+                        for (int i = 0; i < 20; i++)
+                        {
+                            Console.Beep();
+                        }
+                    });
+                }
             }
         }
         public void SetAlarm(DateTime alarmTime)

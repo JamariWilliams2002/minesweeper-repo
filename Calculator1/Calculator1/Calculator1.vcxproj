@@ -24,6 +24,7 @@
     <ClInclude Include="CalculatorProcessor.h" />
     <ClInclude Include="CApp.h" />
     <ClInclude Include="CMain.h" />
+    <ClInclude Include="IBaseCommand.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="tinyexpr.h" />
   </ItemGroup>
@@ -33,6 +34,7 @@
     <ClCompile Include="CalculatorProcessor.cpp" />
     <ClCompile Include="CApp.cpp" />
     <ClCompile Include="CMain.cpp" />
+    <ClCompile Include="IBaseCommand.cpp" />
     <ClCompile Include="tinyexpr.c" />
   </ItemGroup>
   <ItemGroup>

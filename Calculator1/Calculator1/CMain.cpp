@@ -388,7 +388,7 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 		if (decimalPointClicked == false)
 		{
 			decimalPointClicked = true;
-			currentNumStr += ".";
+			currentNumStr += "."; 
 			calDisplay->SetLabel(currentNumStr);
 		}
 	}

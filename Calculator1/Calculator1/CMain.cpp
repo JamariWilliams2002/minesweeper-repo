@@ -218,8 +218,6 @@ void CMain::OnClickNumbers(wxCommandEvent& evt)
 	UpdatePreview();
 }
 
-
-
 void CMain::OnClickBinHexDec(wxCommandEvent& evt)
 {
 	int row = (evt.GetId() - 1000) % fieldRows;

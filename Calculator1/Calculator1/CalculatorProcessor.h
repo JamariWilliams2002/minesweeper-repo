@@ -13,7 +13,7 @@ public:
 	}
 private: 
 	std::vector<IBaseCommand*> commands;
-
+	std::vector<double> nums;
 	//conversion functions
 	//only valid constructor
 	CalculatorProcessor(wxString expression);
@@ -21,13 +21,21 @@ private:
 
 	//Pass in the whole string, include all arithmetic. Will return a decimal number
 	void ProjectedSolution(wxString decStr);
-	
+	void NewProjectedSolution(wxString decStr);
+
+	bool IsOperator(char c);
+	bool IsNumber(char c);
+	int GetPrecedence(char c);
+
+
+	void PushNums();
 	void PushAddCommand();
 	void PushSubtractCommand();
 	void PushMultiplyCommand();
 	void PushDivideCommand();
 	void PushModulusCommand();
-	void PushClearCommandVector();
+	void ClearCommandVector();
+	void ClearNums();
 public:
 	double resultAsDouble;
 	wxString resultAswxString;

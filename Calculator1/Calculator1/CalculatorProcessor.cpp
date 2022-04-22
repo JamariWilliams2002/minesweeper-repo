@@ -12,6 +12,8 @@ CalculatorProcessor::CalculatorProcessor(wxString expression)
 	ProjectedSolution(expression);
 }
 
+#pragma region Solution
+
 void CalculatorProcessor::ProjectedSolution(wxString decStr)
 {
 	double numResult = 0;
@@ -23,6 +25,73 @@ void CalculatorProcessor::ProjectedSolution(wxString decStr)
 	resultAswxString = strResult;
 }
 
+void CalculatorProcessor::NewProjectedSolution(wxString decStr)
+{
+	char op;
+	std::string nums;
+	for (int i = 0; i < decStr.length(); i++)
+	{
+		if (IsOperator(decStr[i])) //found operator
+		{
+
+		}
+		else if (IsNumber(decStr[i])) //found a number
+		{
+			int nextNum = i;
+			while (IsNumber(decStr[i])) //get the remaining digits in that number
+			{
+
+			}
+		}
+		//if it's a space, then continue
+	}
+}
+
+bool CalculatorProcessor::IsOperator(char c)
+{
+	bool result;
+	if (c == '+' || c == '-' || c == '*' || c == '/' || c == '%')
+		result = true;
+	else
+		result = false;
+	return result;
+}
+bool CalculatorProcessor::IsNumber(char c)
+{
+	bool result;
+	if (c >= '0' && c <= '9')
+		result = true;
+	else
+		result = false;
+	return result;
+}
+
+int CalculatorProcessor::GetPrecedence(char c)
+{
+	switch (c)
+	{
+
+		case '+':
+		case '-':
+			return 3;
+		case '*':
+		case '/':
+		case '%':
+			return 2;
+		case '(':
+		case ')':
+			return 3;
+		default: 
+			return -1;
+	}
+}
+
+#pragma endregion
+
+
+
+
+#pragma region Commands 
 void CalculatorProcessor::PushAddCommand()
 {
 	commands.push_back(new AddCommand(1, 2));
@@ -43,8 +112,10 @@ void CalculatorProcessor::PushModulusCommand()
 {
 	commands.push_back(new ModulusCommand(1, 2));
 }
-void CalculatorProcessor::PushClearCommandVector()
+void CalculatorProcessor::ClearCommandVector()
 {
 	for (int i = 0; i < commands.size(); i++)
 		commands.pop_back();
 }
+#pragma endregion
+

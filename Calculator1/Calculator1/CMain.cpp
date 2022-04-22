@@ -190,10 +190,6 @@ void CMain::ButtonSpecs()
 
 }
 
-
-
-
-
 void CMain::OnClickNumbers(wxCommandEvent& evt)
 {
 	int row = (evt.GetId() - 1000) % fieldRows;
@@ -273,9 +269,17 @@ void CMain::ToggleButtonsForHex()
 	}
 	//handle f
 	if (isHex)
+	{
 		calButtons[GetButtonIndex(0, 1)]->Enable();
-	else
+		calButtons[GetButtonIndex(3, 2)]->Disable();
+		calButtons[GetButtonIndex(3, 4)]->Disable();
+	}
+	else if(!isBin)
+	{
 		calButtons[GetButtonIndex(0, 1)]->Disable();
+		calButtons[GetButtonIndex(3, 2)]->Enable();
+		calButtons[GetButtonIndex(3, 4)]->Enable();
+	}
 
 }
 
@@ -293,11 +297,17 @@ void CMain::ToggleButtonsForBinary()
 				calButtons[GetButtonIndex(rows, cols)]->Enable();
 		}
 	}
-	//no plus/minus
+	//no plus/minus or decimal
 	if (isBin)
+	{
 		calButtons[GetButtonIndex(3, 2)]->Disable();
-	else
+		calButtons[GetButtonIndex(3, 4)]->Disable();
+	}
+	else if(!isHex)
+	{
 		calButtons[GetButtonIndex(3, 2)]->Enable();
+		calButtons[GetButtonIndex(3, 4)]->Enable();
+	}
 }
 
 void CMain::OnClickArithmetic(wxCommandEvent& evt)

@@ -374,32 +374,18 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 	}
 	else if (calButtons[buttonIndex]->GetLabel() == "+/-")
 	{
-		if (onNextNum)
-		{
-			nextNumFl = -nextNumFl;
-			nextNumStr = wxString::Format(wxT("%f"), nextNumFl);
-			calDisplay->SetLabelText(nextNumStr);
-		}
+		currentNumFl = currentNumFl * -1;
+		if (currentNumFl - (int)currentNumFl == 0) //num is int
+			currentNumStr = wxString::Format(wxT("%i"), (int)currentNumFl);
 		else
-		{
-			prevNumFl = -prevNumFl;
-			prevNumStr = wxString::Format(wxT("%f"), prevNumFl);
-			calDisplay->SetLabelText(prevNumStr);
-		}
+			currentNumStr= wxString::Format(wxT("%f"), currentNumFl);
+		calDisplay->SetLabelText(currentNumStr);
+		 
 	}
 	else if (calButtons[buttonIndex]->GetLabel() == ".")
 	{
 		decimalPointClicked = true;
-		if (onNextNum)
-		{
-			nextNumStr = nextNumStr + ".";
-			calDisplay->SetLabelText(nextNumStr);
-		}
-		else
-		{
-			prevNumStr = prevNumStr + ".";
-			calDisplay->SetLabelText(prevNumStr);
-		}
+		
 	}
 }
 

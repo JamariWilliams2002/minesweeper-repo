@@ -28,7 +28,6 @@ namespace ClockLecture
                     {
                         if (((latestTime - now).TotalSeconds) >= 1)
                         {
-
                             latestTime = now;
                             TimeUpdatedHandler(now);
                         }

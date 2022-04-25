@@ -319,8 +319,15 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 	int buttonIndex = GetButtonIndex(row, col);
 	wxString label = calButtons[buttonIndex]->GetLabel();
 	clickedAction = label;
-	//increment num of arithmetic
-	enteredOperations.push_back(clickedAction);
+	CalculatorProcessor* calc = &CalculatorProcessor::GetInstance(previewDecStr);
+
+
+	//determine which pushback needs to be called
+	if (calButtons[buttonIndex]->GetLabel() == "+")
+	{
+		calc->PushAddCommand(currentNumFl);
+	}
+
 	ResetCurrentNum();
 	//move to next num
 	arithmeticClick = true;
@@ -403,35 +410,6 @@ wxString CMain::ProjectedSolution()
 	double numResult = 0;
 	wxString strResult;
 	BinHexDecConversion convert;
-	//wxString calDisplayStr = calDisplay->GetValue();
-	//wxString currentOperation;
-	//std::vector<wxString> sortedOperations;
-	//std::vector<int> indeciesOfOperations;
-	//wxString operationToFind;
-	//float num1 = 0, num2 = 0;
-
-	////iterator to store position
-	//std::vector<wxString>::iterator enteredOperationsIter;
-	//std::vector<wxString>::iterator fullExpressionIter;
-
-
-	////sort the list of operations
-	//for (int i = 0; i < enteredOperations.size(); i++)
-	//{
-	//	for (int j = 0; j < operationsInPemdas.size(); j++)
-	//	{
-	//		operationToFind = operationsInPemdas[j];
-	//		enteredOperationsIter = std::find(enteredOperations.begin(), enteredOperations.end(), operationToFind);
-	//		//found the operation
-	//		if (enteredOperationsIter != enteredOperations.end())
-	//		{
-	//			sortedOperations.push_back(operationToFind);
-	//			//find numbers between the found operations
-	//			break;
-	//		}
-	//		//do math based on the operations
-	//	}
-	//}
 
 	CalculatorProcessor* calc = &CalculatorProcessor::GetInstance(previewDecStr);
 	numResult = calc->resultAsDouble;
@@ -526,8 +504,6 @@ wxString CMain::UpdateStrings(wxString strToUpdate)
 		arithmeticClick = false;
 	}
 	else if (numClick && onNextNum) //update the string that is shown in preview
-	{
 		updatedStr = prePreviewStr + currentLabel;
-	}
 	return updatedStr;
 }

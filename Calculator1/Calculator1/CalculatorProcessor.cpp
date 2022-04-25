@@ -27,24 +27,52 @@ void CalculatorProcessor::ProjectedSolution(wxString decStr)
 
 void CalculatorProcessor::NewProjectedSolution(wxString decStr)
 {
-	char op;
-	std::string nums;
+	//decStr = "124";
+	char op = 0;
+	std::string nums = "";
 	for (int i = 0; i < decStr.length(); i++)
 	{
-		if (IsOperator(decStr[i])) //found operator
+		char currentChar = decStr[i];
+		if (IsOperator(currentChar)) //found operator
 		{
-
+			op = currentChar;
 		}
-		else if (IsNumber(decStr[i])) //found a number
+		else if (IsNumber(currentChar)) //found a number
 		{
-			int nextNum = i;
-			while (IsNumber(decStr[i])) //get the remaining digits in that number
+			int nextNum = i, nextIndex = 1;
+
+			do//get the remaining digits in that number
 			{
-
-			}
+				nums += (char)nextNum;
+				//add the number to the string
+				nextNum = decStr[i + nextIndex];
+			} while (IsNumber(nextNum));
 		}
+		else if (currentChar == ' ')
+			continue;
 		//if it's a space, then continue
 	}
+}
+
+void CalculatorProcessor::NewestProjectedSolution()
+{
+	wxString decStr, clickedAction;
+	//build the string
+	for (size_t i = 0; i < commands.size(); i++)
+	{
+		if (commands.size() - 1 != i)
+		{
+			clickedAction = commands[i]->Execute();
+		}
+		else
+		{
+			clickedAction = "";
+			i++;
+		}
+		decStr = std::to_string(nums[i]) + clickedAction;
+	}
+	//call projected solution with the created decStr
+	ProjectedSolution(decStr);
 }
 
 bool CalculatorProcessor::IsOperator(char c)
@@ -71,18 +99,18 @@ int CalculatorProcessor::GetPrecedence(char c)
 	switch (c)
 	{
 
-		case '+':
-		case '-':
-			return 3;
-		case '*':
-		case '/':
-		case '%':
-			return 2;
-		case '(':
-		case ')':
-			return 3;
-		default: 
-			return -1;
+	case '+':
+	case '-':
+		return 3;
+	case '*':
+	case '/':
+	case '%':
+		return 2;
+	case '(':
+	case ')':
+		return 3;
+	default:
+		return -1;
 	}
 }
 
@@ -92,30 +120,24 @@ int CalculatorProcessor::GetPrecedence(char c)
 
 
 #pragma region Commands 
-void CalculatorProcessor::PushAddCommand()
+void CalculatorProcessor::PushNums(double num)
 {
-	commands.push_back(new AddCommand(1, 2));
+	nums.push_back(num);
 }
-void CalculatorProcessor::PushSubtractCommand()
+
+void CalculatorProcessor::PushAddCommand(double num)
 {
-	commands.push_back(new SubtractCommand(1, 2));
+	commands.push_back(new AddCommand());
+	nums.push_back(num);
 }
-void CalculatorProcessor::PushMultiplyCommand()
+void CalculatorProcessor::ClearNums()
 {
-	commands.push_back(new MultiplyCommand(1, 2));
-}
-void CalculatorProcessor::PushDivideCommand()
-{
-	commands.push_back(new DivideCommand(1, 2));
-}
-void CalculatorProcessor::PushModulusCommand()
-{
-	commands.push_back(new ModulusCommand(1, 2));
+	nums.clear();
 }
 void CalculatorProcessor::ClearCommandVector()
 {
-	for (int i = 0; i < commands.size(); i++)
-		commands.pop_back();
+	commands.clear();
 }
+
 #pragma endregion
 

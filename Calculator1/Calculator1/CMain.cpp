@@ -352,7 +352,7 @@ void CMain::ResetCurrentNum()
 
 void CMain::UpdatePreview()
 {
-	wxString updatedStr = calPreview->GetLabel();
+	wxString updatedStr = calPreview->GetValue();
 
 	calPreview->SetLabelText(UpdateStrings(updatedStr));
 }
@@ -390,7 +390,9 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 		calDisplay->SetLabelText("");
 		ResetArithmetic();
 		UpdatePreview();
+		UpdateToDecimalStr(true);
 		ClearCalcProcessor();
+		ResetCurrentNum();
 		clearClicked = false;
 	}
 	else if (calButtons[buttonIndex]->GetLabel() == "+/-")
@@ -494,12 +496,18 @@ wxString CMain::UpdateStrings(wxString strToUpdate)
 	wxString currentLabel = calDisplay->GetValue();
 	//early return for when numbers are clicked and nextnum is off
 	if (!arithmeticClick && !equalsClicked && !onNextNum)
+	{
+		prePreviewStr = updatedStr;
 		return updatedStr;
+	}
 	else if (equalsClicked || currentLabel == "")//equalsClicked or calDisplay is an empty string
+	{
+		prePreviewStr = updatedStr;
 		return updatedStr;
+	}
 	else if (clearClicked)
 	{
-		prePreviewStr = "";
+		prePreviewStr = updatedStr;
 		return updatedStr;
 	}
 	else if (numClick && !onNextNum && arithmeticClick) //if the first num was entered, this will only happen once
@@ -533,8 +541,4 @@ void CMain::ClearCalcProcessor()
 	CalculatorProcessor* calc = &CalculatorProcessor::GetInstance(previewDecStr);
 	calc->ClearCommandVector();
 	calc->ClearNums();
-}
-
-void CMain::ClearPreview()
-{
 }

@@ -10,7 +10,7 @@ CApp::~CApp()
 
 bool CApp::OnInit()
 {
-	frame1 = new CMain();
-	frame1->Show();
+	//frame1 = new CMain();
+	//frame1->Show();
 	return true;
 }

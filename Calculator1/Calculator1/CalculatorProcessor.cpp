@@ -56,20 +56,22 @@ void CalculatorProcessor::NewProjectedSolution(wxString decStr)
 
 void CalculatorProcessor::NewestProjectedSolution()
 {
-	wxString decStr, clickedAction;
+	wxString decStr = "", clickedAction;
+	int count = 0;
 	//build the string
 	for (size_t i = 0; i < commands.size(); i++)
 	{
-		if (commands.size() - 1 != i)
+		//count = i + 1;
+		clickedAction = commands[i]->Execute();
+		decStr = decStr + std::to_string(nums[i]) + clickedAction;
+		if (commands.size() - 1 == i)
 		{
-			clickedAction = commands[i]->Execute();
+			decStr = decStr + std::to_string(nums[i + 1]);
+			/*if (commands.size() > 1)
+			{
+				decStr = decStr + commands[i + 1]->Execute() + std::to_string(nums[i + 2]);
+			}*/
 		}
-		else
-		{
-			clickedAction = "";
-			i++;
-		}
-		decStr = std::to_string(nums[i]) + clickedAction;
 	}
 	//call projected solution with the created decStr
 	ProjectedSolution(decStr);

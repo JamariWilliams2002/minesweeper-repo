@@ -363,6 +363,10 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 		equalsClicked = true;
 		if (onNextNum)
 		{
+			//grab the last number
+			CalculatorProcessor* calc = &CalculatorProcessor::GetInstance(previewDecStr);
+			calc->PushNums(currentNumFl);
+			calc->NewestProjectedSolution();
 			UpdateToDecimalStr();
 			strResult = ProjectedSolution();
 			calDisplay->SetLabelText(strResult);
@@ -371,6 +375,8 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 			onNextNum = false;
 			decimalPointClicked = false;
 			UpdatePreview();
+			calc->ClearCommandVector();
+			calc->ClearNums();
 		}
 	}
 	else if (calButtons[buttonIndex]->GetLabel() == "clear")
@@ -393,7 +399,7 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 		if (decimalPointClicked == false)
 		{
 			decimalPointClicked = true;
-			currentNumStr += "."; 
+			currentNumStr += ".";
 			calDisplay->SetLabel(currentNumStr);
 		}
 	}

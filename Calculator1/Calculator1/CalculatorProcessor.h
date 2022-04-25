@@ -8,10 +8,12 @@ public:
 	static CalculatorProcessor& GetInstance(wxString expression)
 	{
 		static CalculatorProcessor calc;
-		calc.ProjectedSolution(expression);
 		return calc;
 	}
-private: 
+	void NewestProjectedSolution();	
+	void ClearCommandVector();
+	void ClearNums();
+private:
 	std::vector<IBaseCommand*> commands;
 	std::vector<double> nums;
 	//conversion functions
@@ -24,7 +26,6 @@ private:
 	//Pass in the whole string, include all arithmetic. Will return a decimal number
 	void ProjectedSolution(wxString decStr);
 	void NewProjectedSolution(wxString decStr);
-	void NewestProjectedSolution();
 
 	bool IsOperator(char c);
 	bool IsNumber(char c);
@@ -80,8 +81,6 @@ public:
 	void PushMultiplyCommand(double num);
 	void PushDivideCommand(double num);
 	void PushModulusCommand(double num);
-	void ClearCommandVector();
-	void ClearNums();
 	double resultAsDouble;
 	wxString resultAswxString;
 	CalculatorProcessor(CalculatorProcessor const&) = delete;

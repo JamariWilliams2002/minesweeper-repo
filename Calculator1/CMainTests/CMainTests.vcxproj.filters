@@ -44,5 +44,8 @@
     <ClInclude Include="..\Calculator1\tinyexpr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CalculatorProcessorTests.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

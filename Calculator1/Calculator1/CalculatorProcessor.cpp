@@ -1,7 +1,7 @@
 #include "CalculatorProcessor.h"
 #include "tinyexpr.h"
-#include "BinHexDecConversion.h"
 #include "IBaseCommand.h"
+#include <sstream>
 
 CalculatorProcessor::CalculatorProcessor()
 {
@@ -119,8 +119,6 @@ int CalculatorProcessor::GetPrecedence(char c)
 #pragma endregion
 
 
-
-
 #pragma region Commands 
 void CalculatorProcessor::PushNums(double num)
 {
@@ -171,6 +169,73 @@ void CalculatorProcessor::ClearCommandVector()
 }
 
 #pragma endregion
+
+#pragma region Conversions
+int CalculatorProcessor::DecimalToBinary(int decimal)
+{
+	int binary = 0, remainder, product = 1;
+
+	while (decimal != 0) {
+		remainder = decimal % 2;
+		binary = binary + (remainder * product);
+		decimal = decimal / 2;
+		product *= 10;
+	}
+	return binary;
+}
+
+std::string CalculatorProcessor::DecimalToHex(int num)
+{
+	std::stringstream ss;
+	ss << std::hex << num; // int decimal_value
+	std::string res(ss.str());
+	return res;
+}
+
+int CalculatorProcessor::BinaryToDecimal(int n)
+{
+	int num = n;
+	int dec_value = 0;
+
+	// Initializing base value to 1, i.e 2^0
+	int base = 1;
+
+	int temp = num;
+	while (temp) {
+		int last_digit = temp % 10;
+		temp = temp / 10;
+
+		dec_value += last_digit * base;
+
+		base = base * 2;
+	}
+
+	return dec_value;
+}
+
+int CalculatorProcessor::HexToDecimal(wxString hex)
+{
+	int result;
+	std::stringstream ss;
+	ss << hex;
+	ss >> std::hex >> result;
+
+	return result;
+}
+
+std::string CalculatorProcessor::BinToHex(int n)
+{
+	int result = BinaryToDecimal(n);
+	return DecimalToHex(result);
+}
+
+int CalculatorProcessor::HexToBinary(wxString hex)
+{
+	int result = HexToDecimal(hex);
+	return DecimalToBinary(result);
+}
+#pragma endregion
+
 
 CalculatorProcessor::~CalculatorProcessor()
 {

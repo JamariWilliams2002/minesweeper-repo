@@ -321,6 +321,12 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 	clickedAction = label;
 	CalculatorProcessor* calc = &CalculatorProcessor::GetInstance(previewDecStr);
 
+	//conversion
+	BinHexDecConversion convert;
+	if (isBin)
+		currentNumFl = convert.BinaryToDecimal(currentNumFl);
+	else if (isHex)
+		currentNumFl = convert.HexToDecimal(calDisplay->GetValue());
 
 	//determine which pushback needs to be called
 	if (calButtons[buttonIndex]->GetLabel() == "+")

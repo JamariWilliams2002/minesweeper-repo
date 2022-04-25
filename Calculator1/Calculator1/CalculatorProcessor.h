@@ -1,5 +1,6 @@
 #pragma once
-#include "../wx/wx.h"
+#define _CRT_SECURE_NO_WARNINGS 
+#include "wx/wx.h"
 
 class IBaseCommand;
 class CalculatorProcessor

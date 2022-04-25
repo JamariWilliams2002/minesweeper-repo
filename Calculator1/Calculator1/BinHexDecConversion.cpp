@@ -58,3 +58,15 @@ int BinHexDecConversion::HexToDecimal(wxString hex)
 
 	return result;
 }
+
+std::string BinHexDecConversion::BinToHex(int n)
+{
+	int result = BinaryToDecimal(n);
+	return DecimalToHex(result);
+}
+
+int BinHexDecConversion::HexToBinary(wxString hex)
+{
+	int result = HexToDecimal(hex);
+	return DecimalToBinary(result);
+}

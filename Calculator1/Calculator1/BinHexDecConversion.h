@@ -11,5 +11,8 @@ public:
 	int BinaryToDecimal(int n);
 	std::string DecimalToHex(int num);
 	int HexToDecimal(wxString hex);
+	//the following functions rely on the functions above
+	std::string BinToHex(int n);
+	int HexToBinary(wxString hex);
 };
 

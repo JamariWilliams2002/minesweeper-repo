@@ -16,9 +16,10 @@
 
 
 //RETURNING NOTES:
-//the decimal point doesn't work properly
-// the plusminus button doesn't work properly
-//do the plusminus first, that's a part of the rubric
+// REMEMBER: if trying to do the tests, go in CApp.cpp and mark the #if with a zero
+// Will get a linker error if this is marked otherwise
+// 
+// 
 
 
 

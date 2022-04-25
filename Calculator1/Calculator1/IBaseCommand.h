@@ -3,7 +3,7 @@
 class IBaseCommand
 {
 public:
-	virtual wxString Execute() = 0;
+	virtual  wxString  Execute() = 0;
 };
 
 class AddCommand : public IBaseCommand
@@ -14,64 +14,57 @@ public:
 	{
 		
 	}
-	wxString Execute()
+	 wxString  Execute()
 	{
 		return " + ";
 	}
 };
 
-//class SubtractCommand: public IBaseCommand
-//{
-//public:
-//	SubtractCommand(double num1, double num2)
-//	{
-//		mNum1 = num1;
-//		mNum2 = num2;
-//	}
-//	double Execute(bool isFirstNum)
-//	{
-//		return mNum1 - mNum2;
-//	}
-//};
-//
-//class MultiplyCommand: public IBaseCommand
-//{
-//	public:
-//	MultiplyCommand(double num1, double num2)
-//	{
-//		mNum1 = num1;
-//		mNum2 = num2;
-//	}
-//	double Execute(bool isFirstNum)
-//	{
-//		return mNum1 * mNum2;
-//	}
-//};
-//
-//class DivideCommand : public IBaseCommand
-//{
-//	public:
-//	DivideCommand(double num1, double num2)
-//	{
-//		mNum1 = num1;
-//		mNum2 = num2;
-//	}
-//	double Execute(bool isFirstNum)
-//	{
-//		return mNum1 / mNum2;
-//	}
-//};
-//
-//class ModulusCommand : public IBaseCommand
-//{
-//	public:
-//	ModulusCommand(double num1, double num2)
-//	{
-//		mNum1 = num1;
-//		mNum2 = num2;
-//	}
-//	double Execute(bool isFirstNum)
-//	{
-//		return (int)mNum1 % (int)mNum2;
-//	}
-//};
+class SubtractCommand: public IBaseCommand
+{
+public:
+	SubtractCommand()
+	{
+
+	}
+	 wxString Execute()
+	{
+		return " - ";
+	}
+};
+
+class MultiplyCommand: public IBaseCommand
+{
+	public:
+	MultiplyCommand()
+	{
+	}
+	wxString Execute()
+	{
+		return " * ";
+	}
+};
+
+class DivideCommand : public IBaseCommand
+{
+	public:
+	DivideCommand()
+	{
+	}
+	 wxString Execute()
+	{
+		return " / ";
+	}
+};
+
+class ModulusCommand : public IBaseCommand
+{
+	public:
+	ModulusCommand()
+	{
+	}
+	 wxString Execute()
+	{
+		return " % ";
+	}
+};

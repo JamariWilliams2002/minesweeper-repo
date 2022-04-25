@@ -49,6 +49,7 @@ private:
 	wxString nextNumStr = "";
 	bool equalsClicked = false;
 	bool negPosButtonClicked = false;
+	bool clearClicked = false;
 	bool decimalPointClicked = false;
 	bool isBin = false;
 	bool isDec = true;
@@ -101,6 +102,8 @@ private:
 	void ResetCurrentNum();
 	void UpdateToDecimalStr(bool resetStr = false);
 	wxString UpdateStrings(wxString strToUpdate);
+	void ClearCalcProcessor();
+	void ClearPreview();
 public:
 	//constructor/destructor
 	CMain();

@@ -132,14 +132,47 @@ void CalculatorProcessor::PushAddCommand(double num)
 	commands.push_back(new AddCommand());
 	nums.push_back(num);
 }
+
+void CalculatorProcessor::PushSubtractCommand(double num)
+{
+	commands.push_back(new SubtractCommand());
+	nums.push_back(num);
+}
+
+void CalculatorProcessor::PushMultiplyCommand(double num)
+{
+	commands.push_back(new MultiplyCommand());
+	nums.push_back(num);
+}
+
+void CalculatorProcessor::PushDivideCommand(double num)
+{
+	commands.push_back(new DivideCommand());
+	nums.push_back(num);
+}
+void CalculatorProcessor::PushModulusCommand(double num)
+{
+	commands.push_back(new ModulusCommand());
+	nums.push_back(num);
+}
+
 void CalculatorProcessor::ClearNums()
 {
 	nums.clear();
 }
 void CalculatorProcessor::ClearCommandVector()
 {
+	//clear allocated memory
+	for (size_t i = 0; i < commands.size(); i++)
+	{
+		delete commands[i];
+	}
 	commands.clear();
 }
 
 #pragma endregion
 
+CalculatorProcessor::~CalculatorProcessor()
+{
+	ClearCommandVector();
+}

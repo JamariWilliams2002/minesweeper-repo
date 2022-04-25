@@ -324,9 +324,15 @@ void CMain::OnClickArithmetic(wxCommandEvent& evt)
 
 	//determine which pushback needs to be called
 	if (calButtons[buttonIndex]->GetLabel() == "+")
-	{
 		calc->PushAddCommand(currentNumFl);
-	}
+	else if (calButtons[buttonIndex]->GetLabel() == "-")
+		calc->PushSubtractCommand(currentNumFl);
+	else if (calButtons[buttonIndex]->GetLabel() == "*")
+		calc->PushMultiplyCommand(currentNumFl);
+	else if (calButtons[buttonIndex]->GetLabel() == "/")
+		calc->PushDivideCommand(currentNumFl);
+	else if (calButtons[buttonIndex]->GetLabel() == "%")
+		calc->PushModulusCommand(currentNumFl);
 
 	ResetCurrentNum();
 	//move to next num
@@ -346,7 +352,7 @@ void CMain::ResetCurrentNum()
 
 void CMain::UpdatePreview()
 {
-	wxString updatedStr = calPreview->GetValue();
+	wxString updatedStr = calPreview->GetLabel();
 
 	calPreview->SetLabelText(UpdateStrings(updatedStr));
 }
@@ -375,14 +381,17 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 			onNextNum = false;
 			decimalPointClicked = false;
 			UpdatePreview();
-			calc->ClearCommandVector();
-			calc->ClearNums();
+			ClearCalcProcessor();
 		}
 	}
 	else if (calButtons[buttonIndex]->GetLabel() == "clear")
 	{
+		clearClicked = true;
 		calDisplay->SetLabelText("");
 		ResetArithmetic();
+		UpdatePreview();
+		ClearCalcProcessor();
+		clearClicked = false;
 	}
 	else if (calButtons[buttonIndex]->GetLabel() == "+/-")
 	{
@@ -487,7 +496,12 @@ wxString CMain::UpdateStrings(wxString strToUpdate)
 	if (!arithmeticClick && !equalsClicked && !onNextNum)
 		return updatedStr;
 	else if (equalsClicked || currentLabel == "")//equalsClicked or calDisplay is an empty string
-		updatedStr = "";
+		return updatedStr;
+	else if (clearClicked)
+	{
+		prePreviewStr = "";
+		return updatedStr;
+	}
 	else if (numClick && !onNextNum && arithmeticClick) //if the first num was entered, this will only happen once
 	{
 		updatedStr = currentLabel + " " + clickedAction + " ";
@@ -512,4 +526,15 @@ wxString CMain::UpdateStrings(wxString strToUpdate)
 	else if (numClick && onNextNum) //update the string that is shown in preview
 		updatedStr = prePreviewStr + currentLabel;
 	return updatedStr;
+}
+
+void CMain::ClearCalcProcessor()
+{
+	CalculatorProcessor* calc = &CalculatorProcessor::GetInstance(previewDecStr);
+	calc->ClearCommandVector();
+	calc->ClearNums();
+}
+
+void CMain::ClearPreview()
+{
 }

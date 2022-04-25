@@ -13,6 +13,7 @@ public:
 	void NewestProjectedSolution();	
 	void ClearCommandVector();
 	void ClearNums();
+	~CalculatorProcessor();
 private:
 	std::vector<IBaseCommand*> commands;
 	std::vector<double> nums;

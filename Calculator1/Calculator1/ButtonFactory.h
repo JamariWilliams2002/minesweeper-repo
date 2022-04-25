@@ -1,5 +1,5 @@
 #pragma once
-#include "wx/wx.h"
+#include "../wx/wx.h"
 class CalculatorButtonFactory
 {
 private:
@@ -12,6 +12,7 @@ private:
 public:
 	//constructors
 	CalculatorButtonFactory(wxWindow* mainWindow, wxButton** calButtons, int fieldRows, int fieldCols);
+	CalculatorButtonFactory();
 	~CalculatorButtonFactory();
 	wxButton* CreateButton(int buttonID, wxPoint buttonPos, wxSize buttonSize, wxString text = "this is a button");
 

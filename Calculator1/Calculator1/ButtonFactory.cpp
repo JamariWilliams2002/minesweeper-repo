@@ -7,6 +7,11 @@ CalculatorButtonFactory::CalculatorButtonFactory(wxWindow* mainWindow, wxButton*
 	mFieldCols = fieldCols;
 }
 
+CalculatorButtonFactory::CalculatorButtonFactory()
+{
+
+}
+
 CalculatorButtonFactory::~CalculatorButtonFactory()
 {
 

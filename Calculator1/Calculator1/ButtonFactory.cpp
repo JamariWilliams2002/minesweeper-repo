@@ -7,11 +7,18 @@ CalculatorButtonFactory::CalculatorButtonFactory(wxWindow* mainWindow, wxButton*
 	mFieldCols = fieldCols;
 }
 
+CalculatorButtonFactory::CalculatorButtonFactory(wxWindow* window)
+{
+	mMainWindow = window;
+}
+
+//destructor
 CalculatorButtonFactory::CalculatorButtonFactory()
 {
 
 }
 
+//destructor
 CalculatorButtonFactory::~CalculatorButtonFactory()
 {
 
@@ -282,9 +289,67 @@ wxButton* CalculatorButtonFactory::Button3()
 	int buttonID = '3'; //ascii code
 	wxPoint p(3, 3);
 	wxSize a(3, 3);
+	wxButton* button = new wxButton(new wxWindow(), buttonID, "3", p, a);
+	button->SetLabel("3");
+	button->SetBackgroundColour((*wxLIGHT_GREY));
 
-	wxButton* button = new wxButton(nullptr, buttonID, "", p, a);
+
 	return button;
 }
 
+wxButton* CalculatorButtonFactory::ButtonMultiply()
+{
+	int buttonID = '*'; //ascii code
+	wxPoint p(3, 3);
+	wxSize a(3, 3);
+
+	wxButton* button = new wxButton(new wxWindow(), buttonID, "*", p, a);
+	button->SetLabel("*");
+	return button;
+}
+
+wxButton* CalculatorButtonFactory::ButtonBinary()
+{
+	int buttonID = 'b'; //ascii code
+	wxPoint p(3, 3);
+	wxSize a(3, 3);
+
+	wxButton* button = new wxButton(new wxWindow(), buttonID, "", p, a);
+	button->SetLabel("bin");
+	return button;
+}
+
+wxButton* CalculatorButtonFactory::ButtonModulus()
+{
+	int buttonID = '%'; //ascii code
+	wxPoint p(3, 3);
+	wxSize a(3, 3);
+
+	wxButton* button = new wxButton(new wxWindow(), buttonID, "*", p, a);
+	button->SetLabel("%");
+	return button;
+}
+
+wxButton* CalculatorButtonFactory::ButtonSubtract()
+{
+	int buttonID = '-'; //ascii code
+	wxPoint p(3, 3);
+	wxSize a(3, 3);
+	wxButton* button = new wxButton(new wxWindow(), buttonID, "", p, a);
+	button->SetLabel("-");
+	button->SetBackgroundColour((*wxLIGHT_GREY));
+
+	return button;
+}
+
+wxButton* CalculatorButtonFactory::ButtonHexA()
+{
+	int buttonID = 'A'; //ascii code
+	wxPoint p(3, 3);
+	wxSize a(3, 3);
+
+	wxButton* button = new wxButton(new wxWindow(), buttonID, "", p, a);
+	button->SetLabel("A");
+	return button;
+}
 #pragma endregion

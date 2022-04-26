@@ -6,8 +6,8 @@ bool ButtonMultiplyLabelCheck();
 bool ButtonBinLabelCheck();
 bool ButtonModulusLabelCheck();
 
-bool ButtonSizeCheck();
-bool ButtonColorDec();
-bool ButtonColorDefault();
-bool ButtonPosition();
+bool ButtonSubtractColor();
+bool Button3ColorDec();
+bool ButtonSubtractIDCheck();
+bool ButtonAIDCheck();
 

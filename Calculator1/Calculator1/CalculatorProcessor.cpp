@@ -118,7 +118,6 @@ int CalculatorProcessor::GetPrecedence(char c)
 
 #pragma endregion
 
-
 #pragma region Commands 
 void CalculatorProcessor::PushNums(double num)
 {

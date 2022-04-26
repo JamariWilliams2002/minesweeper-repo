@@ -1,6 +1,6 @@
 #include "../Calculator1/ButtonFactory.h"
 #include "wx/wx.h"
-bool Button3LabelReturn()
+bool Button3LabelCheck()
 {
 	bool result = true;
 	CalculatorButtonFactory factory;
@@ -33,7 +33,14 @@ bool ButtonMultiplyIDCheck()
 {
 	bool result = true;
 	CalculatorButtonFactory factory;
-	wxButton* button = factory.Button3();
+	wxButton* button = factory.ButtonMultiply();
+	int id = button->GetId();
+
+	//evaluate
+	if (id != '*')
+		result = false;
+
+	//clean up
 
 	return result;
 }
@@ -41,15 +48,22 @@ bool ButtonMultiplyLabelCheck()
 {
 	bool result = true;
 	CalculatorButtonFactory factory;
-	wxButton* button = factory.Button3();
+	wxButton* button = factory.ButtonMultiply();
+	wxString text = button->GetLabel();
 
+	if (text != "*")
+		result = false;
 	return result;
 }
 bool ButtonBinLabelCheck()
 {
 	bool result = true;
 	CalculatorButtonFactory factory;
-	wxButton* button = factory.Button3();
+	wxButton* button = factory.ButtonBinary();
+	wxString text = button->GetLabel();
+
+	if (text != "bin")
+		result = false;
 
 	return result;
 }
@@ -57,40 +71,57 @@ bool ButtonModulusLabelCheck()
 {
 	bool result = true;
 	CalculatorButtonFactory factory;
-	wxButton* button = factory.Button3();
+	wxButton* button = factory.ButtonModulus();
+	wxString text = button->GetLabel();
+
+	if (text != "%")
+		result = false;
 
 	return result;
 }
 
-bool ButtonSizeCheck()
+bool ButtonSubtractColor()
+{
+	bool result = true;
+
+	CalculatorButtonFactory factory;
+
+
+	wxButton* button = factory.ButtonSubtract();
+	
+	if ((*wxLIGHT_GREY) != button->GetBackgroundColour())
+		result = false;
+
+	return result;
+}
+bool Button3ColorDec()
 {
 	bool result = true;
 	CalculatorButtonFactory factory;
 	wxButton* button = factory.Button3();
 
-	return result;
-}
-bool ButtonColorDec()
-{
-	bool result = true;
-	CalculatorButtonFactory factory;
-	wxButton* button = factory.Button3();
+	if ((*wxLIGHT_GREY) != button->GetBackgroundColour())
+		result = false;
 
 	return result;
 }
-bool ButtonColorDefault()
+bool ButtonSubtractIDCheck()
 {
 	bool result = true;
 	CalculatorButtonFactory factory;
-	wxButton* button = factory.Button3();
+	wxButton* button = factory.ButtonSubtract();
 
+	if (button->GetId() != '-')
+		result = false;
 	return result;
 }
-bool ButtonPosition()
+bool ButtonAIDCheck()
 {
 	bool result = true;
 	CalculatorButtonFactory factory;
-	wxButton* button = factory.Button3();
+	wxButton* button = factory.ButtonHexA();
 
+	if(button->GetId() != 'A')
+		result = false;
 	return result;
 }

@@ -14,6 +14,7 @@ private:
 public:
 	//constructors
 	CalculatorButtonFactory(wxWindow* mainWindow, wxButton** calButtons, int fieldRows, int fieldCols);
+	CalculatorButtonFactory(wxWindow* mainWindow);
 	CalculatorButtonFactory();
 	~CalculatorButtonFactory();
 	wxButton* CreateButton(int buttonID, wxPoint buttonPos, wxSize buttonSize, wxString text = "this is a button");
@@ -36,15 +37,20 @@ public:
 	//arithmetic
 	wxButton* ButtonAdd(int buttonID, wxPoint buttonPos, wxSize buttonSize);
 	wxButton* ButtonSubtract(int buttonID, wxPoint buttonPos, wxSize buttonSize);
+	wxButton* ButtonSubtract();
 	wxButton* ButtonMultiply(int buttonID, wxPoint buttonPos, wxSize buttonSize);
+	wxButton* ButtonMultiply();
 	wxButton* ButtonDivide(int buttonID, wxPoint buttonPos, wxSize buttonSize);
 	wxButton* ButtonModulus(int buttonID, wxPoint buttonPos, wxSize buttonSize);
+	wxButton* ButtonModulus();
 	//bin/hex/dec
 	wxButton* ButtonBinary(int buttonID, wxPoint buttonPos, wxSize buttonSize);
+	wxButton* ButtonBinary();
 	wxButton* ButtonDecimal(int buttonID, wxPoint buttonPos, wxSize buttonSize);
 	wxButton* ButtonHexadecimal(int buttonID, wxPoint buttonPos, wxSize buttonSize);
 	//hex buttons
 	wxButton* ButtonHexA(int buttonID, wxPoint buttonPos, wxSize buttonSize);
+	wxButton* ButtonHexA();
 	wxButton* ButtonHexB(int buttonID, wxPoint buttonPos, wxSize buttonSize);
 	wxButton* ButtonHexC(int buttonID, wxPoint buttonPos, wxSize buttonSize);
 	wxButton* ButtonHexD(int buttonID, wxPoint buttonPos, wxSize buttonSize);

@@ -21,7 +21,7 @@ CalculatorButtonFactory::CalculatorButtonFactory()
 //destructor
 CalculatorButtonFactory::~CalculatorButtonFactory()
 {
-
+	ClearMemory();
 }
 
 void CalculatorButtonFactory::GenerateButtonGrid(wxSize buttonSize, int xPos, int yPos)
@@ -289,7 +289,10 @@ wxButton* CalculatorButtonFactory::Button3()
 	int buttonID = '3'; //ascii code
 	wxPoint p(3, 3);
 	wxSize a(3, 3);
-	wxButton* button = new wxButton(new wxWindow(), buttonID, "3", p, a);
+	wxWindow* window = new wxWindow();
+	windowV.push_back(window);
+
+	wxButton* button = new wxButton(window, buttonID, "3", p, a);
 	button->SetLabel("3");
 	button->SetBackgroundColour((*wxLIGHT_GREY));
 
@@ -303,7 +306,10 @@ wxButton* CalculatorButtonFactory::ButtonMultiply()
 	wxPoint p(3, 3);
 	wxSize a(3, 3);
 
-	wxButton* button = new wxButton(new wxWindow(), buttonID, "*", p, a);
+	wxWindow* window = new wxWindow();
+	windowV.push_back(window);
+
+	wxButton* button = new wxButton(window, buttonID, "*", p, a);
 	button->SetLabel("*");
 	return button;
 }
@@ -314,7 +320,10 @@ wxButton* CalculatorButtonFactory::ButtonBinary()
 	wxPoint p(3, 3);
 	wxSize a(3, 3);
 
-	wxButton* button = new wxButton(new wxWindow(), buttonID, "", p, a);
+	wxWindow* window = new wxWindow();
+	windowV.push_back(window);
+
+	wxButton* button = new wxButton(window, buttonID, "", p, a);
 	button->SetLabel("bin");
 	return button;
 }
@@ -325,7 +334,10 @@ wxButton* CalculatorButtonFactory::ButtonModulus()
 	wxPoint p(3, 3);
 	wxSize a(3, 3);
 
-	wxButton* button = new wxButton(new wxWindow(), buttonID, "*", p, a);
+	wxWindow* window = new wxWindow();
+	windowV.push_back(window);
+
+	wxButton* button = new wxButton(window, buttonID, "*", p, a);
 	button->SetLabel("%");
 	return button;
 }
@@ -335,7 +347,11 @@ wxButton* CalculatorButtonFactory::ButtonSubtract()
 	int buttonID = '-'; //ascii code
 	wxPoint p(3, 3);
 	wxSize a(3, 3);
-	wxButton* button = new wxButton(new wxWindow(), buttonID, "", p, a);
+
+	wxWindow* window = new wxWindow();
+	windowV.push_back(window);
+
+	wxButton* button = new wxButton(window, buttonID, "", p, a);
 	button->SetLabel("-");
 	button->SetBackgroundColour((*wxLIGHT_GREY));
 
@@ -348,8 +364,19 @@ wxButton* CalculatorButtonFactory::ButtonHexA()
 	wxPoint p(3, 3);
 	wxSize a(3, 3);
 
-	wxButton* button = new wxButton(new wxWindow(), buttonID, "", p, a);
+	wxWindow* window = new wxWindow();
+	windowV.push_back(window);
+
+	wxButton* button = new wxButton(window, buttonID, "", p, a);
 	button->SetLabel("A");
 	return button;
 }
 #pragma endregion
+
+void CalculatorButtonFactory::ClearMemory()
+{
+	for (int i = 0; i < windowV.size(); i++)
+		delete windowV[i];
+	windowV.clear();
+}
+

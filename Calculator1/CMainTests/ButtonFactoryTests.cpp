@@ -11,6 +11,9 @@ bool Button3LabelCheck()
 	if (text != "3")
 		result = false;
 
+	//clean up
+	delete button;
+
 	return result;
 
 }
@@ -25,6 +28,10 @@ bool Button3IDCheck()
 
 	if (id != '3')
 		result = false;
+	
+	//clean up
+	delete button;
+
 	return result;
 }
 
@@ -41,7 +48,7 @@ bool ButtonMultiplyIDCheck()
 		result = false;
 
 	//clean up
-
+	delete button;
 	return result;
 }
 bool ButtonMultiplyLabelCheck()
@@ -53,6 +60,10 @@ bool ButtonMultiplyLabelCheck()
 
 	if (text != "*")
 		result = false;
+
+	//clean up
+	delete button;
+
 	return result;
 }
 bool ButtonBinLabelCheck()
@@ -64,6 +75,9 @@ bool ButtonBinLabelCheck()
 
 	if (text != "bin")
 		result = false;
+	
+	//clean up
+	delete button;
 
 	return result;
 }
@@ -76,6 +90,9 @@ bool ButtonModulusLabelCheck()
 
 	if (text != "%")
 		result = false;
+
+	//clean up
+	delete button;
 
 	return result;
 }
@@ -91,6 +108,9 @@ bool ButtonSubtractColor()
 	
 	if ((*wxLIGHT_GREY) != button->GetBackgroundColour())
 		result = false;
+	
+	//clean up
+	delete button;
 
 	return result;
 }
@@ -103,6 +123,9 @@ bool Button3ColorDec()
 	if ((*wxLIGHT_GREY) != button->GetBackgroundColour())
 		result = false;
 
+	//clean up
+	delete button;
+
 	return result;
 }
 bool ButtonSubtractIDCheck()
@@ -113,6 +136,10 @@ bool ButtonSubtractIDCheck()
 
 	if (button->GetId() != '-')
 		result = false;
+
+	//clean up
+	delete button;
+
 	return result;
 }
 bool ButtonAIDCheck()
@@ -123,5 +150,9 @@ bool ButtonAIDCheck()
 
 	if(button->GetId() != 'A')
 		result = false;
+
+	//clean up
+	delete button;
+
 	return result;
 }

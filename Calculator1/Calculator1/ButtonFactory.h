@@ -7,6 +7,7 @@ class CalculatorButtonFactory
 private:
 	wxWindow* mMainWindow;
 	wxButton** mCalButtons;
+	std::vector<wxWindow*> windowV;
 	int mFieldRows;
 	int mFieldCols;
 	//garbage code, don't use
@@ -17,6 +18,7 @@ public:
 	CalculatorButtonFactory(wxWindow* mainWindow);
 	CalculatorButtonFactory();
 	~CalculatorButtonFactory();
+	void ClearMemory();
 	wxButton* CreateButton(int buttonID, wxPoint buttonPos, wxSize buttonSize, wxString text = "this is a button");
 
 //private:

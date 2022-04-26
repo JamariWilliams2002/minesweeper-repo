@@ -2,61 +2,43 @@
 #include <windows.h>
 #define _CRT_SECURE_NO_WARNINGS 
 #include "CalculatorProcessorTests.h"
+
+void TestCheck(bool(*func)());
 int main()
 {
 
 #pragma region Calculator Processor
+	const int arrSize = 10;
+	bool (*calcProcessorArr[arrSize])() {
+		&BinToDec11, &BinToDec138, &DecToBin42, &DecToBin245,
+		&HexToDec328, &HexToDec18, &DecToHex84, &DecToHex99, &BinToHex200, &HexToBin408
+	};
+	bool (*buttonFactoryArr[arrSize])() {
+	
+	
+	};
+	
+
 	std::cout << "Calculator Processor: " << std::endl;
 	std::cout << "----------------------" << std::endl;
-	if (BinToDec11())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "Fail" << std::endl;
 
-	if (BinToDec138())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "Fail" << std::endl;
+	for (int i = 0; i < arrSize; i++)
+		TestCheck(calcProcessorArr[i]);
 
-	if (DecToBin42())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "Fail" << std::endl;
 
-	if (DecToBin245())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "Fail" << std::endl;
+#pragma endregion
 
-	if (HexToDec328())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "Fail" << std::endl;
+#pragma region Button Factory
 
-	if (HexToDec18())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "Fail" << std::endl;
-
-	if (DecToHex84())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "Fail" << std::endl;
-
-	if (DecToHex99())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "Fail" << std::endl;
-
-	if (BinToHex200())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "Fail" << std::endl;
-
-	if (HexToBin408())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "Fail" << std::endl;
 #pragma endregion
 
 }
+
+void TestCheck(bool(*func)())
+{
+	if (func)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "Fail" << std::endl;
+}
+

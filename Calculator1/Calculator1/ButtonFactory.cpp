@@ -248,7 +248,7 @@ wxButton* CalculatorButtonFactory::ButtonHexF(int buttonID, wxPoint buttonPos, w
 }
 #pragma endregion
 
-#pragma region miscellaneous
+#pragma region Miscellaneous
 wxButton* CalculatorButtonFactory::ButtonPlusMinus(int buttonID, wxPoint buttonPos, wxSize buttonSize)
 {
 	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "+/-");
@@ -274,4 +274,17 @@ wxButton* CalculatorButtonFactory::ButtonClear(int buttonID, wxPoint buttonPos, 
 	wxButton* button = CreateButton(buttonID, buttonPos, buttonSize, "clear");
 	return button;
 }
+#pragma endregion
+
+#pragma region For Tests Lab
+wxButton* CalculatorButtonFactory::Button3()
+{
+	int buttonID = '3'; //ascii code
+	wxPoint p(3, 3);
+	wxSize a(3, 3);
+
+	wxButton* button = new wxButton(nullptr, buttonID, "", p, a);
+	return button;
+}
+
 #pragma endregion

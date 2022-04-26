@@ -18,12 +18,14 @@ public:
 	~CalculatorButtonFactory();
 	wxButton* CreateButton(int buttonID, wxPoint buttonPos, wxSize buttonSize, wxString text = "this is a button");
 
-private:
+//private:
 #pragma region Button Functions
 	//numpad
 	wxButton* Button1(int buttonID, wxPoint buttonPos, wxSize buttonSize);
 	wxButton* Button2(int buttonID, wxPoint buttonPos, wxSize buttonSize);
 	wxButton* Button3(int buttonID, wxPoint buttonPos, wxSize buttonSize);
+	wxButton* Button3();
+
 	wxButton* Button4(int buttonID, wxPoint buttonPos, wxSize buttonSize);
 	wxButton* Button5(int buttonID, wxPoint buttonPos, wxSize buttonSize);
 	wxButton* Button6(int buttonID, wxPoint buttonPos, wxSize buttonSize);

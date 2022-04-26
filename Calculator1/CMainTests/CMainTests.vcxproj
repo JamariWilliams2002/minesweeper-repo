@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="..\Calculator1\CApp.h" />
     <ClInclude Include="..\Calculator1\tinyexpr.h" />
+    <ClInclude Include="ButtonFactoryTests.h" />
     <ClInclude Include="CalculatorProcessorTests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

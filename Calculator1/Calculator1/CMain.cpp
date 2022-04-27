@@ -2,6 +2,7 @@
 #include "ButtonFactory.h"
 #include "BinHexDecConversion.h"
 #include "CalculatorProcessor.h"
+#include "JammyParserer.h"
 #include <sstream>
 #include <vector>
 #include <string>
@@ -20,6 +21,8 @@ const int CAL_SIZE_HEIGHT = 700;
 
 CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's Calculator", wxPoint(CAL_POINT_X, CAL_POINT_Y), wxSize(CAL_SIZE_WIDTH, CAL_SIZE_HEIGHT))
 {
+	JammyParser parser;
+	parser.Interpret((std::string)"48 + 6 % 8");
 	//display & buttons
 	GeneratePreview();
 	GenerateDisplay();

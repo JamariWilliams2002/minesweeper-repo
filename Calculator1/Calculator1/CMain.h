@@ -16,6 +16,9 @@
 
 
 //RETURNING NOTES:
+// rewrite recursive descent parser
+// 
+// 
 // REMEMBER: if trying to do the tests, go in CApp.cpp and mark the #if with a zero
 // Will get a linker error if this is marked otherwise
 // 

@@ -1,12 +1,18 @@
 #include <iostream>
 #include <windows.h>
-#define _CRT_SECURE_NO_WARNINGS 
 #include "CalculatorProcessorTests.h"
 #include "ButtonFactoryTests.h"
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#define MEMORY_LEAK_LINE 3818
 
 void TestCheck(bool(*func)());
 int main()
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtDumpMemoryLeaks();
+	_CrtSetBreakAlloc(MEMORY_LEAK_LINE); // DO NOT COMMENT OUT THIS LINE
 
 #pragma region Calculator Processor
 	const int arrSize = 10;

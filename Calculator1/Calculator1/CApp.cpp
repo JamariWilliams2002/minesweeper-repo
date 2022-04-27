@@ -11,7 +11,8 @@ CApp::~CApp()
 
 bool CApp::OnInit()
 {
-#if 0 //means that we are checking for tests
+	//means that we are checking for tests if false
+#if 1
 	frame1 = new CMain();
 	frame1->Show();
 

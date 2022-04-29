@@ -148,14 +148,12 @@
     <ClCompile Include="..\Calculator1\ButtonFactory.cpp" />
     <ClCompile Include="..\Calculator1\CalculatorProcessor.cpp" />
     <ClCompile Include="..\Calculator1\CApp.cpp" />
-    <ClCompile Include="..\Calculator1\tinyexpr.c" />
     <ClCompile Include="ButtonFactoryTests.cpp" />
     <ClCompile Include="CalculatorProcessorTests.cpp" />
     <ClCompile Include="CMainTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Calculator1\CApp.h" />
-    <ClInclude Include="..\Calculator1\tinyexpr.h" />
     <ClInclude Include="ButtonFactoryTests.h" />
     <ClInclude Include="CalculatorProcessorTests.h" />
   </ItemGroup>

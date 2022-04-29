@@ -27,7 +27,6 @@
     <ClInclude Include="IBaseCommand.h" />
     <ClInclude Include="JammyParserer.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="tinyexpr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BinHexDecConversion.cpp" />
@@ -37,7 +36,6 @@
     <ClCompile Include="CMain.cpp" />
     <ClCompile Include="IBaseCommand.cpp" />
     <ClCompile Include="JammyParserer.cpp" />
-    <ClCompile Include="tinyexpr.c" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Calculator1.rc" />

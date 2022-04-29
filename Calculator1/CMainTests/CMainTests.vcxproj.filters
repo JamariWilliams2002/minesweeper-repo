@@ -33,15 +33,9 @@
     <ClCompile Include="..\Calculator1\CApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Calculator1\tinyexpr.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Calculator1\CApp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Calculator1\tinyexpr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CalculatorProcessorTests.h">

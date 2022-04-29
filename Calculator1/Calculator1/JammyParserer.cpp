@@ -64,23 +64,27 @@ int JammyParser::Interpret(std::string expression)
 		//organize the vectors with the highest precedence being at lower indecies
 		OrganizeVectors();
 
-		//first operation
-		int tempResult = Evaluate(nums[0], nums[1], operations[0]);
-		auto it1 = nums.begin();
-		auto it2 = nums.begin() + 1;
 		auto it3 = operations.begin();
 		operations.erase(it3);
-		nums.erase(it1);
-		nums.erase(it2);
-		result = Evaluate(tempResult, nums[2], operations[0]);
 
-		for (int i = 0; i < operations.size(); i++)
-		{
-			//grab temp result
-			tempResult = Evaluate(nums[0], nums[1], operations[0]);
 
-			//pop the values used
-			auto it1 = nums.begin();
+		//first operation
+		//int tempResult = Evaluate(nums[0], nums[1], operations[0]);
+		//auto it1 = nums.begin();
+		//auto it2 = nums.begin() + 1;
+		//auto it3 = operations.begin();
+		//operations.erase(it3);
+		//nums.erase(it1);
+		//nums.erase(it2);
+		//result = Evaluate(tempResult, nums[2], operations[0]);
+
+		//for (int i = 0; i < operations.size(); i++)
+		//{
+		//	//grab temp result
+		//	tempResult = Evaluate(nums[0], nums[1], operations[0]);
+
+		//	//pop the values used
+		/*	auto it1 = nums.begin();
 			auto it2 = nums.begin() + 1;
 			auto it3 = operations.begin();
 			operations.erase(it3);
@@ -88,7 +92,7 @@ int JammyParser::Interpret(std::string expression)
 			nums.erase(it2);
 			result = nums[2];
 			result = Evaluate(tempResult)
-		}
+		}*/
 	}
 	
 
@@ -260,4 +264,21 @@ std::vector<char>::iterator JammyParser::CheckDivide()
 std::vector<char>::iterator JammyParser::CheckModulus()
 {
 	return std::find(operations.begin(), operations.end(), '%');
+}
+
+int JammyParser::RecursiveDescent(int tempResult)
+{
+	//takes in the first temp result, which is res
+	int res = Evaluate(nums[0], nums[1], operations[0]);
+	//pops the used values
+	auto numIt = nums.begin();
+	auto opIt = operations.begin();
+	operations.erase(opIt);
+	nums.erase(numIt);
+	nums[0] = res;
+	//keep going until finished
+	if (operations.size() != 0)
+		return RecursiveDescent(res);
+	else
+		return res;
 }

@@ -36,6 +36,7 @@ private:
 	void SwapOperators(int index);
 	void SwapNumbers(int index);
 	int Evaluate(int num1, int num2, char op);
+	int RecursiveDescent(int tempResult = INT32_MAX);
 
 	std::vector<char>::iterator CheckMultiply();
 	std::vector<char>::iterator CheckDivide();

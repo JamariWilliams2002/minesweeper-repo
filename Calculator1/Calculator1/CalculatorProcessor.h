@@ -12,6 +12,7 @@ public:
 		return calc;
 	}
 	void NewestProjectedSolution();	
+	void NewerProjectedSolution(std::string s);
 	void ClearCommandVector();
 	void ClearNums();
 	~CalculatorProcessor();

@@ -1,5 +1,6 @@
 #include "CalculatorProcessor.h"
 #include "tinyexpr.h"
+#include "JammyParserer.h"
 #include "IBaseCommand.h"
 #include <sstream>
 
@@ -18,7 +19,9 @@ void CalculatorProcessor::ProjectedSolution(wxString decStr)
 {
 	double numResult = 0;
 	wxString strResult;
-	numResult = te_interp(decStr, 0);
+	JammyParser parser;
+	numResult = parser.Interpret(decStr);
+	//numResult = te_interp(decStr, 0);
 	strResult = std::to_string(numResult);
 
 	resultAsDouble = numResult;
@@ -77,6 +80,18 @@ void CalculatorProcessor::NewestProjectedSolution()
 	ProjectedSolution(decStr);
 }
 
+void CalculatorProcessor::NewerProjectedSolution(std::string s)
+{
+	double numResult = 0;
+	wxString strResult;
+	JammyParser parser;
+	numResult = parser.Interpret(s);
+	strResult = std::to_string(numResult);
+
+	resultAsDouble = numResult;
+	resultAswxString = strResult;
+
+}
 bool CalculatorProcessor::IsOperator(char c)
 {
 	bool result;

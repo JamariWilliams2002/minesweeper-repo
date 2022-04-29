@@ -16,7 +16,7 @@
 
 
 //RETURNING NOTES:
-// rewrite recursive descent parser
+// recursive descent parser is circumstantial: will guaranteed work with single operations, only sometimes accurate with multiple operations
 // 
 // 
 // REMEMBER: if trying to do the tests, go in CApp.cpp and mark the #if with a zero

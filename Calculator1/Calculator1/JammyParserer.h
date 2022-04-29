@@ -26,7 +26,9 @@ private:
 	void SwapNumbers(int index);
 	int Evaluate(int num1, int num2, char op);
 
-	std::vector<char> CheckMultiply();
+	std::vector<char>::iterator CheckMultiply();
+	std::vector<char>::iterator CheckDivide();
+	std::vector<char>::iterator CheckModulus();
 
 
 };

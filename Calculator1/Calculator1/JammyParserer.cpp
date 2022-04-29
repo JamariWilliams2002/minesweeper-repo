@@ -59,25 +59,39 @@ int JammyParser::Interpret(std::string expression)
 	//OrganizeVectors();
 
 	//complete operations
-	for (int i = 0; i < operations.size(); i++)
+	int size = operations.size();
+	bool change = false;
+	for (int i = 0; i < size; i++)
 	{
+		int temp;
 		char currentChar = operations[i];
 		int precedence = GetPrecedence(currentChar);
 		//grab index of the param
 
 		int index = i;
 		//check to see if there are any high precedent operators
-		if (precedence != 1) //atleast one high precedence operator
+		if (operations.size() != 1) //atleast one high precedence operator
 		{
 			//find high precedence operator
-			auto it = std::find(operations.begin(), operations.end(), '*');
+			auto it = std::find(operations.begin(), operations.end(), '%');
 			if (it != operations.end())
+			{
 				index = it - operations.begin();
+				change == true;
+			}
 			//change the value in the vector
-			operations[index] = 'D';
 		}
+
 		//evaluate result
-		result = Evaluate(nums[i], nums[i + 1], operations[i]);
+		
+		result = Evaluate(nums[index], nums[index + 1], operations[index]);
+		//make the value unreadable so it's not evaluated twice. 
+		operations[index] = 'd'; 
+
+		//change the values in the nums vector
+		nums[index] = Evaluate(nums[index], nums[index + 1], operations[index]);
+		nums[index + 1] = INT32_MAX;
+
 	}
 	return result;
 }
@@ -175,4 +189,17 @@ int JammyParser::Evaluate(int num1, int num2, char op)
 	else if (op == '-')
 		result = num1 - num2;
 	return result;
+}
+
+std::vector<char>::iterator JammyParser::CheckMultiply()
+{
+	return std::find(operations.begin(), operations.end(), '%');
+}
+std::vector<char>::iterator JammyParser::CheckDivide()
+{
+	return std::find(operations.begin(), operations.end(), '%');
+}
+std::vector<char>::iterator JammyParser::CheckModulus()
+{
+	return std::find(operations.begin(), operations.end(), '%');
 }

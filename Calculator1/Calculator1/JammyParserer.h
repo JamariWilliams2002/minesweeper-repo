@@ -10,6 +10,14 @@ public:
 	int Interpret(std::string expression);
 	int Interpret(wxString expression);
 private:
+	enum Operators
+	{
+		Multiply = 1,
+		Divide,
+		Modulus,
+		Addition,
+		Subtraction
+	};
 	std::vector<double> nums;
 	std::vector<char> operations;
 	std::vector<int> operationPrecedence;

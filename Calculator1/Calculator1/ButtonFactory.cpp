@@ -375,7 +375,7 @@ wxButton* CalculatorButtonFactory::ButtonHexA()
 
 void CalculatorButtonFactory::ClearMemory()
 {
-	for (int i = 0; i < windowV.size(); i++)
+	for (int i = 0; i < (int)windowV.size(); i++)
 		delete windowV[i];
 	windowV.clear();
 }

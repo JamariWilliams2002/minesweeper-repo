@@ -5,7 +5,8 @@
 
 CalculatorProcessor::CalculatorProcessor()
 {
-
+	resultAsDouble = 0;
+	resultAswxString = "";
 }
 CalculatorProcessor::CalculatorProcessor(wxString expression)
 {
@@ -32,7 +33,7 @@ void CalculatorProcessor::NewProjectedSolution(wxString decStr)
 	//decStr = "124";
 	char op = 0;
 	std::string nums = "";
-	for (int i = 0; i < decStr.length(); i++)
+	for (int i = 0; i < (int)decStr.length(); i++)
 	{
 		char currentChar = decStr[i];
 		if (IsOperator(currentChar)) //found operator

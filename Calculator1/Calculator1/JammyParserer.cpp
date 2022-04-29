@@ -18,7 +18,7 @@ int JammyParser::Interpret(std::string expression)
 	int result = 0;
 	bool isNegative = false;
 	//building vectors
-	for (int i = 0; i < expression.length();)
+	for (int i = 0; i < (int)expression.length();)
 	{
 		//check if it's a negative value
 		if (expression[i] == '-' && IsNumber(expression[i + 1]))
@@ -73,7 +73,7 @@ int JammyParser::Interpret(std::string expression)
 	else
 	{
 		//vector matching precedence for operators
-		for (int i = 0; i < operations.size(); i++)
+		for (int i = 0; i < (int)operations.size(); i++)
 			operationPrecedence.push_back(GetPrecedence(operations[i]));
 
 		//organize the vectors with the highest precedence being at lower indecies
@@ -208,7 +208,7 @@ void JammyParser::OrganizeVectors()
 	//no work required for one operator
 	if (operations.size() == 1)
 		return;
-	for (int i = 0; i < operations.size(); i++)
+	for (int i = 0; i < (int)operations.size(); i++)
 	{
 		if (operations.size() == i + 1)
 		{

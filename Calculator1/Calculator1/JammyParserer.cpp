@@ -50,49 +50,61 @@ int JammyParser::Interpret(std::string expression)
 			i = count;
 		}
 	}
+	//simple if only one operation
+	if (operations.size() == 1)
+	{
+		result = Evaluate(nums[0], nums[1], operations[0]);
+	}
+	else
+	{
+		//vector matching precedence for operators
+		for (int i = 0; i < operations.size(); i++)
+			operationPrecedence.push_back(GetPrecedence(operations[i]));
 
-	//vector matching precedence for operators
-	for (int i = 0; i < operations.size(); i++)
-		operationPrecedence.push_back(GetPrecedence(operations[i]));
+		//organize the vectors with the highest precedence being at lower indecies
+		OrganizeVectors();
 
-	//organize the vectors with the highest precedence being at lower indecies
-	OrganizeVectors();
+		//first operation
+		
+	}
+	
+
 
 	//complete operations
-	int size = operations.size();
-	bool change = false;
-	for (int i = 0; i < size; i++)
-	{
-		int temp;
-		char currentChar = operations[i];
-		int precedence = GetPrecedence(currentChar);
-		//grab index of the param
+	//int size = operations.size();
+	//bool change = false;
+	//for (int i = 0; i < size; i++)
+	//{
+	//	int temp;
+	//	char currentChar = operations[i];
+	//	int precedence = GetPrecedence(currentChar);
+	//	//grab index of the param
 
-		int index = i;
-		//check to see if there are any high precedent operators
-		if (operations.size() != 1) //atleast one high precedence operator
-		{
-			//find high precedence operator
-			auto it = std::find(operations.begin(), operations.end(), '%');
-			if (it != operations.end())
-			{
-				index = it - operations.begin();
-				change == true;
-			}
-			//change the value in the vector
-		}
+	//	int index = i;
+	//	//check to see if there are any high precedent operators
+	//	if (operations.size() != 1) //atleast one high precedence operator
+	//	{
+	//		//find high precedence operator
+	//		auto it = std::find(operations.begin(), operations.end(), '%');
+	//		if (it != operations.end())
+	//		{
+	//			index = it - operations.begin();
+	//			change == true;
+	//		}
+	//		//change the value in the vector
+	//	}
 
-		//evaluate result
-		
-		result = Evaluate(nums[index], nums[index + 1], operations[index]);
-		//make the value unreadable so it's not evaluated twice. 
-		operations[index] = 'd'; 
+	//	//evaluate result
 
-		//change the values in the nums vector
-		nums[index] = Evaluate(nums[index], nums[index + 1], operations[index]);
-		nums[index + 1] = INT32_MAX;
+	//	result = Evaluate(nums[index], nums[index + 1], operations[index]);
+	//	//make the value unreadable so it's not evaluated twice. 
+	//	operations[index] = 'd';
 
-	}
+	//	//change the values in the nums vector
+	//	nums[index] = Evaluate(nums[index], nums[index + 1], operations[index]);
+	//	nums[index + 1] = INT32_MAX;
+
+	//}
 	return result;
 }
 int JammyParser::Interpret(wxString expression)
@@ -149,23 +161,32 @@ int JammyParser::GetNumberFromChar(char c)
 
 void JammyParser::OrganizeVectors()
 {
-	int prevOpPrec = GetPrecedence(operations[0]);
+	int prevOpPrec = 0;
+	int index = 0;
+	bool needSwap = false;
 	//no work required for one operator
 	if (operations.size() == 1)
 		return;
 	for (int i = 0; i < operations.size(); i++)
 	{
-		while (operationPrecedence[i] > operationPrecedence[prevOpPrec])
+		if (operations.size() == i + 1)
+		{
+			index = i;
+			needSwap = operationPrecedence[index] > operationPrecedence[prevOpPrec];
+		}
+		else
+			index = i + 1;
+		prevOpPrec = index - 1;
+		while (operationPrecedence[index] < operationPrecedence[prevOpPrec] || needSwap)
 		{
 			//swap operators
-			SwapOperators(i);
+			SwapOperators(index);
 			//means we have at least 3 nums
-			for (size_t i = 0; i < 2; i++)
-				SwapNumbers(2 - i);
+			SwapNumbers(index + 1);
+			needSwap = false;
 		}
 
 	}
-
 }
 
 void JammyParser::SwapOperators(int index)
@@ -176,9 +197,17 @@ void JammyParser::SwapOperators(int index)
 }
 void JammyParser::SwapNumbers(int index)
 {
-	int temp = nums[index];
+	/*int temp = nums[index];
+
 	nums[index] = nums[index + 1];
-	nums[index + 1] = temp;
+	nums[index + 1] = temp;*/
+
+	int temp = nums[index];
+	int temp2 = nums[index - 1];
+	int temp3 = nums[index - 2];
+	nums[index] = temp3;
+	nums[index - 1] = temp;
+	nums[index - 2] = temp2;
 }
 
 int JammyParser::Evaluate(int num1, int num2, char op)

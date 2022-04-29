@@ -10,6 +10,9 @@ CalculatorButtonFactory::CalculatorButtonFactory(wxWindow* mainWindow, wxButton*
 CalculatorButtonFactory::CalculatorButtonFactory(wxWindow* window)
 {
 	mMainWindow = window;
+	mCalButtons = nullptr;
+	mFieldCols = 0;
+	mFieldRows = 0;
 }
 
 //destructor
@@ -291,10 +294,12 @@ wxButton* CalculatorButtonFactory::Button3()
 	wxSize a(3, 3);
 	wxWindow* window = new wxWindow();
 	windowV.push_back(window);
+	auto color = *wxLIGHT_GREY;
+
 
 	wxButton* button = new wxButton(window, buttonID, "3", p, a);
 	button->SetLabel("3");
-	button->SetBackgroundColour((*wxLIGHT_GREY));
+	button->SetBackgroundColour((color));
 
 
 	return button;

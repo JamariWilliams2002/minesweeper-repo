@@ -5,7 +5,7 @@
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
-#define MEMORY_LEAK_LINE 3818
+#define MEMORY_LEAK_LINE 3864
 #define DEBUG_ON 0
 
 void TestCheck(bool(*func)());

@@ -105,8 +105,8 @@ bool ButtonSubtractColor()
 
 
 	wxButton* button = factory.ButtonSubtract();
-	
-	if ((*wxLIGHT_GREY) != button->GetBackgroundColour())
+	auto color = *wxLIGHT_GREY;
+	if ((color) != button->GetBackgroundColour())
 		result = false;
 	
 	//clean up

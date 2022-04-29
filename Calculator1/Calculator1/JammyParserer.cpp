@@ -56,7 +56,7 @@ int JammyParser::Interpret(std::string expression)
 		operationPrecedence.push_back(GetPrecedence(operations[i]));
 
 	//organize the vectors with the highest precedence being at lower indecies
-	//OrganizeVectors();
+	OrganizeVectors();
 
 	//complete operations
 	int size = operations.size();
@@ -149,15 +149,20 @@ int JammyParser::GetNumberFromChar(char c)
 
 void JammyParser::OrganizeVectors()
 {
+	int prevOpPrec = GetPrecedence(operations[0]);
+	if (operations.size() == 1)
+		return;
 	for (int i = 1; i <= operations.size(); i++)
 	{
-		if (operationPrecedence[i] > 1)
+		while (operationPrecedence[i] > operationPrecedence[prevOpPrec])
 		{
 			//swap operators
 			SwapOperators(i);
+			//means we have at least 3 nums
 			for (size_t i = 0; i < 2; i++)
 				SwapNumbers(2 - i);
 		}
+
 	}
 
 }

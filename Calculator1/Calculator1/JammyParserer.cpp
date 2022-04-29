@@ -65,7 +65,30 @@ int JammyParser::Interpret(std::string expression)
 		OrganizeVectors();
 
 		//first operation
-		
+		int tempResult = Evaluate(nums[0], nums[1], operations[0]);
+		auto it1 = nums.begin();
+		auto it2 = nums.begin() + 1;
+		auto it3 = operations.begin();
+		operations.erase(it3);
+		nums.erase(it1);
+		nums.erase(it2);
+		result = Evaluate(tempResult, nums[2], operations[0]);
+
+		for (int i = 0; i < operations.size(); i++)
+		{
+			//grab temp result
+			tempResult = Evaluate(nums[0], nums[1], operations[0]);
+
+			//pop the values used
+			auto it1 = nums.begin();
+			auto it2 = nums.begin() + 1;
+			auto it3 = operations.begin();
+			operations.erase(it3);
+			nums.erase(it1);
+			nums.erase(it2);
+			result = nums[2];
+			result = Evaluate(tempResult)
+		}
 	}
 	
 

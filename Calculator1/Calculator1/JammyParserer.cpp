@@ -2,81 +2,209 @@
 #include <vector>
 JammyParser::JammyParser()
 {
-
+	prec1 = 0;
+	prec2 = 0;
 }
+
+
 JammyParser::~JammyParser()
 {
 
 }
-int JammyParser::Interpret(const char* equation)
+int JammyParser::Interpret(std::string expression)
 {
-    expressionToParse = equation;
-	int result = expression();
-    return result;
+	//decStr = "124";
+	char op = 0;
+	int result = 0;
+	//building vectors
+	for (int i = 0; i < expression.length();)
+	{
+		char currentChar = expression[i];
+		//if it's a space, then continue
+		if (currentChar == ' ')
+		{
+			i++;
+			continue;
+		}
+		else if (IsOperator(currentChar)) //found operator
+		{
+			op = currentChar;
+			operations.push_back(currentChar);
+			i++;
+		}
+		else if (IsNumber(currentChar)) //found a number
+		{
+			std::string number = "";
+			int nextNum = currentChar, digit, count = i;
+			do//get the remaining digits in that number
+			{
+				digit = GetNumberFromChar(nextNum);
+				number += std::to_string(digit);
+				//continue in the string
+				nextNum = expression[count + 1];
+				count++;
+			} while (IsNumber(nextNum));
+
+			//add to vector
+			nums.push_back(std::stod(number));
+			i = count;
+		}
+	}
+
+	//vector matching precedence for operators
+	for (int i = 0; i < operations.size(); i++)
+		operationPrecedence.push_back(GetPrecedence(operations[i]));
+
+	//organize the vectors with the highest precedence being at lower indecies
+	OrganizeVectors();
+
+	//complete operations
+	int size = operations.size();
+	bool change = false;
+	for (int i = 0; i < size; i++)
+	{
+		int temp;
+		char currentChar = operations[i];
+		int precedence = GetPrecedence(currentChar);
+		//grab index of the param
+
+		int index = i;
+		//check to see if there are any high precedent operators
+		if (operations.size() != 1) //atleast one high precedence operator
+		{
+			//find high precedence operator
+			auto it = std::find(operations.begin(), operations.end(), '%');
+			if (it != operations.end())
+			{
+				index = it - operations.begin();
+				change == true;
+			}
+			//change the value in the vector
+		}
+
+		//evaluate result
+
+		result = Evaluate(nums[index], nums[index + 1], operations[index]);
+		//make the value unreadable so it's not evaluated twice. 
+		operations[index] = 'd';
+
+		//change the values in the nums vector
+		nums[index] = Evaluate(nums[index], nums[index + 1], operations[index]);
+		nums[index + 1] = INT32_MAX;
+
+	}
+	return result;
 }
-//int JammyParser::Interpret(wxString expression)
-//{
-//	std::string expressionStr = (std::string)expression;
-//	return Interpret(expressionStr);
-//}
+int JammyParser::Interpret(wxString expression)
+{
+	std::string expressionStr = (std::string)expression;
+	return Interpret(expressionStr);
+}
 
 
-int JammyParser::term()
+bool JammyParser::IsOperator(char c)
 {
-    int result = factor();
-    while (peek() == '*' || peek() == '/')
-        if (get() == '*')
-            result *= factor();
-        else
-            result /= factor();
-    return result;
+	bool result;
+	if (c == '+' || c == '-' || c == '*' || c == '/' || c == '%')
+		result = true;
+	else
+		result = false;
+	return result;
 }
-int JammyParser::expression()
+bool JammyParser::IsNumber(char c)
 {
-    int result = term();
-    while (peek() == '+' || peek() == '-')
-        if (get() == '+')
-            result += term();
-        else
-            result -= term();
-    return result;
+	bool result;
+	if (c >= '0' && c <= '9')
+		result = true;
+	else
+		result = false;
+	return result;
 }
 
-int JammyParser::factor()
+int JammyParser::GetPrecedence(char c)
 {
-    if (peek() >= '0' && peek() <= '9')
-        return number();
-    else if (peek() == '(')
-    {
-        get(); // '('
-        int result = expression();
-        get(); // ')'
-        return result;
-    }
-    else if (peek() == '-')
-    {
-        get();
-        return -factor();
-    }
-    return 0; // error
+	switch (c)
+	{
+	case '+':
+	case '-':
+		prec1++;
+		return 1;
+	case '*':
+	case '/':
+	case '%':
+		prec2++;
+		return 2;
+		/*case '(':
+		case ')':
+			return 3;*/
+	default:
+		return -1;
+	}
 }
 
-int JammyParser::number()
+int JammyParser::GetNumberFromChar(char c)
 {
-    int result = get() - '0';
-    while (peek() >= '0' && peek() <= '9')
-    {
-        result = 10 * result + get() - '0';
-    }
-    return result;
+	return c - '0';
 }
 
-char JammyParser::get()
+void JammyParser::OrganizeVectors()
 {
-    return *expressionToParse++;
+	int prevOpPrec = GetPrecedence(operations[0]);
+	if (operations.size() == 1)
+		return;
+	for (int i = 1; i <= operations.size(); i++)
+	{
+		while (operationPrecedence[i] > operationPrecedence[prevOpPrec])
+		{
+			//swap operators
+			SwapOperators(i);
+			//means we have at least 3 nums
+			for (size_t i = 0; i < 2; i++)
+				SwapNumbers(2 - i);
+		}
+
+	}
+
 }
 
-char JammyParser::peek()
+void JammyParser::SwapOperators(int index)
 {
-    return *expressionToParse;
+	int temp = operations[index - 1];
+	operations[index - 1] = operations[index];
+	operations[index] = temp;
+}
+void JammyParser::SwapNumbers(int index)
+{
+	int temp = nums[index];
+	nums[index] = nums[index + 1];
+	nums[index + 1] = temp;
+}
+
+int JammyParser::Evaluate(int num1, int num2, char op)
+{
+	int result = 0;
+	if (op == '*')
+		result = num1 * num2;
+	else if (op == '/')
+		result = num1 / num2;
+	else if (op == '%')
+		result = num1 % num2;
+	else if (op == '+')
+		result = num1 + num2;
+	else if (op == '-')
+		result = num1 - num2;
+	return result;
+}
+
+std::vector<char>::iterator JammyParser::CheckMultiply()
+{
+	return std::find(operations.begin(), operations.end(), '%');
+}
+std::vector<char>::iterator JammyParser::CheckDivide()
+{
+	return std::find(operations.begin(), operations.end(), '%');
+}
+std::vector<char>::iterator JammyParser::CheckModulus()
+{
+	return std::find(operations.begin(), operations.end(), '%');
 }

@@ -6,13 +6,18 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 #define MEMORY_LEAK_LINE 3818
+#define DEBUG_ON 0
 
 void TestCheck(bool(*func)());
 int main()
 {
+
+#if DEBUG_ON
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	_CrtDumpMemoryLeaks();
-	_CrtSetBreakAlloc(MEMORY_LEAK_LINE); // DO NOT COMMENT OUT THIS LINE
+	_CrtSetBreakAlloc(MEMORY_LEAK_LINE);
+#endif // DEBUG_ON
+
 
 #pragma region Calculator Processor
 	const int arrSize = 10;

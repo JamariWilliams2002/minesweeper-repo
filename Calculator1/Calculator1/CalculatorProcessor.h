@@ -8,18 +8,14 @@ public:
 	static CalculatorProcessor& GetInstance(wxString expression = "")
 	{
 		static CalculatorProcessor calc;
-		/*if (expression != "")
-		{
-			NewerProjectedSolution((std::string)expression);
-		}*/
 		return calc;
 	}
-	void NewestProjectedSolution();	
 	void NewerProjectedSolution(std::string s);
 	void ClearCommandVector();
 	void ClearNums();
 	~CalculatorProcessor();
 private:
+	void NewestProjectedSolution();	
 	std::vector<IBaseCommand*> commands;
 	std::vector<double> nums;
 	//conversion functions

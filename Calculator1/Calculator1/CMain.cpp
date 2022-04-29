@@ -22,7 +22,7 @@ const int CAL_SIZE_HEIGHT = 700;
 CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's Calculator", wxPoint(CAL_POINT_X, CAL_POINT_Y), wxSize(CAL_SIZE_WIDTH, CAL_SIZE_HEIGHT))
 {
 	JammyParser parser;
-	int a = parser.Interpret((std::string)"48 + 6 % 8");
+	int a = parser.Interpret((std::string)"-48 + 6 % 8");
 	//display & buttons
 	GeneratePreview();
 	GenerateDisplay();
@@ -184,6 +184,7 @@ void CMain::ButtonSpecs()
 	calButtons[GetButtonIndex(3, 6)]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnClickMisc, this);
 
 	calButtons[GetButtonIndex(3, 4)]->SetLabel(".");
+	calButtons[GetButtonIndex(3, 4)]->Disable();
 	calButtons[GetButtonIndex(3, 4)]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CMain::OnClickMisc, this);
 
 	calButtons[GetButtonIndex(0, 5)]->SetLabel("del");
@@ -273,13 +274,13 @@ void CMain::ToggleButtonsForHex()
 	{
 		calButtons[GetButtonIndex(0, 1)]->Enable();
 		calButtons[GetButtonIndex(3, 2)]->Disable();
-		calButtons[GetButtonIndex(3, 4)]->Disable();
+		//calButtons[GetButtonIndex(3, 4)]->Disable();
 	}
 	else if (!isBin)
 	{
 		calButtons[GetButtonIndex(0, 1)]->Disable();
 		calButtons[GetButtonIndex(3, 2)]->Enable();
-		calButtons[GetButtonIndex(3, 4)]->Enable();
+		//calButtons[GetButtonIndex(3, 4)]->Enable();
 	}
 
 }
@@ -302,12 +303,12 @@ void CMain::ToggleButtonsForBinary()
 	if (isBin)
 	{
 		calButtons[GetButtonIndex(3, 2)]->Disable();
-		calButtons[GetButtonIndex(3, 4)]->Disable();
+		//calButtons[GetButtonIndex(3, 4)]->Disable();
 	}
 	else if (!isHex)
 	{
 		calButtons[GetButtonIndex(3, 2)]->Enable();
-		calButtons[GetButtonIndex(3, 4)]->Enable();
+		//calButtons[GetButtonIndex(3, 4)]->Enable();
 	}
 }
 

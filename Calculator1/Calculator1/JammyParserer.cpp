@@ -16,9 +16,17 @@ int JammyParser::Interpret(std::string expression)
 	//decStr = "124";
 	char op = 0;
 	int result = 0;
+	bool isNegative = false;
 	//building vectors
 	for (int i = 0; i < expression.length();)
 	{
+		//check if it's a negative value
+		if (expression[i] == '-' && IsNumber(expression[i + 1]))
+		{
+			isNegative = true;
+			i++;
+		}
+
 		char currentChar = expression[i];
 		//if it's a space, then continue
 		if (currentChar == ' ')
@@ -35,7 +43,7 @@ int JammyParser::Interpret(std::string expression)
 		else if (IsNumber(currentChar)) //found a number
 		{
 			std::string number = "";
-			int nextNum = currentChar, digit, count = i;
+			int nextNum = currentChar, digit, numToPush = 0, count = i;
 			do//get the remaining digits in that number
 			{
 				digit = GetNumberFromChar(nextNum);
@@ -44,9 +52,16 @@ int JammyParser::Interpret(std::string expression)
 				nextNum = expression[count + 1];
 				count++;
 			} while (IsNumber(nextNum));
+			if (isNegative)
+			{
+				isNegative = false;
+				numToPush = (std::stod(number)) * -1;
+			}
+			else
+				numToPush = (std::stod(number));
 
 			//add to vector
-			nums.push_back(std::stod(number));
+			nums.push_back(numToPush);
 			i = count;
 		}
 	}

@@ -2,7 +2,8 @@
 #include <vector>
 JammyParser::JammyParser()
 {
-
+	prec1 = 0;
+	prec2 = 0;
 }
 
 
@@ -10,10 +11,11 @@ JammyParser::~JammyParser()
 {
 
 }
-void JammyParser::Interpret(std::string expression)
+int JammyParser::Interpret(std::string expression)
 {
 	//decStr = "124";
 	char op = 0;
+	int result = 0;
 	//building vectors
 	for (int i = 0; i < expression.length();)
 	{
@@ -54,29 +56,35 @@ void JammyParser::Interpret(std::string expression)
 		operationPrecedence.push_back(GetPrecedence(operations[i]));
 
 	//organize the vectors with the highest precedence being at lower indecies
-	OrganizeVectors();
+	//OrganizeVectors();
 
 	//complete operations
 	for (int i = 0; i < operations.size(); i++)
 	{
 		char currentChar = operations[i];
 		int precedence = GetPrecedence(currentChar);
-
 		//grab index of the param
 
-		//multiply, mod, divide
-		if (precedence == 2)
+		int index = i;
+		//check to see if there are any high precedent operators
+		if (precedence != 1) //atleast one high precedence operator
 		{
-
+			//find high precedence operator
+			auto it = std::find(operations.begin(), operations.end(), '*');
+			if (it != operations.end())
+				index = it - operations.begin();
+			//change the value in the vector
+			operations[index] = 'D';
 		}
-
+		//evaluate result
+		result = Evaluate(nums[i], nums[i + 1], operations[i]);
 	}
-
+	return result;
 }
-void JammyParser::Interpret(wxString expression)
+int JammyParser::Interpret(wxString expression)
 {
 	std::string expressionStr = (std::string)expression;
-	Interpret(expressionStr);
+	return Interpret(expressionStr);
 }
 
 
@@ -105,10 +113,12 @@ int JammyParser::GetPrecedence(char c)
 	{
 	case '+':
 	case '-':
-		return 3;
+		prec1++;
+		return 1;
 	case '*':
 	case '/':
 	case '%':
+		prec2++;
 		return 2;
 		/*case '(':
 		case ')':
@@ -151,7 +161,7 @@ void JammyParser::SwapNumbers(int index)
 	nums[index + 1] = temp;
 }
 
-int Evaluate(int num1, int num2, char op)
+int JammyParser::Evaluate(int num1, int num2, char op)
 {
 	int result = 0;
 	if (op == '*')

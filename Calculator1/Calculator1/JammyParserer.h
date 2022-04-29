@@ -7,12 +7,16 @@ class JammyParser
 public:
 	JammyParser();
 	~JammyParser();
-	void Interpret(std::string expression);
-	void Interpret(wxString expression);
+	int Interpret(std::string expression);
+	int Interpret(wxString expression);
+private:
 	std::vector<double> nums;
 	std::vector<char> operations;
 	std::vector<int> operationPrecedence;
-private:
+	//helper variables
+	int prec1;
+	int prec2;
+
 	bool IsOperator(char c);
 	bool IsNumber(char c);
 	int GetPrecedence(char c);
@@ -22,6 +26,7 @@ private:
 	void SwapNumbers(int index);
 	int Evaluate(int num1, int num2, char op);
 
+	std::vector<char> CheckMultiply();
 
 
 };

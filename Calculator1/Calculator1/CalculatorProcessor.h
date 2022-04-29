@@ -6,9 +6,13 @@ class IBaseCommand;
 class CalculatorProcessor
 {
 public:
-	static CalculatorProcessor& GetInstance(wxString expression)
+	static CalculatorProcessor& GetInstance(wxString expression = "")
 	{
 		static CalculatorProcessor calc;
+		/*if (expression != "")
+		{
+			NewerProjectedSolution((std::string)expression);
+		}*/
 		return calc;
 	}
 	void NewestProjectedSolution();	

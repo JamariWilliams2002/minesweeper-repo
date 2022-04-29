@@ -22,7 +22,7 @@ const int CAL_SIZE_HEIGHT = 700;
 CMain::CMain() : wxFrame(nullptr, wxID_ANY, "Jammy's Calculator", wxPoint(CAL_POINT_X, CAL_POINT_Y), wxSize(CAL_SIZE_WIDTH, CAL_SIZE_HEIGHT))
 {
 	JammyParser parser;
-	//int a = parser.Interpret((std::string)"48 + 6 / 8");
+	int a = parser.Interpret((std::string)"48 + 6 % 8");
 	//display & buttons
 	GeneratePreview();
 	GenerateDisplay();
@@ -379,12 +379,10 @@ void CMain::OnClickMisc(wxCommandEvent& evt)
 		if (onNextNum)
 		{
 			//grab the last number
-			CalculatorProcessor* calc = &CalculatorProcessor::GetInstance(previewDecStr);
-			calc->PushNums(currentNumFl);
-
 			previewDecStr += calDisplay->GetValue();
-
+			CalculatorProcessor* calc = &CalculatorProcessor::GetInstance();
 			calc->NewerProjectedSolution((std::string)previewDecStr);
+			calc->PushNums(currentNumFl);
 			UpdateToDecimalStr();
 			strResult = ProjectedSolution();
 			calDisplay->SetLabelText(strResult);
@@ -551,7 +549,7 @@ wxString CMain::UpdateStrings(wxString strToUpdate)
 
 void CMain::ClearCalcProcessor()
 {
-	CalculatorProcessor* calc = &CalculatorProcessor::GetInstance(previewDecStr);
+	CalculatorProcessor* calc = &CalculatorProcessor::GetInstance();
 	calc->ClearCommandVector();
 	calc->ClearNums();
 }

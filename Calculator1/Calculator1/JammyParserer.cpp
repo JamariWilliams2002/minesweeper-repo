@@ -64,8 +64,7 @@ int JammyParser::Interpret(std::string expression)
 		//organize the vectors with the highest precedence being at lower indecies
 		OrganizeVectors();
 
-		auto it3 = operations.begin();
-		operations.erase(it3);
+		result = RecursiveDescent(nums[0]);
 
 
 		//first operation
@@ -94,7 +93,7 @@ int JammyParser::Interpret(std::string expression)
 			result = Evaluate(tempResult)
 		}*/
 	}
-	
+
 
 
 	//complete operations
@@ -218,9 +217,15 @@ void JammyParser::OrganizeVectors()
 
 void JammyParser::SwapOperators(int index)
 {
+	//operator vector
 	int temp = operations[index - 1];
 	operations[index - 1] = operations[index];
 	operations[index] = temp;
+
+	//operator precedence vector
+	//temp = operationPrecedence[index - 1];
+	//operationPrecedence[index - 1] = operationPrecedence[index];
+	//operationPrecedence[index] = temp;
 }
 void JammyParser::SwapNumbers(int index)
 {
@@ -266,19 +271,19 @@ std::vector<char>::iterator JammyParser::CheckModulus()
 	return std::find(operations.begin(), operations.end(), '%');
 }
 
-int JammyParser::RecursiveDescent(int tempResult)
+int JammyParser::RecursiveDescent(int indexZero)
 {
-	//takes in the first temp result, which is res
-	int res = Evaluate(nums[0], nums[1], operations[0]);
+	//pass in the first index of the nums vector
+	indexZero = Evaluate(indexZero, nums[1], operations[0]);
+
 	//pops the used values
 	auto numIt = nums.begin();
 	auto opIt = operations.begin();
 	operations.erase(opIt);
 	nums.erase(numIt);
-	nums[0] = res;
+	nums[0] = indexZero;
 	//keep going until finished
 	if (operations.size() != 0)
-		return RecursiveDescent(res);
-	else
-		return res;
+		indexZero = RecursiveDescent(indexZero);
+	return indexZero;
 }

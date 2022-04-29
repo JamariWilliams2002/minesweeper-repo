@@ -1,6 +1,7 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS 
 #include <string>
+#include <queue>
 #include"wx/wx.h"
 class JammyParser
 {
@@ -18,6 +19,8 @@ private:
 		Addition,
 		Subtraction
 	};
+	
+	std::priority_queue<Operators> ops;
 	std::vector<double> nums;
 	std::vector<char> operations;
 	std::vector<int> operationPrecedence;

@@ -83,10 +83,10 @@ int JammyParser::Interpret(std::string expression)
 		}
 
 		//evaluate result
-
+		
 		result = Evaluate(nums[index], nums[index + 1], operations[index]);
 		//make the value unreadable so it's not evaluated twice. 
-		operations[index] = 'd';
+		operations[index] = 'd'; 
 
 		//change the values in the nums vector
 		nums[index] = Evaluate(nums[index], nums[index + 1], operations[index]);
@@ -150,9 +150,10 @@ int JammyParser::GetNumberFromChar(char c)
 void JammyParser::OrganizeVectors()
 {
 	int prevOpPrec = GetPrecedence(operations[0]);
+	//no work required for one operator
 	if (operations.size() == 1)
 		return;
-	for (int i = 1; i <= operations.size(); i++)
+	for (int i = 0; i < operations.size(); i++)
 	{
 		while (operationPrecedence[i] > operationPrecedence[prevOpPrec])
 		{
